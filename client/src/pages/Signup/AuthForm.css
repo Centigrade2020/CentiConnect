@@ -39,10 +39,6 @@
   outline: none;
 }
 
-.formField {
-  margin-bottom: 0px;
-}
-
 .authButton {
   background-color: var(--violet);
   color: white;
