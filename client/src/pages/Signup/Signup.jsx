@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
 import { Formik, Form } from "formik";
 import { initialValues, validationSchema } from "./formikConfig";
 import { FormFieldClass } from "../../components";
 import "./AuthForm.css";
 
 function Signup() {
+  const history = useHistory();
+
   const [serverError, setServerError] = useState("");
 
   const signup = ({ username, email, password }, { setSubmitting }) => {};
@@ -19,7 +22,7 @@ function Signup() {
       >
         {({ isValid, isSubmitting }) => (
           <Form>
-            <h1>Sign up</h1>
+            <h1>Sign up your account</h1>
 
             <FormFieldClass.FormField
               label="Username"
@@ -50,7 +53,15 @@ function Signup() {
             </div>
             <div className="authLinkContainer">
               <p>
-                Already have an account? <a className="authLink">Login</a>
+                Already have an account?{" "}
+                <a
+                  className="authLink"
+                  onClick={() => {
+                    history.push("login");
+                  }}
+                >
+                  Login
+                </a>
               </p>
             </div>
           </Form>

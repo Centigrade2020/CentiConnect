@@ -6,6 +6,7 @@ import { FormFieldClass } from "../../components";
 
 function Login() {
   const history = useHistory();
+
   const [serverError, setServerError] = useState("");
 
   const login = ({ password }, { setSubmitting }) => {};
@@ -20,7 +21,7 @@ function Login() {
       >
         {({ isValid, isSubmitting }) => (
           <Form>
-            <h1>Login</h1>
+            <h1>Log in to your account</h1>
 
             <FormFieldClass.FormField label="Email" name="email" type="email" />
             <FormFieldClass.FormField
@@ -38,6 +39,19 @@ function Login() {
             </button>
             <div className="serverErrorContainer">
               <FormFieldClass.ServerError serverError={serverError} />
+            </div>
+            <div className="authLinkContainer">
+              <p>
+                Don't have an account?{" "}
+                <a
+                  className="authLink"
+                  onClick={() => {
+                    history.push("signup");
+                  }}
+                >
+                  Signup
+                </a>
+              </p>
             </div>
           </Form>
         )}

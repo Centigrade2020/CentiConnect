@@ -20,11 +20,10 @@
 .AuthForm > form > h1 {
   font-weight: 500;
   text-transform: uppercase;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: rgb(110, 110, 110);
   letter-spacing: 1px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin: 20px 0;
 }
 
 .authButton,
@@ -34,7 +33,7 @@
   background-color: rgb(235, 235, 235);
   border: 1px solid rgb(235, 235, 235);
   color: rgb(110, 110, 110);
-  font-size: 1rem;
+  font-size: 0.8rem;
   border-radius: 2px;
   outline: none;
 }
@@ -88,6 +87,6 @@
   font-weight: 500;
 }
 
-.authLink :hover {
+.authLink:hover {
   color: var(--violet);
 }
