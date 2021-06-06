@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request
 from services import firebase as fb
 
 app = Flask(__name__)
-ma = Marshmallow(app)
 
 def create_user(email, password, username):
     user = fb.auth.create_user(email=email, password=password)
