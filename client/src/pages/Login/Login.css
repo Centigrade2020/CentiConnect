@@ -1,0 +1,69 @@
+.Login {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.auth-form-wrapper {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Login > h2 {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+}
+
+.auth-form-container {
+  width: 400px;
+  color: var(--light);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  transform: translateY(-5%);
+}
+.auth-form-container > * > * {
+  margin-bottom: 20px;
+}
+.auth-form-container h1 {
+  color: var(--primary);
+  text-align: center;
+  font-size: 2.2rem;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: var(--transparent);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  font-weight: lighter;
+  transition: color 200ms ease-in-out, background-color 200ms ease-in-out;
+}
+
+.auth-button:disabled {
+  cursor: not-allowed;
+  border: 1px solid var(--dark2);
+  color: var(--light);
+  background-color: var(--dark2);
+}
+
+.auth-button:enabled:hover {
+  background-color: var(--primary);
+  color: var(--dark2);
+}
+.auth-link-container {
+  color: var(--light);
+}
+.auth-link {
+  padding-left: 8px;
+  transition: color 200ms ease-in-out;
+  color: var(--light);
+}
+
+.auth-link:hover {
+  color: var(--primary);
+  cursor: pointer;
+}
