@@ -1,51 +1,14 @@
-.nav-container {
+.NavBar {
   width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
   height: 10vh;
-  position: sticky;
-  background-color: var(--dark);
 }
 
-nav {
-  width: 80%;
-  height: inherit;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.line {
+.navBarContainer {
   width: 90%;
-  margin: auto;
-  height: 1px;
-  background-color: var(--light2);
-}
-
-.logo {
-  color: var(--primary);
-}
-
-.profile {
   height: inherit;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
-}
-
-.profile .profile-name {
-  color: var(--light);
-  margin-top: 10px;
-  transition: all 200ms ease-in-out;
-}
-
-.profile:hover .profile-name {
-  color: var(--primary);
-}
-
-.profile:hover .Profile {
-  fill: var(--primary);
+  color: white;
 }

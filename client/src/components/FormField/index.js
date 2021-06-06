@@ -1,3 +1,5 @@
 import { FormField, ServerError } from "./FormField";
 
-export { FormField, ServerError };
+let FormFieldClass = { FormField, ServerError };
+
+export default FormFieldClass;
