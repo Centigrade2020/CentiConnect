@@ -2,7 +2,7 @@ import pyrebase
 
 from flask import Flask, jsonify
 from flask_marshmallow import Marshmallow
-from services import firebase as fb
+from services import firebase
 
 app = Flask(__name__)
 
