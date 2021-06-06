@@ -48,6 +48,11 @@ function Signup() {
             <div className="serverErrorContainer">
               <FormFieldClass.ServerError serverError={serverError} />
             </div>
+            <div className="authLinkContainer">
+              <p>
+                Already have an account? <a className="authLink">Login</a>
+              </p>
+            </div>
           </Form>
         )}
       </Formik>

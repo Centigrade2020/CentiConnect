@@ -78,3 +78,16 @@
   font-size: 0.8rem;
   color: red;
 }
+
+.authLinkContainer {
+  margin-bottom: 20px;
+}
+
+.authLink {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.authLink :hover {
+  color: var(--violet);
+}
