@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Formik, Form } from "formik";
 import { initialValues, validationSchema } from "./formikConfig";
@@ -7,8 +7,6 @@ import "./AuthForm.css";
 
 function Signup() {
   const history = useHistory();
-
-  const flask_link = "http://127.0.0.1:4001/";
 
   const [serverError, setServerError] = useState("");
 
@@ -19,7 +17,9 @@ function Signup() {
       password: password,
     };
 
-    const response = await fetch("http://127.0.0.1:4001/signup", {
+    // const response = await fetch("http://127.0.0.1:4001/signup", {
+
+    const response = fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,6 +31,9 @@ function Signup() {
       console.log("signed up");
     }
   };
+  //  useEffect(()=>{
+  //    fetch('/signup').then(response => response.json())
+  //  })
 
   return (
     <div className="AuthForm">
