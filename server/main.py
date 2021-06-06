@@ -1,7 +1,4 @@
-import pyrebase
-
 from flask import Flask, jsonify, request
-from flask_marshmallow import Marshmallow
 from services import firebase as fb
 
 app = Flask(__name__)
@@ -16,7 +13,7 @@ def create_user(email, password, username):
 @app.route("/signup", methods=['POST'])
 def signup():
     content = request.get_json()
-    return jsonify(content)
+    return content
 
 
 if __name__ == "__main__":

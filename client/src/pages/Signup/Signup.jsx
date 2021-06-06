@@ -12,14 +12,14 @@ function Signup() {
 
   const [serverError, setServerError] = useState("");
 
-  const signup = ({ username, email, password }, { setSubmitting }) => {
+  const signup = async ({ username, email, password }, { setSubmitting }) => {
     const content = {
       username: username,
       email: email,
       password: password,
     };
 
-    const response = fetch(flask_link + "signup", {
+    const response = await fetch("http://127.0.0.1:4001/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
