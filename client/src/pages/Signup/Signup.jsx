@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Formik, Form } from "formik";
+import fetchFlask from "../../helpers/fetchFlask";
 import { initialValues, validationSchema } from "./formikConfig";
 import { FormFieldClass } from "../../components";
 import "./AuthForm.css";
@@ -17,23 +18,34 @@ function Signup() {
       password: password,
     };
 
-    // const response = await fetch("http://127.0.0.1:4001/signup", {
-
-    const response = fetch("/signup", {
+    fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(content),
-    });
-
-    if (response.ok) {
-      console.log("signed up");
-    }
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        if (res.err) {
+          if (res.error === "ALREADY_EXISTS") {
+            setServerError("Email already exists");
+          } else {
+            setServerError("Trouble signing up. Try again");
+          }
+        } else {
+          localStorage.setItem("userId", res.uid);
+        }
+      })
+      .catch(() => {
+        setServerError("Trouble signing up. Try again");
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
-  //  useEffect(()=>{
-  //    fetch('/signup').then(response => response.json())
-  //  })
 
   return (
     <div className="AuthForm">

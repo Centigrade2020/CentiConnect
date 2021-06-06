@@ -1,20 +1,32 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, json
 from services import firebase as fb
+
 
 app = Flask(__name__)
 
 
 def create_user(email, password, username):
-    user = fb.auth.create_user(email=email, password=password)
-    fb.firestore.collection("users").document(user.uid).set({
-        "username": username,
-    })
+    try:
+        user = fb.auth.create_user(email=email, password=password)
+        fb.firestore.collection("users").document(user.uid).set({
+            "username": username,
+        })
+        return {"uid": f"{user.uid}"}
+    except BaseException as e:
+        return({"error": f"{e.code}"})
 
 
-@app.route("/signup", methods=['POST'])
+@app.route("/signup", methods=["GET", "POST"])
 def signup():
-    content = request.get_json()
-    return content
+    
+    if request.method == "POST":
+        content = request.get_json()
+        data = create_user(content["email"], content["password"], content["username"])
+        return jsonify(data)
+    else:
+        return {
+            "hello": "helo"
+        }
 
 
 
