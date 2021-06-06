@@ -9,7 +9,40 @@ function Login() {
 
   const [serverError, setServerError] = useState("");
 
-  const login = ({ password }, { setSubmitting }) => {};
+  const login = async ({ email, password }, { setSubmitting }) => {
+    const content = {
+      email: email,
+      password: password,
+    };
+
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(content),
+    });
+    // .then((res) => {
+    //   return res.json();
+    // })
+    // .then((res) => {
+    //   if (res.error) {
+    //     if (res.error === "ALREADY_EXISTS") {
+    //       setServerError("Email already exists");
+    //     } else {
+    //       setServerError("Trouble signing up. Try again");
+    //     }
+    //   } else {
+    //     localStorage.setItem("userId", res.uid);
+    //   }
+    // })
+    // .catch(() => {
+    //   setServerError("Trouble signing up. Try again");
+    // })
+    // .finally(() => {
+    //   setSubmitting(false);
+    // });
+  };
 
   return (
     <div className="AuthForm">
