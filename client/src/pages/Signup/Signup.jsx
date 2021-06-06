@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Formik, Form } from "formik";
-import fetchFlask from "../../helpers/fetchFlask";
 import { initialValues, validationSchema } from "./formikConfig";
 import { FormFieldClass } from "../../components";
 import "./AuthForm.css";
@@ -29,7 +28,7 @@ function Signup() {
         return res.json();
       })
       .then((res) => {
-        if (res.err) {
+        if (res.error) {
           if (res.error === "ALREADY_EXISTS") {
             setServerError("Email already exists");
           } else {

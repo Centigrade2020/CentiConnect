@@ -28,6 +28,17 @@ def signup():
             "hello": "helo"
         }
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    
+    if request.method == "POST":
+        content = request.get_json()
+        data = create_user(content["email"], content["password"], content["username"])
+        return jsonify(data)
+    else:
+        return {
+            "hello": "helo"
+        }
 
 
 if __name__ == "__main__":
