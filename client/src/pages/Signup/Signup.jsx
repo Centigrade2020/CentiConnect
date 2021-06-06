@@ -8,9 +8,29 @@ import "./AuthForm.css";
 function Signup() {
   const history = useHistory();
 
+  const flask_link = "http://127.0.0.1:4001/";
+
   const [serverError, setServerError] = useState("");
 
-  const signup = ({ username, email, password }, { setSubmitting }) => {};
+  const signup = ({ username, email, password }, { setSubmitting }) => {
+    const content = {
+      username: username,
+      email: email,
+      password: password,
+    };
+
+    const response = fetch(flask_link + "signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(content),
+    });
+
+    if (response.ok) {
+      console.log("signed up");
+    }
+  };
 
   return (
     <div className="AuthForm">
