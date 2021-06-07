@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, json
 from services import firebase as fb
-
+from db import *
 
 app = Flask(__name__)
 
@@ -18,10 +18,11 @@ def create_user(email, password, username):
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-    
+
     if request.method == "POST":
         content = request.get_json()
-        data = create_user(content["email"], content["password"], content["username"])
+        data = create_user(
+            content["email"], content["password"], content["username"])
         return jsonify(data)
     else:
         return {}

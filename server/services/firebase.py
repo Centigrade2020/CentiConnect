@@ -3,6 +3,9 @@ from firebase_admin import credentials
 from firebase_admin import firestore, auth, storage
 
 cred = credentials.Certificate("services/serviceAccountKey.json")
+firebase_admin.initialize_app(cred, {
+    'storageBucket': 'centiconnect.appspot.com/'
+})
 app = firebase_admin.initialize_app(cred)
 
 firestore = firestore.client()
