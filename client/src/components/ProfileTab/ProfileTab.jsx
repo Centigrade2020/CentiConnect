@@ -1,6 +1,10 @@
+import { useHistory } from "react-router";
+import fb from "../../services/firebase";
 import "./ProfileTab.css";
 
 function ProfileTab() {
+  const history = useHistory();
+
   return (
     <div className="ProfileTab" id="ProfileTab">
       <section className="ProfileTabHeader">
@@ -15,7 +19,16 @@ function ProfileTab() {
         </ul>
       </section>
       <section>
-        <div className="logout">Logout</div>
+        <div
+          className="logout"
+          onClick={() => {
+            fb.auth.signOut();
+            localStorage.clear();
+            history.push("login");
+          }}
+        >
+          Log out
+        </div>
       </section>
     </div>
   );

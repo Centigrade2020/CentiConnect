@@ -1,13 +1,12 @@
 .ProfileTab {
   width: 300px;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   position: absolute;
-  right: 5%;
+  right: 4%;
   top: 10vh;
   display: none;
   overflow: hidden;
-  box-shadow: 2px 2px;
 }
 
 .ProfileTab > .ProfileTabHeader {
@@ -58,7 +57,7 @@
 
 .logout {
   width: 100%;
-  background-color: var(--violet);
+  background-color: var(--violet2);
   padding: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -66,4 +65,9 @@
   color: white;
   user-select: none;
   text-align: center;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background-color: var(--violet3);
 }
