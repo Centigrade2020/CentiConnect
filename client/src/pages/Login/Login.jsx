@@ -1,47 +1,35 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import fb from "../../services/firebase";
 import { Formik, Form } from "formik";
 import { initialValues, validationSchema } from "./formikConfig";
 import { FormFieldClass } from "../../components";
 
 function Login() {
   const history = useHistory();
-
   const [serverError, setServerError] = useState("");
 
-  const login = async ({ email, password }, { setSubmitting }) => {
-    const content = {
-      email: email,
-      password: password,
-    };
-
-    fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(content),
-    });
-    // .then((res) => {
-    //   return res.json();
-    // })
-    // .then((res) => {
-    //   if (res.error) {
-    //     if (res.error === "ALREADY_EXISTS") {
-    //       setServerError("Email already exists");
-    //     } else {
-    //       setServerError("Trouble signing up. Try again");
-    //     }
-    //   } else {
-    //     localStorage.setItem("userId", res.uid);
-    //   }
-    // })
-    // .catch(() => {
-    //   setServerError("Trouble signing up. Try again");
-    // })
-    // .finally(() => {
-    //   setSubmitting(false);
-    // });
+  const login = ({ email, password }, { setSubmitting }) => {
+    fb.auth
+      .signInWithEmailAndPassword(email, password)
+      .then((res) => {
+        if (!res.user) {
+          setServerError("Trouble logging in.");
+        }
+      })
+      .catch((err) => {
+        if (err.code === "auth/wrong-password") {
+          setServerError("Invalid credentials");
+        } else if (err.code === "auth/user-not-found") {
+          setServerError("Email not registered");
+        } else {
+          setServerError("Something went wrong");
+        }
+      })
+      .finally(() => {
+        setSubmitting(false);
+        localStorage.setItem("userId", fb.auth.currentUser?.uid);
+      });
   };
 
   return (

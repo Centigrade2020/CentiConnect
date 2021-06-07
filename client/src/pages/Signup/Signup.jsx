@@ -9,6 +9,7 @@ function Signup() {
   const history = useHistory();
 
   const [serverError, setServerError] = useState("");
+  const [signedUp, setSignedUp] = useState(false);
 
   const signup = async ({ username, email, password }, { setSubmitting }) => {
     const content = {
@@ -34,8 +35,9 @@ function Signup() {
           } else {
             setServerError("Trouble signing up. Try again");
           }
+          console.log(res.error);
         } else {
-          localStorage.setItem("userId", res.uid);
+          history.push("login");
         }
       })
       .catch(() => {
