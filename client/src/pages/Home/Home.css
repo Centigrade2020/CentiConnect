@@ -1,0 +1,29 @@
+.createPostButton {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 8%;
+  right: 5%;
+  box-shadow: 0 0 0 5px var(--violet);
+  transition: all 200ms ease-in-out;
+}
+
+.createPostButton:hover {
+  box-shadow: 0 0 0 5px var(--violet3);
+}
+
+.createPostButton .Plus {
+  fill: var(--violet);
+  transition: 200ms ease-in-out;
+}
+
+.createPostButton:hover .Plus {
+  fill: var(--violet3);
+}

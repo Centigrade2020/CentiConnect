@@ -24,14 +24,13 @@
 .profilePicContainer {
   width: 40px;
   height: 40px;
-  background-color: gray;
+  background-color: rgb(231, 231, 231);
   border-radius: 50%;
-  box-shadow: 0px 0px 0px 1px white;
   cursor: pointer;
   transition: all 200ms ease-in-out;
 }
 .profilePicContainer:hover {
-  box-shadow: 0px 0px 0px 2px white;
+  box-shadow: 0 0 0 4px var(--violet3);
 }
 
 .profileName {

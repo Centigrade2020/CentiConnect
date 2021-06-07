@@ -2,8 +2,6 @@ import { useHistory } from "react-router";
 import "./NavBar.css";
 
 function NavBar() {
-  const history = useHistory();
-
   return (
     <div className="NavBar">
       <div className="navBarContainer">
