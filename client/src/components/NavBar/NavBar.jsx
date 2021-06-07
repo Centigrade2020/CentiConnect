@@ -12,7 +12,13 @@ function NavBar() {
         </div>
         <div className="profileContainer">
           <p className="profileName">username</p>
-          <div className="profilePicContainer"></div>
+          <div
+            className="profilePicContainer"
+            onClick={() => {
+              const profileTab = document.getElementById("ProfileTab");
+              profileTab.classList.toggle("ProfileTabActive");
+            }}
+          ></div>
         </div>
       </div>
     </div>
