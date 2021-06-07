@@ -94,14 +94,14 @@ function Signup() {
             <div className="authLinkContainer">
               <p>
                 Already have an account?{" "}
-                <a
+                <span
                   className="authLink"
                   onClick={() => {
                     history.push("login");
                   }}
                 >
                   Login
-                </a>
+                </span>
               </p>
             </div>
           </Form>
