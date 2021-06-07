@@ -7,3 +7,4 @@ app = firebase_admin.initialize_app(cred)
 
 firestore = firestore.client()
 auth = auth
+storage = storage.bucket()

@@ -3,17 +3,19 @@ import "./ProfileTab.css";
 function ProfileTab() {
   return (
     <div className="ProfileTab" id="ProfileTab">
-      <header className="ProfileTabHeader">
+      <section className="ProfileTabHeader">
         <div className="profilePicContainer"></div>
         <div className="username">username</div>
-      </header>
-      <div className="line"></div>
+      </section>
       <section className="ProfileTabContent">
         <ul>
           <li>apple</li>
           <li>banana</li>
           <li>grapes</li>
         </ul>
+      </section>
+      <section>
+        <div className="logout">Logout</div>
       </section>
     </div>
   );

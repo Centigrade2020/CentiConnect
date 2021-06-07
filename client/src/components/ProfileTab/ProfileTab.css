@@ -1,13 +1,13 @@
 .ProfileTab {
   width: 300px;
-  min-height: 300px;
   background-color: white;
   border-radius: 5px;
-  padding: 20px;
   position: absolute;
   right: 5%;
   top: 10vh;
   display: none;
+  overflow: hidden;
+  box-shadow: 2px 2px;
 }
 
 .ProfileTab > .ProfileTabHeader {
@@ -15,6 +15,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px;
 }
 
 .ProfileTabHeader .username {
@@ -44,6 +45,8 @@
 }
 
 .ProfileTabContent {
+  padding: 20px;
+  background-color: rgb(240, 240, 240);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,4 +54,16 @@
 
 .ProfileTabActive {
   display: block;
+}
+
+.logout {
+  width: 100%;
+  background-color: var(--violet);
+  padding: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: white;
+  user-select: none;
+  text-align: center;
 }
