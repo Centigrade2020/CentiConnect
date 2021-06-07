@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import { Formik, Form } from "formik";
 import { initialValues, validationSchema } from "./formikConfig";
@@ -9,7 +9,6 @@ function Signup() {
   const history = useHistory();
 
   const [serverError, setServerError] = useState("");
-  const [signedUp, setSignedUp] = useState(false);
 
   const signup = async ({ username, email, password }, { setSubmitting }) => {
     const content = {
@@ -65,7 +64,12 @@ function Signup() {
               name="username"
               type="text"
             />
-            <FormFieldClass.FormField label="Email" name="email" type="email" />
+            <FormFieldClass.FormField
+              label="Email"
+              name="email"
+              type="email"
+              autoComplete="on"
+            />
             <FormFieldClass.FormField
               label="Password"
               name="password"

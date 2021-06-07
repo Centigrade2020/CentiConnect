@@ -44,7 +44,12 @@ function Login() {
           <Form>
             <h1>Log in to your account</h1>
 
-            <FormFieldClass.FormField label="Email" name="email" type="email" />
+            <FormFieldClass.FormField
+              label="Email"
+              name="email"
+              type="email"
+              autoComplete="on"
+            />
             <FormFieldClass.FormField
               label="Password"
               name="password"
@@ -64,14 +69,14 @@ function Login() {
             <div className="authLinkContainer">
               <p>
                 Don't have an account?{" "}
-                <a
+                <span
                   className="authLink"
                   onClick={() => {
                     history.push("signup");
                   }}
                 >
                   Signup
-                </a>
+                </span>
               </p>
             </div>
           </Form>

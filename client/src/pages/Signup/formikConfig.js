@@ -1,10 +1,10 @@
 import * as yup from "yup";
 
 const initialValues = {
-  username: "adsf",
-  email: "dharunsivakumar002@gmail.com",
-  password: "dharun",
-  confirmPassword: "dharun",
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
 const validationSchema = yup.object().shape({
