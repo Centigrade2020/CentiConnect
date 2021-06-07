@@ -1,5 +1,4 @@
 import { useHistory } from "react-router";
-import fb from "../../services/firebase";
 import "./NavBar.css";
 
 function NavBar() {
@@ -11,15 +10,9 @@ function NavBar() {
         <div className="logo">
           <h1>Connect</h1>
         </div>
-        <div
-          className="logout"
-          onClick={() => {
-            fb.auth.signOut();
-            localStorage.clear();
-            history.push("login");
-          }}
-        >
-          Logout
+        <div className="profileContainer">
+          <p className="profileName">username</p>
+          <div className="profilePicContainer"></div>
         </div>
       </div>
     </div>

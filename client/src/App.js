@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NavBar from "./components/NavBar";
+import ProfileTab from "./components/ProfileTab";
 
 function App() {
   const history = useHistory();
@@ -23,6 +24,7 @@ function App() {
       <Route path="/signup" component={Signup} />
       <>
         <NavBar />
+        <ProfileTab />
         <Route exact path="/" component={Home} />
       </>
     </Switch>
