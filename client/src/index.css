@@ -14,6 +14,14 @@
   --whiteTrans: rgba(255, 255, 255, 0.404);
 }
 
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--whiteTrans);
+}
+
 html,
 body {
   width: 100%;

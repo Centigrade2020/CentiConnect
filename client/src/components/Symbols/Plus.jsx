@@ -1,9 +1,9 @@
 const Plus = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height={`${size}`}
+    height={size}
     viewBox="0 0 24 24"
-    width={`${size}`}
+    width={size}
     fill="#000000"
     className="Plus"
   >

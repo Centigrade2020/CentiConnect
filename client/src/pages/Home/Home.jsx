@@ -6,6 +6,7 @@ function Home() {
     <div className="Home">
       <div className="posts">
         <Post />
+        <Post />
       </div>
       <div className="createPostButton">
         <Symbols.Plus size="38" />

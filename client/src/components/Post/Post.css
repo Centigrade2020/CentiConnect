@@ -1,0 +1,158 @@
+.Post {
+  width: 700px;
+  height: calc(400px + 8vh);
+  margin: 20px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  font-size: 0.8rem;
+}
+
+.profile {
+  width: 100%;
+  height: 8vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgb(235, 235, 235);
+}
+
+.profile .profileIcon {
+  width: 35px;
+  height: 35px;
+  background-color: gray;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.profile .settings {
+  position: absolute;
+  right: 10px;
+}
+
+.imageSection {
+  position: absolute;
+  top: 8vh;
+  left: 0;
+  right: calc(100% - 400px);
+  bottom: 0;
+}
+.commentSection {
+  position: absolute;
+  top: 8vh;
+  left: 400px;
+  right: 0;
+  bottom: 0;
+  border-left: 1px solid rgb(235, 235, 235);
+}
+
+.commentSection .comments {
+  height: 250px;
+  border-bottom: 1px solid rgb(235, 235, 235);
+  overflow: scroll;
+}
+
+.imageSection .imageContainer {
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
+}
+
+.imageSection .imageContainer img {
+  width: inherit;
+  height: auto;
+}
+
+.Post .ThreeDots {
+  margin-top: 3px;
+  fill: gray;
+}
+
+.postLinks {
+  display: flex;
+  padding: 5px;
+  font-size: 0.8rem;
+  height: 30px;
+}
+
+.postLinks > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30px;
+}
+.postLinks .UpVote,
+.postLinks .DownVote {
+  fill: gray;
+  margin-right: 5px;
+}
+
+.commentSection .comment {
+  background-color: rgb(235, 235, 235);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.addComment {
+  height: 50px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgb(235, 235, 235);
+}
+.addComment textarea {
+  width: 80%;
+  height: 100%;
+  padding: 10px;
+  resize: none;
+  outline: none;
+  border: none;
+}
+
+.addComment textarea::placeholder {
+  transform: translate(10px, 5px);
+}
+
+.addComment button {
+  width: 20%;
+  height: 100%;
+  outline: none;
+  border: none;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 500;
+  background-color: var(--violet2);
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.addComment button:hover {
+  background-color: var(--violet3);
+}
+
+.description {
+  height: 100px;
+}
+
+.descriptionContent {
+  height: 80px;
+  overflow: scroll;
+  padding: 0 5px;
+}
+
+.descriptionContent::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+.descriptionContent .profileName {
+  font-weight: bold;
+}
