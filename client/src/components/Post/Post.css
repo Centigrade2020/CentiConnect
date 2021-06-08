@@ -1,17 +1,28 @@
+:root {
+  --imageDim: 400px;
+  --profileHeight: calc(var(--imageDim) * 0.125);
+  --commentSectWidth: calc(var(--imageDim) * 0.75);
+  --commentSectHeight: var(--imageDim);
+  --padding10: calc(var(--imageDim) * 0.025);
+  --fontSize: calc(var(--imageDim) * 0.03);
+  --fontSize2: calc(var(--imageDim) * 0.034);
+  --profilePicDim: calc(var(--imageDim) * 0.0875);
+}
+
 .Post {
-  width: 700px;
-  height: calc(400px + 8vh);
-  margin: 20px;
+  width: calc(var(--imageDim) + var(--commentSectWidth));
+  height: calc(var(--imageDim) + var(--profileHeight));
+  margin: calc(var(--padding10) * 2);
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-  font-size: 0.8rem;
+  font-size: var(--fontSize);
 }
 
 .profile {
   width: 100%;
-  height: 8vh;
+  height: var(--profileHeight);
   position: absolute;
   top: 0;
   left: 0;
@@ -22,43 +33,44 @@
 }
 
 .profile .profileIcon {
-  width: 35px;
-  height: 35px;
+  width: var(--profilePicDim);
+  height: var(--profilePicDim);
   background-color: rgb(192, 192, 192);
   border-radius: 50%;
-  margin: 0 10px;
+  margin: 0 var(--padding10);
 }
 
 .profile .settings {
   position: absolute;
-  right: 10px;
+  right: var(--padding10);
 }
 
 .imageSection {
   position: absolute;
-  top: 8vh;
+  top: var(--profileHeight);
   left: 0;
-  right: calc(100% - 400px);
+  right: calc(100% - var(--imageDim));
   bottom: 0;
 }
 .commentSection {
   position: absolute;
-  top: 8vh;
-  left: 400px;
+  height: var(--commentSectHeight);
+  top: var(--profileHeight);
+  left: var(--imageDim);
   right: 0;
   bottom: 0;
   border-left: 1px solid rgb(235, 235, 235);
 }
 
 .commentSection .comments {
-  height: 250px;
+  height: calc(var(--commentSectHeight) * 0.625);
   border-bottom: 1px solid rgb(235, 235, 235);
   overflow: scroll;
 }
 
 .imageSection .imageContainer {
-  width: 400px;
-  height: 400px;
+  width: var(--imageDim);
+  height: var(--imageDim);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -78,32 +90,32 @@
 
 .postLinks {
   display: flex;
-  padding: 5px;
-  font-size: 0.8rem;
-  height: 30px;
+  padding: calc(var(--padding10) / 2);
+  font-size: var(--fontSize);
+  height: calc(var(--commentSectHeight) * 0.075);
 }
 
 .postLinks > * {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 30px;
+  margin-right: calc(var(--padding10) * 3);
 }
 .postLinks .UpVote,
 .postLinks .DownVote {
   fill: gray;
-  margin-right: 5px;
+  margin-right: calc(var(--padding10) / 2);
 }
 
 .commentSection .comment {
   background-color: rgb(235, 235, 235);
-  padding: 10px;
-  margin: 10px;
-  border-radius: 10px;
+  padding: var(--padding10);
+  margin: var(--padding10);
+  border-radius: var(--padding10);
 }
 
 .addComment {
-  height: 50px;
+  height: calc(var(--commentSectHeight) * 0.125);
   display: flex;
   width: 100%;
   align-items: center;
@@ -113,14 +125,16 @@
 .addComment textarea {
   width: 80%;
   height: 100%;
-  padding: 10px;
+  padding: var(--padding10);
   resize: none;
   outline: none;
   border: none;
+  font-size: var(--fontSize);
 }
 
 .addComment textarea::placeholder {
-  transform: translate(10px, 5px);
+  transform: translate(var(--padding10), calc(var(--padding10) / 2));
+  font-size: var(--fontSize2);
 }
 
 .addComment button {
@@ -134,6 +148,7 @@
   background-color: var(--violet2);
   letter-spacing: 1px;
   cursor: pointer;
+  font-size: var(--fontSize2);
 }
 
 .addComment button:hover {
@@ -141,13 +156,13 @@
 }
 
 .description {
-  height: 100px;
+  height: calc(var(--commentSectHeight) * 0.25);
 }
 
 .descriptionContent {
-  height: 80px;
+  height: calc(var(--commentSectHeight) * 0.2);
   overflow: scroll;
-  padding: 0 5px;
+  padding: 0 calc(var(--padding10) / 2);
 }
 
 .descriptionContent::-webkit-scrollbar-thumb {
