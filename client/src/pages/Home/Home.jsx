@@ -1,8 +1,6 @@
 import { useHistory } from "react-router";
 import { Symbols, Post } from "../../components";
 import "./Home.css";
-import fb from "../../services/firebase";
-// import test from "./test.jpg";
 
 function Home() {
   const history = useHistory();

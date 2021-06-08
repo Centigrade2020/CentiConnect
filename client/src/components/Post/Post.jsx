@@ -3,15 +3,7 @@ import fb from "../../services/firebase";
 import { Symbols } from "../../components";
 import "./Post.css";
 
-const Post = ({
-  postId,
-  comments,
-  username,
-  upvotes,
-  downvotes,
-  caption,
-  imageToken,
-}) => {
+const Post = ({ postId, comments, username, upvotes, downvotes, caption }) => {
   const [link, setLink] = useState("");
 
   fb.storage
@@ -81,10 +73,6 @@ const Post = ({
           <button className="postComment">Post</button>
         </form>
       </section>
-      {/* <script>
-        document .getElementById("postImage") .addEventListener("contextmenu",
-        function (e) {e.preventDefault()})
-      </script> */}
     </div>
   );
 };

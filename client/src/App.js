@@ -16,7 +16,6 @@ function App() {
 
   useEffect(() => {
     if (authResolved) {
-      console.log(location.pathname);
       if (location.pathname === "/createpost") {
         history.push(!!authUser ? "/createpost" : "login");
       } else {

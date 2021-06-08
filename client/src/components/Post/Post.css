@@ -83,6 +83,7 @@
   width: inherit;
   height: auto;
   z-index: 10;
+  user-select: none;
 }
 
 .Post .ThreeDots {
