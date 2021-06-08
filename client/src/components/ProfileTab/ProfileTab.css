@@ -8,7 +8,8 @@
   display: none;
   overflow: hidden;
   z-index: 2000;
-  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.192);
+  border: 4px solid white;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.178);
 }
 
 .ProfileTab > .ProfileTabHeader {
@@ -55,7 +56,7 @@
 
 .logout {
   width: 100%;
-  background-color: var(--violet2);
+  background-color: var(--violet);
   padding: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -67,5 +68,5 @@
 }
 
 .logout:hover {
-  background-color: var(--violet3);
+  background-color: var(--violet2);
 }
