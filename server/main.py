@@ -5,6 +5,9 @@ from db import *
 app = Flask(__name__)
 
 
+
+
+
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -36,6 +39,15 @@ def deletepost():
         return jsonify(data)
     else:
         return {}
+
+
+
+@app.route("/")
+def index():
+    return jsonify({
+        "Backend": "Flask",
+        "Frontend": "React"
+    })
 
 
 if __name__ == "__main__":
