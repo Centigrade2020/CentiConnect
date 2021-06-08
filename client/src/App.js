@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost";
 import NavBar from "./components/NavBar";
 import ProfileTab from "./components/ProfileTab";
+import Profile from "./pages/ProfilePage";
 
 function App() {
   const history = useHistory();
@@ -16,6 +17,7 @@ function App() {
 
   useEffect(() => {
     if (authResolved) {
+      console.log(location.pathname);
       if (location.pathname === "/createpost") {
         history.push(!!authUser ? "/createpost" : "login");
       } else {
@@ -33,6 +35,8 @@ function App() {
         <ProfileTab />
         <Route exact path="/" component={Home} />
         <Route path="/createpost" component={CreatePost} />
+        <Route path="/Profile" component={Profile} />
+        
       </>
     </Switch>
   );
