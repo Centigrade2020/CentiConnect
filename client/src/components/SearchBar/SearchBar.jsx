@@ -6,7 +6,16 @@ import "./SearchBar.css";
 function SearchBar() {
   const history = useHistory();
 
-  var usernames = ["dharunvs", "dharundds", "hrithik69"];
+  function getUsernames() {
+    if (!!sessionStorage.getItem("usernames")) {
+      var str = sessionStorage.getItem("usernames");
+      var usernames = str.split(",");
+      return usernames;
+    }
+    return [];
+  }
+
+  // var usernames = ["dharunvs", "dharundds", "hrithik69"];
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -16,10 +25,10 @@ function SearchBar() {
   }
 
   function dynamicSearch() {
-    if (searchTerm !== "" && searchTerm.length >= 3) {
+    if (searchTerm !== "" && searchTerm.length >= 1) {
       return (
         <ul className="searchList" id="searchList">
-          {usernames
+          {getUsernames()
             .filter((name) =>
               name.toLowerCase().includes(searchTerm.toLowerCase())
             )

@@ -34,32 +34,53 @@ function Profile() {
 
   return (
     <div className="Profile">
-      <div className="edit">
-        <span
-          onClick={() => {
-            document
-              .getElementsByClassName("editPage")
-              .classList.toggle("show");
-          }}
-        >
-          Edit
-        </span>
-        <Symbols.Edit size="30" />
+      <div className="ProfileBanner">
+        <div className="profilePicContainer"></div>
+
+        <div className="profileBannerContent">
+          <div className="username">username</div>
+
+          <div className="userInfo">
+            <p className="posts">
+              <span className="userInfoNum">2</span>
+              <span className="userInfoText">Posts</span>
+            </p>
+            <p className="connections">
+              <span className="userInfoNum">3</span>
+              <span className="userInfoText">Connections</span>
+            </p>
+          </div>
+
+          <div className="bio">
+            <p className="userInfoText">About</p>
+            <p className="bioText">Centiconnect will launched soon</p>
+          </div>
+        </div>
+
+        <div className="profileBannerLinks">
+          <div
+            className="profileBannerLinkButton"
+            onClick={() => {
+              document
+                .getElementsByClassName("editPage")
+                .classList.toggle("show");
+            }}
+          >
+            <Symbols.Edit size="30" />
+          </div>
+          <div
+            className="profileBannerLinkButton"
+            onClick={() => {
+              document
+                .getElementsByClassName("editPage")
+                .classList.toggle("show");
+            }}
+          >
+            <Symbols.Settings size="30" />
+          </div>
+        </div>
       </div>
 
-      <div className="profilePicContainer profilePic"></div>
-      <div className="username">username</div>
-      <div className="bio">
-        <span>Centiconnect will launched soon</span>
-      </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div className="line"></div>
-      <h2>Your Posts</h2>
-      <div className="line"></div>
       <div className="currentUserPosts">
         <Post
           postId={post.postId}
