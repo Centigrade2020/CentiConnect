@@ -15,8 +15,12 @@ def create_user(email, password, username):
         fb.firestore.collection("users").document(user.uid).set({
             "username": username,
         })
+        fb.firestore.collection("root").document("AdditionalData").update({
+            "usernames": fb.functions.ArrayUnion([username])
+        })
         return {"uid": f"{user.uid}", "loggedIn": True}
     except BaseException as e:
+        print(e)
         return({"error": f"{e.code}"})
 
 

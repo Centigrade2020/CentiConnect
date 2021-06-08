@@ -4,11 +4,20 @@ import { Formik, Form } from "formik";
 import { initialValues, validationSchema } from "./formikConfig";
 import { FormFieldClass } from "../../components";
 import "./AuthForm.css";
+import fb from "../../services/firebase";
 
 function Signup() {
   const history = useHistory();
 
   const [serverError, setServerError] = useState("");
+
+  fb.firestore
+    .collection("root")
+    .doc("AdditionalData")
+    .get()
+    .then((doc) => {
+      sessionStorage.setItem("usernames", doc.data().usernames);
+    });
 
   const signup = async ({ username, email, password }, { setSubmitting }) => {
     const content = {

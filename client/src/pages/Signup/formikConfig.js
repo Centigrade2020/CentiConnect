@@ -3,28 +3,19 @@ import * as yup from "yup";
 import fb from "../../services/firebase";
 
 const initialValues = {
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  username: "senpai",
+  email: "sssvsd123@gmail.com",
+  password: "dharun",
+  confirmPassword: "dharun",
 };
 
-var usernamesList = [];
-
 function getUsernames() {
-  fb.firestore
-    .collection("root")
-    .doc("AdditionalData")
-    .get()
-    .then((doc) => {
-      sessionStorage.setItem("usernames", doc.data().usernames);
-    });
-
   var str = sessionStorage.getItem("usernames");
   var usernames = str.split(",");
 
   return usernames;
 }
+
 const validationSchema = yup.object().shape({
   username: yup
     .string()
