@@ -1,3 +1,4 @@
+from firebase_admin.auth import get_users
 from services import firebase as fb
 
 
@@ -41,9 +42,10 @@ def remove_post(imageId):
     fb.firestore.collection('posts').document(imageId).delete()
 
 
-def get_user(uid):
-    pass
+def get_user(email):
+    user = fb.auth.get_user_by_email(email)
+    return user if user else None
 
 
 # if __name__ == "__main__":
-#     print("hello")
+#     get_user('dharundds@gmail.com')
