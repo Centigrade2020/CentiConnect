@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
 import * as yup from "yup";
-import fb from "../../services/firebase";
 
 const initialValues = {
-  username: "senpai",
-  email: "sssvsd123@gmail.com",
-  password: "dharun",
-  confirmPassword: "dharun",
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
 function getUsernames() {
   var str = sessionStorage.getItem("usernames");
   var usernames = str.split(",");
-
   return usernames;
 }
 
