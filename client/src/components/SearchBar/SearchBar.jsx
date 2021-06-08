@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import fb from "../../services/firebase";
 import "./SearchBar.css";
 
 function SearchBar() {
   const history = useHistory();
+
   var usernames = ["dharunvs", "dharundds", "hrithik69"];
 
   const [searchTerm, setSearchTerm] = useState("");

@@ -9,12 +9,21 @@ import SearchUser from "./pages/SearchUser";
 import NavBar from "./components/NavBar";
 import ProfileTab from "./components/ProfileTab";
 import Profile from "./pages/ProfilePage";
+import fb from "./services/firebase";
 
 function App() {
   const history = useHistory();
   const location = useLocation();
   const authUser = useAuth();
   const authResolved = useResolved(authUser);
+
+  fb.firestore
+    .collection("root")
+    .doc("AdditionalData")
+    .get()
+    .then((doc) => {
+      sessionStorage.setItem("usernames", doc.data().usernames);
+    });
 
   useEffect(() => {
     if (authResolved) {
