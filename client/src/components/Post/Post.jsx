@@ -32,7 +32,20 @@ const Post = ({
       <section className="imageSection">
         <div className="imageContainer">
           <Symbols.Loading size="100" />
-          <img src={link} id="postImage" alt="" />
+          <img
+            src={link}
+            id="postImage"
+            alt=""
+            onDragStart={(e) => {
+              e.preventDefault();
+            }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          />
         </div>
       </section>
       <section className="commentSection">
