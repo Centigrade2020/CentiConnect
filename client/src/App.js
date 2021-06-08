@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost";
+import SearchUser from "./pages/SearchUser";
 import NavBar from "./components/NavBar";
 import ProfileTab from "./components/ProfileTab";
 import Profile from "./pages/ProfilePage";
@@ -20,6 +21,8 @@ function App() {
       console.log(location.pathname);
       if (location.pathname === "/createpost") {
         history.push(!!authUser ? "/createpost" : "login");
+      } else if (location.pathname === "/profile") {
+        history.push(!!authUser ? "/profile" : "login");
       } else {
         history.push(!!authUser ? "/" : "login");
       }
@@ -35,8 +38,8 @@ function App() {
         <ProfileTab />
         <Route exact path="/" component={Home} />
         <Route path="/createpost" component={CreatePost} />
-        <Route path="/Profile" component={Profile} />
-        
+        <Route path="/profile" component={Profile} />
+        <Route path="/searchuser" component={SearchUser} />
       </>
     </Switch>
   );

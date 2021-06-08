@@ -1,37 +1,41 @@
 import { useHistory } from "react-router";
 import fb from "../../services/firebase";
 import "./ProfileTab.css";
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 import Symbols from "../Symbols";
 
 function ProfileTab() {
   const inputFileRef = useRef(null);
   const [state, setState] = useState({ image: null });
-  const onImageChange = event => {
+  const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       setState({
-        image: URL.createObjectURL(img)
+        image: URL.createObjectURL(img),
       });
     }
-  }
+  };
   const onBtnClick = () => {
-
     inputFileRef.current.click();
-  }
+  };
   const history = useHistory();
 
   return (
     <div className="ProfileTab" id="ProfileTab">
       <section className="ProfileTabHeader">
-        <div id="profilePicContainer" >
-          <div className="profileChange" onClick={onBtnClick}>
-
-            <span className="edit"><Symbols.Edit fill="#000" size="50px" /></span>
-            <input type="file" id="dp" ref={inputFileRef} onChange={onImageChange}></input>
+        <div id="profilePicContainer">
+          {/* <div className="profileChange" onClick={onBtnClick}>
+            <span className="edit">
+              <Symbols.Edit fill="#000" size="50px" />
+            </span>
+            <input
+              type="file"
+              id="dp"
+              ref={inputFileRef}
+              onChange={onImageChange}
+            />
           </div>
-          <img className="maindp" src={state.image} ></img>
-
+          <img className="maindp" src={state.image}></img> */}
         </div>
 
         <div className="username">username</div>
