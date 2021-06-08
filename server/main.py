@@ -45,8 +45,7 @@ def deletepost():
 @app.route("/")
 def index():
     return jsonify({
-        "Backend": "Flask",
-        "Frontend": "React"
+        "Hello": "World"
     })
 
 
