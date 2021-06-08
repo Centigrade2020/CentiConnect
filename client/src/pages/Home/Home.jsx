@@ -1,8 +1,11 @@
+import { useHistory } from "react-router";
 import { Symbols, Post } from "../../components";
 import "./Home.css";
 import test from "./test.jpg";
 
 function Home() {
+  const history = useHistory();
+
   const createPost = async () => {
     const content = {
       postId: "123",
@@ -67,7 +70,12 @@ function Home() {
           caption={post.caption}
         />
       </div>
-      <div className="createPostButton" onClick={createPost}>
+      <div
+        className="createPostButton"
+        onClick={() => {
+          history.push("createpost");
+        }}
+      >
         <Symbols.Plus size="38" />
       </div>
       {/* <button onClick={deletePost}>delete</button> */}
