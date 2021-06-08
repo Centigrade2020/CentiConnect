@@ -8,9 +8,12 @@ const initialValues = {
 };
 
 function getUsernames() {
-  var str = sessionStorage.getItem("usernames");
-  var usernames = str.split(",");
-  return usernames;
+  if (!!sessionStorage.getItem("usernames")) {
+    var str = sessionStorage.getItem("usernames");
+    var usernames = str.split(",");
+    return usernames;
+  }
+  return [];
 }
 
 const validationSchema = yup.object().shape({
