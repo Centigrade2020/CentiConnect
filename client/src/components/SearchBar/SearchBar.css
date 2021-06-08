@@ -1,0 +1,94 @@
+.Search {
+  width: 200px;
+  position: relative;
+  z-index: 20;
+}
+
+.searchInput {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: 10px;
+  color: white;
+  font-size: 1rem;
+  width: inherit;
+  border-bottom: 1px solid white;
+  text-align: center;
+}
+
+.searchInput::placeholder {
+  color: white;
+  text-align: center;
+}
+
+.searchInput:focus + .searchListContainer {
+  display: block;
+}
+
+.searchListContainer {
+  width: 300px;
+  height: 200px;
+  background-color: rgb(224, 224, 224);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  border-radius: 20px;
+  border: 3px solid white;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.178);
+  overflow: hidden;
+  display: none;
+}
+
+.searchList {
+  position: relative;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.searchList::-webkit-scrollbar {
+  width: 10px;
+}
+
+.searchList::-webkit-scrollbar-thumb {
+  background-color: var(--violet);
+}
+
+.searchList .searchResult {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  border-bottom: 2px solid rgb(216, 216, 216);
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.searchList .searchResult:hover {
+  background-color: var(--violet);
+  color: white;
+}
+
+.searchList .searchResult .imageContainer {
+  width: 35px;
+  height: 35px;
+  background-color: rgb(216, 216, 216);
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.searchResultNoUsers {
+  color: gray;
+  list-style: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% + 10px), -50%);
+  user-select: none;
+  font-size: large;
+}

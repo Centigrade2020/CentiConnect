@@ -29,7 +29,10 @@ function SearchBar() {
                   history.push("searchuser");
                 }}
               >
-                {name}
+                <div className="imageContainer">
+                  <img src="" alt="" />
+                </div>
+                <p>{name}</p>
               </button>
             ))}
         </ul>
@@ -38,7 +41,7 @@ function SearchBar() {
 
     return (
       <ul className="searchList" id="searchList">
-        <li className="searchResult">No users</li>
+        <li className="searchResultNoUsers">No users</li>
       </ul>
     );
   }
@@ -50,7 +53,7 @@ function SearchBar() {
         value={searchTerm}
         onChange={editSearchTerm}
         placeholder="Search"
-        className="search"
+        className="searchInput"
       />
       <div className="searchListContainer">{dynamicSearch()}</div>
     </div>
