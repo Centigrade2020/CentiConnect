@@ -14,6 +14,7 @@ def create_user(email, password, username):
         user = fb.auth.create_user(email=email, password=password)
         fb.firestore.collection("users").document(user.uid).set({
             "username": username,
+            "privacy": False
         })
         fb.firestore.collection("root").document("AdditionalData").update({
             "usernames": fb.functions.ArrayUnion([username])

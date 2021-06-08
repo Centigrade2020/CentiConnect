@@ -1,5 +1,6 @@
 :root {
-  --imageDim: 500px;
+  --postWidth: 800px;
+  --imageDim: calc(var(--postWidth) * 0.625);
   --profileHeight: calc(var(--imageDim) * 0.125);
   --commentSectWidth: calc(var(--imageDim) * 0.75);
   --commentSectHeight: var(--imageDim);
@@ -14,7 +15,7 @@
   height: calc(var(--imageDim) + var(--profileHeight));
   margin: calc(var(--padding10) * 2);
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
   overflow: hidden;
   position: relative;
   font-size: var(--fontSize);
