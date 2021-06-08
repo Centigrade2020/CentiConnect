@@ -4,6 +4,7 @@ import { useAuth, useResolved } from "./hooks";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import CreatePost from "./pages/CreatePost";
 import NavBar from "./components/NavBar";
 import ProfileTab from "./components/ProfileTab";
 
@@ -26,6 +27,7 @@ function App() {
         <NavBar />
         <ProfileTab />
         <Route exact path="/" component={Home} />
+        <Route path="/createpost" component={CreatePost} />
       </>
     </Switch>
   );
