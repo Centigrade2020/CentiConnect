@@ -10,7 +10,6 @@ function Profile() {
       hrithik: "waste ra dei!!",
     },
     username: "legend",
-    imageToken: "8ead60e9-ede8-4317-a171-b478fe57b580",
     upvotes: 24,
     downvotes: 3,
     caption:
@@ -25,7 +24,6 @@ function Profile() {
       hrithik: "waste ra dei!!",
     },
     username: "legend",
-    imageToken: "d848a3b9-461e-4a47-b8a2-aa6e6b2327af",
     upvotes: 24,
     downvotes: 3,
     caption:
@@ -89,7 +87,6 @@ function Profile() {
           upvotes={post.upvotes}
           downvotes={post.downvotes}
           caption={post.caption}
-          imageToken={post.imageToken}
         />
         <Post
           postId={post2.postId}
@@ -98,7 +95,6 @@ function Profile() {
           upvotes={post2.upvotes}
           downvotes={post2.downvotes}
           caption={post2.caption}
-          imageToken={post2.imageToken}
         />
       </div>
     </div>
