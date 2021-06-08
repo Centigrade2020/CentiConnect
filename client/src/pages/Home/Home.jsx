@@ -12,7 +12,7 @@ function Home() {
       upvotes: 0,
       downvotes: 0,
       caption:
-        "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit v Hello frands.. Diwali outfit",
+        "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit",
     };
 
     await fetch("/createpost", {
@@ -26,18 +26,18 @@ function Home() {
     });
   };
 
-  const deletePost = async () => {
-    const imageId = {
-      imageId: "9089",
-    };
-    await fetch("/deletepost", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(imageId),
-    });
-  };
+  // const deletePost = async () => {
+  //   const imageId = {
+  //     imageId: "9089",
+  //   };
+  //   await fetch("/deletepost", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(imageId),
+  //   });
+  // };
 
   const post = {
     postId: "asdf",
@@ -70,7 +70,7 @@ function Home() {
       <div className="createPostButton" onClick={createPost}>
         <Symbols.Plus size="38" />
       </div>
-      <button onClick={deletePost}>delete</button>
+      {/* <button onClick={deletePost}>delete</button> */}
     </div>
   );
 }
