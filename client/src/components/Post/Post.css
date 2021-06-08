@@ -150,7 +150,7 @@
   text-transform: uppercase;
   color: white;
   font-weight: 500;
-  background-color: var(--violet2);
+  background-color: var(--violet);
   letter-spacing: 1px;
   cursor: pointer;
   font-size: var(--fontSize2);
@@ -160,7 +160,7 @@
 }
 
 .addComment button:hover {
-  background-color: var(--violet3);
+  background-color: var(--violet2);
 }
 
 .description {
