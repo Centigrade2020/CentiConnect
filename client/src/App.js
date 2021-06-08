@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { useAuth, useResolved } from "./hooks";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -10,12 +10,15 @@ import ProfileTab from "./components/ProfileTab";
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
   const authUser = useAuth();
   const authResolved = useResolved(authUser);
 
   useEffect(() => {
     if (authResolved) {
-      history.push(!!authUser ? "/" : "login");
+      if (location.pathname !== "createpost") {
+        history.push(!!authUser ? "/" : "login");
+      }
     }
   }, [authResolved, authUser, history]);
 
