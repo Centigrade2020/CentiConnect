@@ -62,7 +62,7 @@ function Home() {
           comments={post.comments}
           username={post.username}
           image={post.image}
-          upvotes={post.username}
+          upvotes={post.upvotes}
           downvotes={post.downvotes}
           caption={post.caption}
         />
