@@ -1,10 +1,10 @@
 :root {
-  --imageDim: 400px;
+  --imageDim: 500px;
   --profileHeight: calc(var(--imageDim) * 0.125);
   --commentSectWidth: calc(var(--imageDim) * 0.75);
   --commentSectHeight: var(--imageDim);
   --padding10: calc(var(--imageDim) * 0.025);
-  --fontSize: calc(var(--imageDim) * 0.03);
+  --fontSize: calc(var(--imageDim) * 0.031);
   --fontSize2: calc(var(--imageDim) * 0.034);
   --profilePicDim: calc(var(--imageDim) * 0.0875);
 }
@@ -55,10 +55,10 @@
 .commentSection {
   position: absolute;
   height: var(--commentSectHeight);
+  width: (var(--commentSectWidth));
   top: var(--profileHeight);
   left: var(--imageDim);
   right: 0;
-  bottom: 0;
   border-left: 1px solid rgb(235, 235, 235);
 }
 
