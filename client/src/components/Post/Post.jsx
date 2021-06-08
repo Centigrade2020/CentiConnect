@@ -35,10 +35,6 @@ const Post = ({
               </div>
             );
           })}
-          <div className="comment">
-            <h4>senpai</h4>
-            <p>Looking gud broo!!</p>
-          </div>
         </div>
 
         <div className="description">
@@ -56,9 +52,6 @@ const Post = ({
             <p>
               <span className="profileName">{username}</span>
               {caption}
-              {/* Hello frands.. Diwali
-              outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit
-              Hello frands.. Diwali outfit v Hello frands.. Diwali outfit */}
             </p>
           </div>
         </div>
