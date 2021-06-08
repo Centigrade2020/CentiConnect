@@ -1,48 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./SearchBar.css";
 
-class SearchBar extends React.Component {
-  state = {
-    usernames: ["dharunvs", "dharundds", "hrithik69"],
-    searchTerm: " ",
-  };
+function SearchBar() {
+  const history = useHistory();
+  var usernames = ["dharunvs", "dharundds", "hrithik69"];
 
-  editSearchTerm = (e) => {
-    this.setState({
-      searchTerm: e.target.value.trim === "" ? " " : e.target.value,
-    });
-    var a = e.target.value.trim();
-    var b = a.trim();
-    console.log(b);
-  };
+  const [searchTerm, setSearchTerm] = useState("");
 
-  dynamicSearch = () => {
+  function editSearchTerm(e) {
+    var value = e.target.value;
+    setSearchTerm(value.split(/\s/).join(""));
+  }
+
+  function dynamicSearch() {
+    if (searchTerm !== "" && searchTerm.length >= 3) {
+      return (
+        <ul className="searchList" id="searchList">
+          {usernames
+            .filter((name) =>
+              name.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map((name) => (
+              <button
+                className="searchResult"
+                key={name}
+                onClick={() => {
+                  history.push("searchuser");
+                }}
+              >
+                {name}
+              </button>
+            ))}
+        </ul>
+      );
+    }
+
     return (
-      <ul>
-        {this.state.usernames
-          .filter((name) =>
-            name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
-          )
-          .map((name) => (
-            <li key={name}>{name}</li>
-          ))}
+      <ul className="searchList" id="searchList">
+        <li className="searchResult">No users</li>
       </ul>
     );
-  };
-
-  render() {
-    return (
-      <div className="Search">
-        <input
-          type="text"
-          value={this.state.searchTerm}
-          onChange={this.editSearchTerm}
-          placeholder="Search"
-        />
-        <div>{this.dynamicSearch()}</div>
-      </div>
-    );
   }
+
+  return (
+    <div className="Search">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={editSearchTerm}
+        placeholder="Search"
+        className="search"
+      />
+      <div className="searchListContainer">{dynamicSearch()}</div>
+    </div>
+  );
 }
 
 export default SearchBar;
