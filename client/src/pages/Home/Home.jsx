@@ -1,33 +1,32 @@
 import { useHistory } from "react-router";
 import { Symbols, Post } from "../../components";
 import "./Home.css";
-import test from "./test.jpg";
+// import test from "./test.jpg";
 
 function Home() {
   const history = useHistory();
 
-  const createPost = async () => {
-    const content = {
-      postId: "123",
-      comments: {},
-      username: "legend",
-      image: test,
-      upvotes: 0,
-      downvotes: 0,
-      caption:
-        "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit",
-    };
+  // const createPost = async () => {
+  //   const content = {
+  //     postId: "123",
+  //     comments: {},
+  //     username: "legend",
+  //     upvotes: 0,
+  //     downvotes: 0,
+  //     caption:
+  //       "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit",
+  //   };
 
-    await fetch("/createpost", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(content),
-    }).then((res) => {
-      return res.json();
-    });
-  };
+  //   await fetch("/createpost", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(content),
+  //   }).then((res) => {
+  //     return res.json();
+  //   });
+  // };
 
   // const deletePost = async () => {
   //   const imageId = {
@@ -43,14 +42,29 @@ function Home() {
   // };
 
   const post = {
-    postId: "asdf",
+    postId: "test",
     comments: {
       senpai: "Looking gud broo!!",
       dharundds: "Wow.. Awesome!!",
       hrithik: "waste ra dei!!",
     },
     username: "legend",
-    image: test,
+    imageToken: "8ead60e9-ede8-4317-a171-b478fe57b580",
+    upvotes: 24,
+    downvotes: 3,
+    caption:
+      "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit v Hello frands.. Diwali outfit",
+  };
+
+  const post2 = {
+    postId: "test2",
+    comments: {
+      senpai: "Looking gud broo!!",
+      dharundds: "Wow.. Awesome!!",
+      hrithik: "waste ra dei!!",
+    },
+    username: "legend",
+    imageToken: "d848a3b9-461e-4a47-b8a2-aa6e6b2327af",
     upvotes: 24,
     downvotes: 3,
     caption:
@@ -64,10 +78,17 @@ function Home() {
           postId={post.postId}
           comments={post.comments}
           username={post.username}
-          image={post.image}
           upvotes={post.upvotes}
           downvotes={post.downvotes}
           caption={post.caption}
+        />
+        <Post
+          postId={post2.postId}
+          comments={post2.comments}
+          username={post2.username}
+          upvotes={post2.upvotes}
+          downvotes={post2.downvotes}
+          caption={post2.caption}
         />
       </div>
       <div

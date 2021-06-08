@@ -5,10 +5,10 @@ const Post = ({
   postId,
   comments,
   username,
-  image,
   upvotes,
   downvotes,
   caption,
+  imageToken,
 }) => {
   return (
     <div className="Post" key={postId}>
@@ -21,7 +21,10 @@ const Post = ({
       </div>
       <section className="imageSection">
         <div className="imageContainer">
-          <img src={image} alt="" />
+          <img
+            src={`https://firebasestorage.googleapis.com/v0/b/centiconnect.appspot.com/o/postImages%2F${postId}.jpg?alt=media&token=${imageToken}`}
+            alt=""
+          />
         </div>
       </section>
       <section className="commentSection">
