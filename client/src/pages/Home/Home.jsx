@@ -5,16 +5,12 @@ import test from "./test.jpg";
 function Home() {
   const createPost = async () => {
     const content = {
-      postId: "asdf",
-      comments: {
-        senpai: "Looking gud broo!!",
-        dharundds: "Wow.. Awesome!!",
-        hrithik: "waste ra dei!!",
-      },
+      postId: "123",
+      comments: {},
       username: "legend",
       image: test,
-      upvotes: 24,
-      downvotes: 3,
+      upvotes: 0,
+      downvotes: 0,
       caption:
         "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit v Hello frands.. Diwali outfit",
     };

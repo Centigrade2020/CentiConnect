@@ -21,20 +21,17 @@ const Post = ({
       </div>
       <section className="imageSection">
         <div className="imageContainer">
-          <img src={image} alt="image" />
+          <img src={image} alt="" />
         </div>
       </section>
       <section className="commentSection">
         <div className="comments">
-          {Object.keys(comments).map((i) => {
-            console.log(i);
-            return (
-              <div className="comment" key={i}>
-                <h4>{i}</h4>
-                <p>{comments[`${i}`]}</p>
-              </div>
-            );
-          })}
+          {Object.keys(comments).map((i) => (
+            <div className="comment" key={i}>
+              <h4>{i}</h4>
+              <p>{comments[`${i}`]}</p>
+            </div>
+          ))}
         </div>
 
         <div className="description">
