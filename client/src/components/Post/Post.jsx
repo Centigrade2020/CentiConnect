@@ -1,3 +1,5 @@
+import { useState } from "react";
+import fb from "../../services/firebase";
 import { Symbols } from "../../components";
 import "./Post.css";
 
@@ -10,6 +12,14 @@ const Post = ({
   caption,
   imageToken,
 }) => {
+  const [link, setLink] = useState("");
+
+  fb.storage
+    .ref()
+    .child(`postImages/${postId}.jpg`)
+    .getDownloadURL()
+    .then((data) => setLink(data));
+
   return (
     <div className="Post" key={postId}>
       <div className="profile">
@@ -21,10 +31,8 @@ const Post = ({
       </div>
       <section className="imageSection">
         <div className="imageContainer">
-          <img
-            src={`https://firebasestorage.googleapis.com/v0/b/centiconnect.appspot.com/o/postImages%2F${postId}.jpg?alt=media&token=${imageToken}`}
-            alt=""
-          />
+          <Symbols.Loading size="100" />
+          <img src={link} id="postImage" alt="" />
         </div>
       </section>
       <section className="commentSection">
@@ -60,6 +68,10 @@ const Post = ({
           <button className="postComment">Post</button>
         </form>
       </section>
+      {/* <script>
+        document .getElementById("postImage") .addEventListener("contextmenu",
+        function (e) {e.preventDefault()})
+      </script> */}
     </div>
   );
 };

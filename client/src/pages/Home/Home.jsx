@@ -1,6 +1,7 @@
 import { useHistory } from "react-router";
 import { Symbols, Post } from "../../components";
 import "./Home.css";
+import fb from "../../services/firebase";
 // import test from "./test.jpg";
 
 function Home() {
@@ -81,6 +82,7 @@ function Home() {
           upvotes={post.upvotes}
           downvotes={post.downvotes}
           caption={post.caption}
+          imageToken={post.imageToken}
         />
         <Post
           postId={post2.postId}
@@ -89,6 +91,7 @@ function Home() {
           upvotes={post2.upvotes}
           downvotes={post2.downvotes}
           caption={post2.caption}
+          imageToken={post2.imageToken}
         />
       </div>
       <div
@@ -99,7 +102,6 @@ function Home() {
       >
         <Symbols.Plus size="38" />
       </div>
-      {/* <button onClick={deletePost}>delete</button> */}
     </div>
   );
 }
