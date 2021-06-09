@@ -3,7 +3,7 @@ import "./NavBar.css";
 import { useHistory } from "react-router";
 
 function NavBar() {
-  const history = useHistory()
+  const history = useHistory();
   return (
     <div className="NavBar">
       <div className="navBarContainer">
@@ -14,16 +14,23 @@ function NavBar() {
           <SearchBar />
         </div>
         <div className="profileContainer">
-          <p className="profileName" onClick={()=>{
-          history.push('profile')
-        }}>username</p>
-          <img
+          <p
+            className="profileName"
+            onClick={() => {
+              history.push("profile");
+            }}
+          >
+            username
+          </p>
+          <div
             className="profilePicContainer"
             onClick={() => {
               const profileTab = document.getElementById("ProfileTab");
               profileTab.classList.toggle("ProfileTabActive");
             }}
-          ></img>
+          >
+            <img src="" alt="" />
+          </div>
         </div>
       </div>
     </div>

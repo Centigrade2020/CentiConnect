@@ -1,98 +1,107 @@
-:root {
-  --radius: 20px;
-}
-.createPost {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.createPostContainer {
-  position: relative;
-  top: 100px;
-  background-color: white;
-  height: 400px;
+.CreatePost {
   width: 800px;
-  border-radius: var(--radius);
+  height: 400px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 5px;
 }
-.cpImageContainer {
-  background-color: rgb(219, 218, 218);
-  margin: -260px 25px 25px 25px;
-  height: 350px;
-  width: 350px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: gray;
-  border-radius: var(--radius);
-}
-#cP {
-  position: relative;
-  left: 500px;
-  top: 30px;
 
-  width: fit-content;
-}
-.cpCommentBox {
-  display: flex;
-
-  width: 45%;
-  height: fit-content;
-  margin-left: 420px;
-  margin-top: 50px;
-}
-#comment {
-  display: table-column;
-  height: 200px;
-  background-color: rgb(219, 218, 218);
-  border-style: none;
+.CreatePost > form {
   width: 100%;
-  resize: none;
-  font-size: large;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  padding: 25px;
+  align-items: center;
+  justify-content: space-between;
 }
-#submitPost {
-  border-style: none;
-  width: 45%;
-  height: 10%;
+
+form > * {
+  width: 360px;
+  height: 360px;
+}
+
+form > .imageContainer {
+  background-color: rgb(238, 238, 238);
+  border-radius: 5px;
   position: relative;
-  margin-left: 420px;
-  color: white;
-  letter-spacing: 1px;
+  overflow: hidden;
+}
+
+form h1 {
   font-weight: 500;
   text-transform: uppercase;
-
-  background-color: var(--violet2);
-  top: -20%;
-}
-#submitPost:hover {
-  background-color: var(--violet3);
-}
-#dp {
-  display: none;
-}
-.cpImage {
-  background-color: transparent;
-  margin: 25px 0px 25px 0px;
-  height: 350px;
-  width: 350px;
-  border-radius: var(--radius);
-  border-style: none;
-  z-index: 1;
+  font-size: 2rem;
   color: gray;
+  letter-spacing: 1px;
+  text-align: center;
 }
-#imageCover {
+
+form > .contentContainer {
   display: flex;
-  opacity: 0;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(253, 253, 253, 0.212);
-  height: 350px;
-  width: 350px;
-  position: relative;
-  top: -100%;
-  z-index: 2;
-  margin: -15px 25px 25px 25px;
-  border-radius: var(--radius);
+  flex-direction: column;
+  justify-content: space-between;
 }
-#imageCover:hover {
-  opacity: 1;
+
+.contentContainer > button {
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: var(--violet);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.contentContainer > button:hover {
+  background-color: var(--violet2);
+}
+
+.contentContainer > textarea {
+  width: 100%;
+  padding: 15px;
+  background-color: rgb(235, 235, 235);
+  border: 1px solid rgb(235, 235, 235);
+  color: rgb(110, 110, 110);
+  font-size: 0.8rem;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+  resize: none;
+}
+
+.imageCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.imageContainerInput {
+  border: 1px solid red;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.imageContainer > img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
 }

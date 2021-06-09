@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import fb from "../../services/firebase";
 import "./SearchBar.css";
 
 function SearchBar() {
@@ -14,8 +13,6 @@ function SearchBar() {
     }
     return [];
   }
-
-  // var usernames = ["dharunvs", "dharundds", "hrithik69"];
 
   const [searchTerm, setSearchTerm] = useState("");
 
