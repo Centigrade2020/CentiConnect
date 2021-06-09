@@ -2,10 +2,10 @@ from firebase_admin.auth import get_users
 from services import firebase as fb
 
 
-def upload_to_storage():
+def upload_to_storage(image):
     image = fb.bucket.blob('/')
-    image_path = 'IMG_0182.jpg'
-    image = fb.bucket.blob('image')
+    image_path = "image"
+    image = fb.bucket.blob('test')
     image.upload_from_filename(image_path)
 
 
@@ -36,6 +36,7 @@ def new_post(content, caption):
         "downvotes": 0
     })
 
+
 def remove_post(imageId):
     fb.firestore.collection('posts').document(imageId).delete()
 
@@ -43,4 +44,3 @@ def remove_post(imageId):
 def get_user(email):
     user = fb.auth.get_user_by_email(email)
     return user if user else None
-

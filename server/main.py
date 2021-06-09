@@ -5,15 +5,13 @@ from db import *
 app = Flask(__name__)
 
 
-
-
-
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
         content = request.get_json()
         data = create_user(
             content["email"], content["password"], content["username"])
+
         return jsonify(data)
     else:
         return {}
@@ -23,10 +21,14 @@ def signup():
 def create_post():
     if request.method == "POST":
         content = request.get_json()
-        data = new_post(content['username'], content['imageId'],
-                        content['content'], content['description'])
+        # content['image'].save("hello")
+        # upload_to_storage(content['image'])
+        print(content)
 
-        return jsonify(data)
+        # data = new_post(content['username'], content['imageId'],
+        #                 content['content'], content['description'])
+        # print(jsonify(data))
+        return {}
     else:
         return {}
 
@@ -41,8 +43,20 @@ def deletepost():
         return {}
 
 
+@ app.route('/images', methods=["POST", "GET"])
+def images():
+    if request.method == "POST":
+        content = request.get_data()
+        print(type(content))
+        content.save("vs")
+        # print(content)
+        print(type(content))
+        return {}
 
-@app.route("/")
+    return {}
+
+
+@ app.route("/")
 def index():
     return jsonify({
         "Hello": "World"

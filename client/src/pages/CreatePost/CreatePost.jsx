@@ -3,6 +3,7 @@ import ReactCrop from "react-image-crop";
 import { Symbols } from "../../components";
 import "react-image-crop/dist/ReactCrop.css";
 import "./CreatePost.css";
+import test from './test.jpg';
 
 function CreatePost() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -22,21 +23,32 @@ function CreatePost() {
     }
   };
 
-  const postUploadhandler = (e) => {
+  const postUploadhandler = async (e) => {
     e.preventDefault();
-
+    const image = test
     const content = {
       caption: description,
       username: "username",
+
     };
 
-    fetch("/createpost", {
+    // await fetch("/createpost", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(content),
+    // });
+
+    const formData = new FormData()
+    formData.append('file', result)
+    await fetch("/images", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(content),
+      body: formData,
+    }).then(res => {
+      console.log(res)
     });
+
   };
 
   function getCroppedImg() {
@@ -65,6 +77,10 @@ function CreatePost() {
     console.log(base64Image);
     setSelectedFile(null);
   }
+
+
+
+
 
   return (
     <div className="CreatePost">
