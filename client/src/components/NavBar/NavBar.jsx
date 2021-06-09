@@ -8,7 +8,14 @@ function NavBar() {
     <div className="NavBar">
       <div className="navBarContainer">
         <div className="logo">
-          <h1>Connect</h1>
+          <h1
+            onClick={() => {
+              history.push("");
+            }}
+          >
+            {" "}
+            Connect
+          </h1>
         </div>
         <div className="searchContainer">
           <SearchBar />
@@ -22,13 +29,7 @@ function NavBar() {
           >
             username
           </p>
-          <div
-            className="profilePicContainer"
-            onClick={() => {
-              const profileTab = document.getElementById("ProfileTab");
-              profileTab.classList.toggle("ProfileTabActive");
-            }}
-          >
+          <div>
             <img src="" alt="" />
           </div>
         </div>
