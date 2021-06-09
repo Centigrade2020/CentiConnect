@@ -1,7 +1,8 @@
 import { Symbols, Post } from "../../components";
 import "./Profile.css";
-
+import { useState } from "react";
 function Profile() {
+  const [show,setshow] = useState('true')
   const post = {
     postId: "test",
     comments: {
@@ -30,13 +31,18 @@ function Profile() {
       "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit v Hello frands.. Diwali outfit",
   };
 
+  const handleToggle= ()=>{
+    setshow(!show)
+  }
+
   return (
     <div className="Profile">
       <div className="ProfileBanner">
         <div className="profilePicContainer"></div>
 
         <div className="profileBannerContent">
-          <div className="username">username</div>
+          <p className={show ? "username":"username hide"}>username</p>
+          <input type="text"  className={show ?'editUsername username':"editUsername show username"} placeholder="username"/>
 
           <div className="userInfo">
             <p className="posts">
@@ -51,28 +57,28 @@ function Profile() {
 
           <div className="bio">
             <p className="userInfoText">About</p>
-            <p className="bioText">Centiconnect will launched soon</p>
+            <p className={show?"bioText":"bioText hide"}>Centiconnect will launched soon</p>
           </div>
+            <input type="text"  className={show ?'editBioText bioText':"editBioText show bioText"} placeholder="Centiconnect will launched soon" />
         </div>
 
         <div className="profileBannerLinks">
           <div
             className="profileBannerLinkButton"
-            onClick={() => {
-              document
-                .getElementsByClassName("editPage")
-                .classList.toggle("show");
+            onClick={()=>{
+               
+              handleToggle()
             }}
           >
             <Symbols.Edit size="30" />
           </div>
           <div
             className="profileBannerLinkButton"
-            onClick={() => {
-              document
-                .getElementsByClassName("editPage")
-                .classList.toggle("show");
-            }}
+            // onClick={() => {
+            //   document
+            //     .getElementsByClassName("editPage")
+            //     .classList.toggle("show");
+            // }}
           >
             <Symbols.Settings size="30" />
           </div>

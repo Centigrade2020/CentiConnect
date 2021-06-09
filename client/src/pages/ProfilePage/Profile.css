@@ -96,6 +96,7 @@ h2 {
 .profileBannerContent .username {
   font-size: 2rem;
   margin-bottom: 20px;
+  border: none;
 }
 
 .profileBannerContent .bio {
@@ -106,6 +107,7 @@ h2 {
 
 .profileBannerContent .bio .bioText {
   margin: 10px 0;
+  border: none;
 }
 
 .profileBannerContent .userInfo {
@@ -165,4 +167,25 @@ h2 {
   justify-content: space-evenly;
   align-items: center;
   margin-left: 8%;
+}
+.editUsername,
+.editBioText,
+.username.hide,
+.bioText.hide {
+  display: none;
+}
+
+.editUsername.show,
+.editBioText.show {
+  display: flex;
+  outline: none;
+  border: none;
+  font-size: 2rem;
+  border-bottom: 5px solid skyblue;
+  caret-color: blue;
+  width: 80%;
+}
+
+.editBioText::placeholder {
+  font-size: 1rem;
 }
