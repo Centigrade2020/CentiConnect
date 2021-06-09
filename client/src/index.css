@@ -7,6 +7,10 @@
     sans-serif;
 }
 
+* img {
+  user-select: none;
+}
+
 :root {
   --violet: rgb(133, 105, 243);
   --violet2: rgb(107, 84, 201);

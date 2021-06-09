@@ -4,71 +4,6 @@
   overflow-y: scroll;
 }
 
-/*
-.profilePic {
-  margin-left: 300px;
-  margin-top: 40px;
-}
-
-.username {
-  margin-left: 350px;
-  margin-top: -34px;
-  font-size: 1.2em;
-  color: white;
-}
-
-.bio {
-  width: 20%;
-  margin: 30px 0 0 330px;
-  font-size: 24px;
-  color: white;
-}
-
-.line {
-  background-color: white;
-  width: 100%;
-}
-
-h2 {
-  margin-left: 48%;
-  color: white;
-}
-.currentUserPosts {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.edit {
-  width: fit-content;
-  float: right;
-}
-
-.edit > .Edit {
-  margin-right: 40px;
-  cursor: pointer;
-}
-.edit > span {
-  color: yellow;
-  font-size: 20px;
-  visibility: hidden;
-}
-
-.edit:hover span {
-  visibility: visible;
-  animation: anim linear 0.1ms;
-}
-
-@keyframes anim {
-  from {
-    margin-right: 40px;
-  }
-  to {
-    margin-right: 50px;
-  }
-} */
-
 .ProfileBanner {
   width: 1000px;
   height: 50vh;
@@ -87,27 +22,69 @@ h2 {
   overflow: hidden;
   background-color: rgb(221, 221, 221);
   margin-right: 10%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ProfileBanner .profileBannerContent {
-  height: 70%;
-}
-
-.profileBannerContent .username {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  border: none;
+  height: 85%;
 }
 
 .profileBannerContent .bio {
-  font-size: 1.4rem;
   margin-top: 50px;
-  color: gray;
 }
 
 .profileBannerContent .bio .bioText {
-  margin: 10px 0;
-  border: none;
+  width: 350px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 3px solid white;
+  color: black;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1.2rem;
+}
+
+.profileBannerContent .username {
+  width: 350px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 3px solid white;
+  color: black;
+  font-size: 0.8rem;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1.8rem;
+}
+
+.profileBannerContent .usernameEdit {
+  width: 350px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: rgb(235, 235, 235);
+  border: 3px solid white;
+  border-bottom: 3px solid var(--violet);
+  color: rgb(110, 110, 110);
+  font-size: 0.8rem;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1.8rem;
+}
+
+.profileBannerContent .bio .bioTextEdit {
+  width: 350px;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgb(235, 235, 235);
+  border: 3px solid white;
+  border-bottom: 3px solid var(--violet);
+  color: rgb(110, 110, 110);
+  border-radius: 10px;
+  outline: none;
+  resize: none;
+  font-size: 1.2rem;
 }
 
 .profileBannerContent .userInfo {
@@ -168,24 +145,80 @@ h2 {
   align-items: center;
   margin-left: 8%;
 }
-.editUsername,
-.editBioText,
-.username.hide,
-.bioText.hide {
-  display: none;
-}
 
-.editUsername.show,
-.editBioText.show {
+.profilePicContainer {
   display: flex;
-  outline: none;
-  border: none;
-  font-size: 2rem;
-  border-bottom: 5px solid skyblue;
-  caret-color: blue;
-  width: 80%;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 4px solid var(--violet);
 }
 
-.editBioText::placeholder {
-  font-size: 1rem;
+.profilePicContainer .text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: gray;
+  font-size: 1.2rem;
+}
+
+.profilePicContainer .text .Image {
+  fill: gray;
+}
+
+.profilePicContainer > img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
+.profilePicContainer .input {
+  height: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: rgba(228, 228, 228, 1);
+  z-index: 8;
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0.5;
+  transition: opacity 200ms ease-in-out;
+}
+
+.profilePicContainer:hover .input {
+  opacity: 1;
+}
+
+.profilePicContainer .input input {
+  background-color: black;
+  width: 100%;
+  height: inherit;
+  z-index: 10;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.profilePicContainer .input .text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.profilePicContainer .input .text .Image {
+  fill: black;
 }

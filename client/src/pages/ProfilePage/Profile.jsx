@@ -1,8 +1,13 @@
 import { Symbols, Post } from "../../components";
 import "./Profile.css";
 import { useState } from "react";
+// import { useHistory } from "react-router";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+
 function Profile() {
-  const [show,setshow] = useState('true')
+  // const history = useHistory();
+  const [editMode, setEditMode] = useState(false);
   const post = {
     postId: "test",
     comments: {
@@ -31,18 +36,155 @@ function Profile() {
       "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit v Hello frands.. Diwali outfit",
   };
 
-  const handleToggle= ()=>{
-    setshow(!show)
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [image, setImage] = useState(null);
+  const [editAbout, setEditAbout] = useState("");
+  const [editUsername, setEditUsername] = useState("");
+  const [finalFile, setFinalfile] = useState(null);
+  const [result, setResult] = useState(null);
+  const [crop, setCrop] = useState({
+    aspect: 1 / 1,
+  });
+
+  const fileSelectHandler = (e) => {
+    try {
+      setSelectedFile(URL.createObjectURL(e.target.files[0]));
+    } catch {
+      console.log("");
+    }
+  };
+
+  const postUploadhandler = async (e) => {
+    e.preventDefault();
+
+    const content = {
+      about: editAbout,
+      usernmae: editUsername,
+    };
+
+    if (!!finalFile) {
+      console.log(content);
+    }
+  };
+
+  function getCroppedImg() {
+    const canvas = document.createElement("canvas");
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+
+    const base64Image = canvas.toDataURL("image/jpeg");
+
+    setResult(base64Image);
+    setFinalfile(dataURItoBlob(base64Image));
+    setSelectedFile(null);
+  }
+
+  function dataURItoBlob(dataURI) {
+    var byteString = atob(dataURI.split(",")[1]);
+    var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ab], { type: mimeString });
   }
 
   return (
     <div className="Profile">
       <div className="ProfileBanner">
-        <div className="profilePicContainer"></div>
+        <div className="profilePicContainer">
+          {editMode ? (
+            <>
+              <div className="input">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={fileSelectHandler}
+                />
+                <div className="text">
+                  <Symbols.Image size="100" /> Select image
+                </div>
+              </div>
+              <div className="text">
+                <Symbols.Image size="100" /> Select image
+              </div>
+              {result ? (
+                <img
+                  src={result}
+                  alt=" "
+                  onDragStart={(e) => {
+                    e.preventDefault();
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                />
+              ) : (
+                <img
+                  src=""
+                  alt=" "
+                  onDragStart={(e) => {
+                    e.preventDefault();
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                />
+              )}
+            </>
+          ) : (
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/centiconnect.appspot.com/o/postImages%2F63cd11a998da4ef38ca4967fdf64c88a.jpeg?alt=media&token=2ae5afcd-2e23-4a98-a98d-487980654099"
+              alt=" "
+              onDragStart={(e) => {
+                e.preventDefault();
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault();
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            />
+          )}
+        </div>
 
         <div className="profileBannerContent">
-          <p className={show ? "username":"username hide"}>username</p>
-          <input type="text"  className={show ?'editUsername username':"editUsername show username"} placeholder="username"/>
+          {editMode ? (
+            <input
+              type="text"
+              className="usernameEdit"
+              defaultValue="username"
+              placeholder="Username"
+              onChange={(e) => setEditUsername(e.target.value)}
+            />
+          ) : (
+            <p className="username">username</p>
+          )}
 
           <div className="userInfo">
             <p className="posts">
@@ -57,32 +199,64 @@ function Profile() {
 
           <div className="bio">
             <p className="userInfoText">About</p>
-            <p className={show?"bioText":"bioText hide"}>Centiconnect will launched soon</p>
+            {editMode ? (
+              <textarea
+                type="text"
+                className="bioTextEdit"
+                defaultValue="Centiconnect will launched soon"
+                placeholder="About"
+                cols="30"
+                rows="3"
+                onChange={(e) => setEditAbout(e.target.value)}
+              ></textarea>
+            ) : (
+              <p className="bioText">Centiconnect will launched soon</p>
+            )}
           </div>
-            <input type="text"  className={show ?'editBioText bioText':"editBioText show bioText"} placeholder="Centiconnect will launched soon" />
         </div>
 
         <div className="profileBannerLinks">
-          <div
-            className="profileBannerLinkButton"
-            onClick={()=>{
-               
-              handleToggle()
-            }}
-          >
-            <Symbols.Edit size="30" />
-          </div>
-          <div
-            className="profileBannerLinkButton"
-            // onClick={() => {
-            //   document
-            //     .getElementsByClassName("editPage")
-            //     .classList.toggle("show");
-            // }}
-          >
+          {editMode ? (
+            <div
+              className="profileBannerLinkButton"
+              onClick={() => {
+                postUploadhandler();
+                setEditMode(false);
+              }}
+            >
+              <Symbols.Settings size="30" />
+            </div>
+          ) : (
+            <div
+              className="profileBannerLinkButton"
+              onClick={() => {
+                setEditMode(true);
+              }}
+            >
+              <Symbols.Edit size="30" />
+            </div>
+          )}
+
+          <div className="profileBannerLinkButton">
             <Symbols.Settings size="30" />
           </div>
         </div>
+        {selectedFile && (
+          <div className="cropContainer">
+            <div className="cropWrapper">
+              <div className="crop">
+                <ReactCrop
+                  src={selectedFile}
+                  onImageLoaded={setImage}
+                  crop={crop}
+                  onChange={setCrop}
+                />
+              </div>
+            </div>
+
+            <button onClick={getCroppedImg}>Save</button>
+          </div>
+        )}
       </div>
 
       <div className="currentUserPosts">

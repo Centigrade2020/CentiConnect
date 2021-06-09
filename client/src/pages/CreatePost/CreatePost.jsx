@@ -12,11 +12,10 @@ function CreatePost() {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
   const [finalFile, setFinalfile] = useState(null);
-
+  const [result, setResult] = useState(null);
   const [crop, setCrop] = useState({
     aspect: 1 / 1,
   });
-  const [result, setResult] = useState(null);
 
   const fileSelectHandler = (e) => {
     try {
@@ -109,7 +108,21 @@ function CreatePost() {
           <div className="text">
             <Symbols.Image size="100" /> Select image
           </div>
-          {result && <img src={result} alt="croppedImage" />}
+          {result && (
+            <img
+              src={result}
+              alt="croppedImage"
+              onDragStart={(e) => {
+                e.preventDefault();
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault();
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            />
+          )}
         </div>
         <div className="contentContainer">
           <h1>Create Post</h1>

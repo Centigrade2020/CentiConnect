@@ -2,7 +2,6 @@ import { useState } from "react";
 import fb from "../../services/firebase";
 import { Symbols } from "../../components";
 import "./Post.css";
-import test from "./test.jpg";
 
 const Post = ({ postId, comments, username, upvotes, downvotes, caption }) => {
   const [link, setLink] = useState("");
@@ -28,7 +27,7 @@ const Post = ({ postId, comments, username, upvotes, downvotes, caption }) => {
           <img
             src={link}
             id="postImage"
-            alt=""
+            alt=" "
             onDragStart={(e) => {
               e.preventDefault();
             }}

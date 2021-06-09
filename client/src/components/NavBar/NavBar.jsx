@@ -28,7 +28,19 @@ function NavBar() {
         >
           <p className="profileName">username</p>
           <div className="profilePicContainer">
-            <img src="" alt="" />
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/centiconnect.appspot.com/o/postImages%2F63cd11a998da4ef38ca4967fdf64c88a.jpeg?alt=media&token=2ae5afcd-2e23-4a98-a98d-487980654099"
+              alt=""
+              onDragStart={(e) => {
+                e.preventDefault();
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault();
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            />
           </div>
         </div>
       </div>

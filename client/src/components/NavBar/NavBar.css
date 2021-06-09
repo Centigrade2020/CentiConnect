@@ -15,22 +15,26 @@
   color: white;
 }
 
-.profileContainer {
+.navBarContainer > .profileContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
 }
 
-.profilePicContainer {
-  width: 40px;
-  height: 40px;
-  background-color: rgb(231, 231, 231);
+.navBarContainer > .profileContainer > .profilePicContainer {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  border: none;
+  overflow: hidden;
+  position: relative;
+  background-color: rgb(231, 231, 231);
   cursor: pointer;
   transition: all 200ms ease-in-out;
 }
-.profilePicContainer:hover {
+
+.navBarContainer > .profileContainer > .profilePicContainer:hover {
   box-shadow: 0 0 0 4px var(--violet3);
 }
 
