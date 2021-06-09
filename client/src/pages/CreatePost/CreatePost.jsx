@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ReactCrop from "react-image-crop";
+import { Symbols } from "../../components";
 import "react-image-crop/dist/ReactCrop.css";
 import "./CreatePost.css";
 
@@ -14,8 +15,11 @@ function CreatePost() {
   const [result, setResult] = useState(null);
 
   const fileSelectHandler = (e) => {
-    setSelectedFile(URL.createObjectURL(e.target.files[0]));
-    console.log(URL.createObjectURL(e.target.files[0]));
+    try {
+      setSelectedFile(URL.createObjectURL(e.target.files[0]));
+    } catch {
+      console.log("");
+    }
   };
 
   const postUploadhandler = (e) => {
@@ -66,7 +70,15 @@ function CreatePost() {
     <div className="CreatePost">
       <form action="#" method="POST">
         <div className="imageContainer">
-          <input type="file" accept="image/*" onChange={fileSelectHandler} />
+          <div className="input">
+            <input type="file" accept="image/*" onChange={fileSelectHandler} />
+            <div className="text">
+              <Symbols.Image size="100" /> Select image
+            </div>
+          </div>
+          <div className="text">
+            <Symbols.Image size="100" /> Select image
+          </div>
           {result && <img src={result} alt="croppedImage" />}
         </div>
         <div className="contentContainer">
@@ -84,19 +96,21 @@ function CreatePost() {
         </div>
       </form>
       {selectedFile && (
-        <div className="setCropContainer">
-          <ReactCrop
-            src={selectedFile}
-            onImageLoaded={setImage}
-            crop={crop}
-            onChange={setCrop}
-          />
+        <div className="cropContainer">
+          <div className="cropWrapper">
+            <div className="crop">
+              <ReactCrop
+                src={selectedFile}
+                onImageLoaded={setImage}
+                crop={crop}
+                onChange={setCrop}
+              />
+            </div>
+          </div>
+
           <button onClick={getCroppedImg}>Save</button>
         </div>
       )}
-      <a href={result} download>
-        Download
-      </a>
     </div>
   );
 }

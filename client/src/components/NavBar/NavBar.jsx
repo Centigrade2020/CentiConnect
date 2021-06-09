@@ -29,7 +29,7 @@ function NavBar() {
           >
             username
           </p>
-          <div>
+          <div className="profilePicContainer">
             <img src="" alt="" />
           </div>
         </div>
