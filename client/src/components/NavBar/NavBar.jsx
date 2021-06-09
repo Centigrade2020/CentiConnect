@@ -20,7 +20,12 @@ function NavBar() {
         <div className="searchContainer">
           <SearchBar />
         </div>
-        <div className="profileContainer">
+        <div
+          className="profileContainer"
+          onClick={() => {
+            history.push("profile");
+          }}
+        >
           <p className="profileName">username</p>
           <div className="profilePicContainer">
             <img src="" alt="" />
