@@ -1,7 +1,9 @@
 import SearchBar from "../SearchBar/SearchBar";
 import "./NavBar.css";
+import { useHistory } from "react-router";
 
 function NavBar() {
+  const history = useHistory()
   return (
     <div className="NavBar">
       <div className="navBarContainer">
@@ -12,7 +14,9 @@ function NavBar() {
           <SearchBar />
         </div>
         <div className="profileContainer">
-          <p className="profileName">username</p>
+          <p className="profileName" onClick={()=>{
+          history.push('profile')
+        }}>username</p>
           <img
             className="profilePicContainer"
             onClick={() => {

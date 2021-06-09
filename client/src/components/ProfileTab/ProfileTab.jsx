@@ -23,7 +23,9 @@ function ProfileTab() {
   return (
     <div className="ProfileTab" id="ProfileTab">
       <section className="ProfileTabHeader">
-        <div id="profilePicContainer">
+        <div id="profilePicContainer" onClick={()=>{
+          history.push('profile')
+        }}>
           {/* <div className="profileChange" onClick={onBtnClick}>
             <span className="edit">
               <Symbols.Edit fill="#000" size="50px" />
