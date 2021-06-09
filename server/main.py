@@ -3,6 +3,7 @@ from services import firebase as fb
 from db import *
 
 app = Flask(__name__)
+app.config["IMAGE_UPLOADS"] = "/uploads"
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -21,13 +22,6 @@ def signup():
 def create_post():
     if request.method == "POST":
         content = request.get_json()
-        # content['image'].save("hello")
-        # upload_to_storage(content['image'])
-        print(content)
-
-        # data = new_post(content['username'], content['imageId'],
-        #                 content['content'], content['description'])
-        # print(jsonify(data))
         return {}
     else:
         return {}
@@ -47,13 +41,20 @@ def deletepost():
 def images():
     if request.method == "POST":
         content = request.get_data()
-        print(type(content))
-        content.save("vs")
-        # print(content)
-        print(type(content))
+
+        fn = "file"
+
+        with open(f"uploads/{fn}.jpeg", "w") as f:
+            f.write("")
+
+        with open(f"uploads/{fn}.jpeg", "wb") as f:
+            f.write(content)
+        
+        return {}
+    else:
         return {}
 
-    return {}
+
 
 
 @ app.route("/")
@@ -65,4 +66,3 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True, port=4001)
-   # upload_to_storage()

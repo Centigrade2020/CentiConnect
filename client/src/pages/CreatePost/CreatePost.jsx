@@ -3,12 +3,12 @@ import ReactCrop from "react-image-crop";
 import { Symbols } from "../../components";
 import "react-image-crop/dist/ReactCrop.css";
 import "./CreatePost.css";
-import test from './test.jpg';
 
 function CreatePost() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
+  const [finalFile, setFinalfile] = useState(null);
 
   const [crop, setCrop] = useState({
     aspect: 1 / 1,
@@ -25,30 +25,18 @@ function CreatePost() {
 
   const postUploadhandler = async (e) => {
     e.preventDefault();
-    const image = test
     const content = {
       caption: description,
       username: "username",
-
     };
 
-    // await fetch("/createpost", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(content),
-    // });
+    var fd = new FormData();
+    fd.append("test", finalFile);
 
-    const formData = new FormData()
-    formData.append('file', result)
-    await fetch("/images", {
+    fetch("/images", {
       method: "POST",
-      body: formData,
-    }).then(res => {
-      console.log(res)
+      body: finalFile,
     });
-
   };
 
   function getCroppedImg() {
@@ -74,13 +62,22 @@ function CreatePost() {
     const base64Image = canvas.toDataURL("image/jpeg");
 
     setResult(base64Image);
-    console.log(base64Image);
+    setFinalfile(dataURItoBlob(base64Image));
     setSelectedFile(null);
   }
 
+  function dataURItoBlob(dataURI) {
+    var byteString = atob(dataURI.split(",")[1]);
+    var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
 
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
 
-
+    return new Blob([ab], { type: mimeString });
+  }
 
   return (
     <div className="CreatePost">
