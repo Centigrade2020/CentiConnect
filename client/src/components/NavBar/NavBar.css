@@ -37,3 +37,16 @@
   margin-right: 10px;
   cursor: pointer;
 }
+
+.profileTabToggler {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0;
+  cursor: pointer;
+  transition-delay: 1s;
+}
+
+.profileTabToggler:focus ~ .ProfileTab {
+  visibility: visible;
+}

@@ -4,16 +4,16 @@ import { useHistory } from "react-router";
 
 function NavBar() {
   const history = useHistory();
+
   return (
     <div className="NavBar">
       <div className="navBarContainer">
         <div className="logo">
           <h1
             onClick={() => {
-              history.push("");
+              history.push("/");
             }}
           >
-            {" "}
             Connect
           </h1>
         </div>
@@ -21,14 +21,7 @@ function NavBar() {
           <SearchBar />
         </div>
         <div className="profileContainer">
-          <p
-            className="profileName"
-            onClick={() => {
-              history.push("profile");
-            }}
-          >
-            username
-          </p>
+          <p className="profileName">username</p>
           <div className="profilePicContainer">
             <img src="" alt="" />
           </div>

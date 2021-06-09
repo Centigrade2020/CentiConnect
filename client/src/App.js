@@ -7,7 +7,6 @@ import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost";
 import SearchUser from "./pages/SearchUser";
 import NavBar from "./components/NavBar";
-import ProfileTab from "./components/ProfileTab";
 import Profile from "./pages/ProfilePage";
 import fb from "./services/firebase";
 
@@ -43,7 +42,6 @@ function App() {
       <Route path="/signup" component={Signup} />
       <>
         <NavBar />
-        <ProfileTab />
         <Route exact path="/" component={Home} />
         <Route path="/createpost" component={CreatePost} />
         <Route path="/profile" component={Profile} />
