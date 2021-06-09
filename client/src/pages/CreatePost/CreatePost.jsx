@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
 import ReactCrop from "react-image-crop";
 import { Symbols } from "../../components";
 import "react-image-crop/dist/ReactCrop.css";
 import "./CreatePost.css";
 
 function CreatePost() {
+  const history = useHistory();
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
@@ -25,18 +28,32 @@ function CreatePost() {
 
   const postUploadhandler = async (e) => {
     e.preventDefault();
-    const content = {
-      caption: description,
-      username: "username",
-    };
 
-    var fd = new FormData();
-    fd.append("test", finalFile);
-
-    fetch("/images", {
-      method: "POST",
-      body: finalFile,
-    });
+    if (!!finalFile) {
+      fetch("/images", {
+        method: "POST",
+        body: finalFile,
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          fetch("/createpost", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              caption: description,
+              username: "username",
+              postId: res.uuid,
+            }),
+          });
+        })
+        .finally(() => {
+          history.push("/");
+        });
+    }
   };
 
   function getCroppedImg() {
@@ -98,12 +115,16 @@ function CreatePost() {
           <h1>Create Post</h1>
           <textarea
             rows="9"
-            placeholder="Enter description"
+            placeholder="Enter description (optional)"
             onChange={(e) => {
               setDescription(e.target.value);
             }}
           ></textarea>
-          <button type="submit" onClick={postUploadhandler}>
+          <button
+            disabled={!finalFile ? true : false}
+            type="submit"
+            onClick={postUploadhandler}
+          >
             Post
           </button>
         </div>

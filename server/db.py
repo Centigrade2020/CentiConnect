@@ -2,11 +2,9 @@ from firebase_admin.auth import get_users
 from services import firebase as fb
 
 
-def upload_to_storage(image):
-    image = fb.bucket.blob('/')
-    image_path = "image"
-    image = fb.bucket.blob('test')
-    image.upload_from_filename(image_path)
+def upload_to_storage(fn, filepath):
+    im = fb.bucket.blob(f'postImages/{fn}.jpeg')
+    im.upload_from_filename(filepath)
 
 
 def create_user(email, password, username):
@@ -21,13 +19,12 @@ def create_user(email, password, username):
         })
         return {"uid": f"{user.uid}", "loggedIn": True}
     except BaseException as e:
-        print(e)
         return({"error": f"{e.code}"})
 
 
-def new_post(content, caption):
-    fb.firestore.collection('posts').document().set({
-        "postId": "",
+def new_post(username, caption, postId):
+    fb.firestore.collection('posts').document(postId).set({
+        "postId": postId,
         "username": username,
         "imageId": "",
         "caption": caption,

@@ -61,6 +61,13 @@ form > .contentContainer {
   background-color: var(--violet2);
 }
 
+.contentContainer > button:disabled {
+  background-color: rgb(235, 235, 235);
+  border: 1px solid rgb(235, 235, 235);
+  color: rgb(197, 197, 197);
+  cursor: not-allowed;
+}
+
 .contentContainer > textarea {
   width: 100%;
   padding: 15px;

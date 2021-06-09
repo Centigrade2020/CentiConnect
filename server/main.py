@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, request, json
 from services import firebase as fb
+import os
 from db import *
+import uuid
 
 app = Flask(__name__)
-app.config["IMAGE_UPLOADS"] = "/uploads"
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -22,6 +23,7 @@ def signup():
 def create_post():
     if request.method == "POST":
         content = request.get_json()
+        new_post(content["username"], content["caption"], content["postId"])
         return {}
     else:
         return {}
@@ -37,22 +39,28 @@ def deletepost():
         return {}
 
 
-@ app.route('/images', methods=["POST", "GET"])
+@ app.route('/images', methods=["POST", "GET", "PUT"])
 def images():
     if request.method == "POST":
         content = request.get_data()
 
-        fn = "file"
+        id = str(uuid.uuid4()).split("-")
+        id = "".join(id)
 
-        with open(f"uploads/{fn}.jpeg", "w") as f:
-            f.write("")
-
-        with open(f"uploads/{fn}.jpeg", "wb") as f:
+        with open(f"uploads/{id}.jpeg", "wb") as f:
             f.write(content)
+
+        upload_to_storage(id, f"uploads/{id}.jpeg")
         
-        return {}
+        if os.path.exists(f"uploads/{id}.jpeg"):
+            os.remove(f"uploads/{id}.jpeg")
+        
+        return jsonify({
+            "uuid" : id
+        })
+
     else:
-        return {}
+        return{}
 
 
 
