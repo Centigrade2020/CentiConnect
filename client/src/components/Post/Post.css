@@ -82,8 +82,8 @@
 }
 
 .imageSection .imageContainer img {
-  width: inherit;
-  height: auto;
+  width: auto;
+  height: inherit;
   z-index: 10;
   user-select: none;
 }

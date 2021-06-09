@@ -97,7 +97,7 @@ form > .contentContainer {
   bottom: 0;
 }
 
-.imageContainer > img {
+form .imageContainer > img {
   position: absolute;
   left: 0;
   top: 0;

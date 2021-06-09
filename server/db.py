@@ -25,23 +25,16 @@ def create_user(email, password, username):
         return({"error": f"{e.code}"})
 
 
-def new_post(uid, imageId, content, description):
-    fb.firestore.collection('posts').document(imageId).set({
-        "username": uid,
-        "imageId": imageId,
-        "content": content,
-        "description": description,
+def new_post(content, caption):
+    fb.firestore.collection('posts').document().set({
+        "postId": "",
+        "username": username,
+        "imageId": "",
+        "caption": caption,
+        "comments": {},
+        "upvotes": 0,
+        "downvotes": 0
     })
-
-    '''
-    {
-        "uid":"xxxx",
-        "pic_id":"yyyy",
-        "description":"",
-        "interactions":"",
-    }
-    '''
-
 
 def remove_post(imageId):
     fb.firestore.collection('posts').document(imageId).delete()
@@ -51,6 +44,3 @@ def get_user(email):
     user = fb.auth.get_user_by_email(email)
     return user if user else None
 
-
-# if __name__ == "__main__":
-#     get_user('dharundds@gmail.com')
