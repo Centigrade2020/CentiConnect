@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 
 import { useHistory, useLocation } from "react-router";
 
-import { useHistory } from "react-router";
-
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import fb from "../../services/firebase";
 function Profile() {
+  const history = useHistory();
+
   const [editMode, setEditMode] = useState(false);
   const [profilePic, setProfilePic] = useState("");
   const [username, setUsername] = useState("");

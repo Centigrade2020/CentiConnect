@@ -26,8 +26,8 @@
   margin: 30px 0;
 }
 
-.authButton,
-.formField {
+.AuthForm .authButton,
+.AuthForm .formField {
   width: 100%;
   padding: 15px;
   background-color: rgb(235, 235, 235);
@@ -39,7 +39,7 @@
   font-size: 1rem;
 }
 
-.authButton {
+.AuthForm .authButton {
   background-color: var(--violet);
   color: white;
   font-weight: bold;
@@ -49,23 +49,23 @@
   margin-top: 10px;
 }
 
-.authButton:hover {
+.AuthForm .authButton:hover {
   background-color: var(--violet2);
 }
 
-.authButton:disabled {
+.AuthForm .authButton:disabled {
   background-color: rgb(235, 235, 235);
   border: 1px solid rgb(235, 235, 235);
   color: rgb(197, 197, 197);
   cursor: not-allowed;
 }
 
-.errorContainer {
+.AuthForm .errorContainer {
   min-height: 30px;
   text-align: left;
 }
 
-.serverErrorContainer {
+.AuthForm .serverErrorContainer {
   min-height: 30px;
   text-align: left;
   display: flex;
@@ -73,21 +73,21 @@
   justify-content: center;
 }
 
-.error {
+.AuthForm .error {
   min-height: 18px;
   font-size: 0.8rem;
   color: red;
 }
 
-.authLinkContainer {
+.AuthForm .authLinkContainer {
   margin-bottom: 20px;
 }
 
-.authLink {
+.AuthForm .authLink {
   cursor: pointer;
   font-weight: 500;
 }
 
-.authLink:hover {
+.AuthForm .authLink:hover {
   color: var(--violet);
 }
