@@ -1,12 +1,12 @@
 import { Symbols, Post } from "../../components";
 import "./Profile.css";
 import { useState, useEffect } from "react";
-// import { useHistory } from "react-router";
+import { useHistory } from "react-router";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import fb from "../../services/firebase";
 function Profile() {
-  // const history = useHistory();
+  const history = useHistory();
   const [editMode, setEditMode] = useState(false);
   const [username, setusername] = useState("")
   useEffect(() => {
@@ -21,6 +21,11 @@ function Profile() {
     }
   }, []);
 
+  const logout = () => {
+    fb.auth.signOut().then(() => {
+      history.push("login")
+    })
+  }
   const post = {
     postId: "test",
     comments: {
@@ -235,7 +240,7 @@ function Profile() {
                 setEditMode(false);
               }}
             >
-              <Symbols.Settings size="30" />
+              <Symbols.Save size="30" />
             </div>
           ) : (
             <div
@@ -250,6 +255,10 @@ function Profile() {
 
           <div className="profileBannerLinkButton">
             <Symbols.Settings size="30" />
+          </div>
+          <div className="profileBannerLinkButton"
+            onClick={() => logout()}>
+            <Symbols.Logout size="30" />
           </div>
         </div>
         {selectedFile && (
