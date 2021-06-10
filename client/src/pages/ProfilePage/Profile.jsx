@@ -14,7 +14,6 @@ function Profile() {
   const [username, setUsername] = useState("");
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
-  const [postIds, setPostIds] = useState([]);
 
   const userDoc = fb.firestore
     .collection("users")
@@ -26,10 +25,6 @@ function Profile() {
       setAbout(doc.data().about);
     });
   }
-
-  // userDoc.get().then((doc) => {
-  //   setPostIds(doc.data().posts);
-  // });
 
   try {
     fb.storage
@@ -133,24 +128,16 @@ function Profile() {
     setEditMode(true);
   };
 
-  // useEffect(() => {
-  //   if (!!localStorage.getItem("userId")) {
-  //     try {
-  //       fb.firestore
-  //         .collection("posts")
-  //         .get()
-  //         .then((docs) => {
-  //           var li = [];
-  //           docs.forEach((doc) => {
-  //             li.push(doc.data());
-  //           });
-  //           setPosts(li);
-  //         });
-  //     } catch {
-  //       console.log("");
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    fetch(`/getuserposts/${localStorage.getItem("userId")}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res.posts);
+        setPosts(res.posts);
+      });
+  }, []);
 
   return (
     <div className="Profile">
@@ -309,7 +296,7 @@ function Profile() {
       </div>
 
       <div className="currentUserPosts">
-        {/* {posts &&
+        {posts &&
           posts.map((i, key) => {
             return (
               <Post
@@ -323,7 +310,7 @@ function Profile() {
                 caption={i.caption}
               />
             );
-          })} */}
+          })}
       </div>
     </div>
   );

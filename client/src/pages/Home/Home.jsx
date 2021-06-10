@@ -9,29 +9,21 @@ function Home() {
 
   const [posts, setPosts] = useState([]);
 
-  // useEffect(() => {
-  //   if (!!localStorage.getItem("userId")) {
-  //     try {
-  //       fb.firestore
-  //         .collection("posts")
-  //         .get()
-  //         .then((docs) => {
-  //           var li = [];
-  //           docs.forEach((doc) => {
-  //             li.push(doc.data());
-  //           });
-  //           setPosts(li);
-  //         });
-  //     } catch {
-  //       console.log("");
-  //     }
-  //   }
-  // }, [posts]);
+  useEffect(() => {
+    fetch("/getallposts")
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res.posts);
+        setPosts(res.posts);
+      });
+  }, []);
 
   return (
     <div className="Home">
       <div className="posts">
-        {/* {posts.map((i, key) => {
+        {posts.map((i, key) => {
           return (
             <Post
               key={key}
@@ -44,7 +36,7 @@ function Home() {
               caption={i.caption}
             />
           );
-        })} */}
+        })}
       </div>
       <div
         className="createPostButton"

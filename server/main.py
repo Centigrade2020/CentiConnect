@@ -11,8 +11,6 @@ app = Flask(__name__)
 def signup():
     if request.method == "POST":
         content = request.get_json()
-        # data = create_user(
-        #     content["email"], content["password"], content["username"])
         try:
             user = fb.auth.create_user(content["email"], content["password"])
             fb.firestore.collection("users").document(user.uid).set({
@@ -35,7 +33,6 @@ def signup():
 def create_post():
     if request.method == "POST":
         content = request.get_json()
-        # new_post(content["username"], content["caption"], content["postId"])
         fb.firestore.collection('posts').document(content["postId"]).set({
             "postId": content["postId"],
             "userId": content["userId"],
@@ -105,14 +102,51 @@ def post_comment():
     else:
         return {}
 
+@app.route("/getuserposts/<uid>", methods=["POST", "GET"])
+def get_user_posts(uid):
+    if request.method == "GET":
+        user_doc =fb.firestore.collection("users").document(uid).get().to_dict()
+        user_posts = []
+        for i in user_doc["posts"]:
+            post = fb.firestore.collection("posts").document(i).get().to_dict()
+            user_posts.append(post)
+        print("\n\n",user_posts)
+        return jsonify({
+            "posts": user_posts
+        })
+    else:
+        return {}
+
+@app.route("/getallposts", methods=["POST", "GET"])
+def get_all_posts():
+    if request.method == "GET":
+        posts_list = []
+
+        posts = fb.firestore.collection("posts").get()
+
+        for i in posts:
+            posts_list.append(i.to_dict())
+            
+      
+        print("\n\n",posts_list)
+
+        return jsonify({
+            "posts": posts_list
+        })
+    else:
+        return {}
 
 
 @ app.route("/")
 def index():
     return jsonify({
         "Centigrade": "CentiConnect",
-        "Developed by": "Dharundds,DharunVS,HrithikMJ"
+        "Developed by": {"Dharundds", "DharunVS", "HrithikMJ"}
     })
+
+
+
+
 
 
 if __name__ == "__main__":
