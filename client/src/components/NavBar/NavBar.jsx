@@ -23,7 +23,10 @@ function NavBar() {
           .ref()
           .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
           .getDownloadURL()
-          .then((data) => setProfilePic(data));
+          .then((data) => (!data ? setProfilePic(data) : console.log("")))
+          .catch(() => {
+            "";
+          });
       } catch {
         setProfilePic("");
       }

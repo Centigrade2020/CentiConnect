@@ -38,13 +38,23 @@
 
 .profileBannerContent .bio .bioText {
   width: 350px;
-  margin-top: 10px;
+  height: 100px;
   padding: 10px;
   border: 3px solid white;
   color: black;
   border-radius: 10px;
   outline: none;
   font-size: 1.2rem;
+  overflow-y: scroll;
+}
+
+.profileBannerContent .bio .bioText::-webkit-scrollbar {
+  width: 10px;
+}
+.profileBannerContent .bio .bioText::-webkit-scrollbar-thumb {
+  background-color: var(--violet);
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
 }
 
 .profileBannerContent .username {
@@ -75,7 +85,6 @@
 
 .profileBannerContent .bio .bioTextEdit {
   width: 350px;
-  margin-top: 10px;
   padding: 10px;
   background-color: rgb(235, 235, 235);
   border: 3px solid white;
@@ -85,6 +94,20 @@
   outline: none;
   resize: none;
   font-size: 1.2rem;
+}
+
+.profileBannerContent .bio .bioTextEdit::-webkit-scrollbar {
+  width: 10px;
+}
+.profileBannerContent .bio .bioTextEdit::-webkit-scrollbar-thumb {
+  background-color: var(--violet);
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+
+.profileBannerContent .bio .bioTextEdit::-webkit-scrollbar-button {
+  height: 5px;
+  background-color: var(--violet);
 }
 
 .profileBannerContent .userInfo {

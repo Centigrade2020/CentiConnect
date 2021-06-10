@@ -22,10 +22,6 @@
   text-align: center;
 }
 
-.searchInput:focus + .searchListContainer {
-  display: block;
-}
-
 .searchListContainer {
   width: 300px;
   height: 200px;

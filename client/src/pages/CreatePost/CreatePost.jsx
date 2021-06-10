@@ -37,7 +37,6 @@ function CreatePost() {
           return res.json();
         })
         .then((res) => {
-          console.log(res.uuid);
           fetch("/createpost", {
             method: "POST",
             headers: {

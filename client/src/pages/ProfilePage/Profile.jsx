@@ -19,22 +19,27 @@ function Profile() {
     .collection("users")
     .doc(localStorage.getItem("userId"));
 
-  if (!!localStorage.getItem("userId")) {
-    userDoc.get().then((doc) => {
-      setUsername(doc.data().username);
-      setAbout(doc.data().about);
-    });
-  }
+  useEffect(() => {
+    if (!!localStorage.getItem("userId")) {
+      userDoc.get().then((doc) => {
+        setUsername(doc.data().username);
+        setAbout(doc.data().about);
+      });
 
-  try {
-    fb.storage
-      .ref()
-      .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
-      .getDownloadURL()
-      .then((data) => setProfilePic(data));
-  } catch {
-    setProfilePic("");
-  }
+      try {
+        fb.storage
+          .ref()
+          .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
+          .getDownloadURL()
+          .then((data) => (!data ? setProfilePic(data) : console.log("")))
+          .catch(() => {
+            "";
+          });
+      } catch {
+        setProfilePic("");
+      }
+    }
+  }, []);
 
   const logout = () => {
     fb.auth.signOut().then(() => {
@@ -75,6 +80,13 @@ function Profile() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(content),
+    }).then(() => {
+      if (!!localStorage.getItem("userId")) {
+        userDoc.get().then((doc) => {
+          setUsername(doc.data().username);
+          setAbout(doc.data().about);
+        });
+      }
     });
   };
 
@@ -129,7 +141,9 @@ function Profile() {
   };
 
   useEffect(() => {
-    fetch(`/getuserposts/${localStorage.getItem("userId")}`)
+    fetch(`/getuserposts/${localStorage.getItem("userId")}`, {
+      method: "GET",
+    })
       .then((res) => {
         return res.json();
       })
@@ -295,21 +309,19 @@ function Profile() {
       </div>
 
       <div className="currentUserPosts">
-        {posts &&
-          posts.map((i, key) => {
-            return (
-              <Post
-                key={key}
-                postId={i.postId}
-                userId={i.userId}
-                comments={i.comments}
-                username={i.username}
-                upvotes={i.upvotes}
-                downvotes={i.downvotes}
-                caption={i.caption}
-              />
-            );
-          })}
+        {posts !== [] &&
+          posts.map((i, key) => (
+            <Post
+              key={key}
+              postId={i.postId}
+              userId={i.userId}
+              comments={i.comments}
+              username={i.username}
+              upvotes={i.upvotes}
+              downvotes={i.downvotes}
+              caption={i.caption}
+            />
+          ))}
       </div>
     </div>
   );

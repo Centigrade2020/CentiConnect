@@ -16,7 +16,8 @@ def signup():
             fb.firestore.collection("users").document(user.uid).set({
                 "username": content["username"],
                 "private": False,
-                "about": ""
+                "about": "",
+                "post": []
             })
             fb.firestore.collection("root").document("AdditionalData").update({
                 "usernames": fb.functions.ArrayUnion([content["username"]])
@@ -59,6 +60,7 @@ def images():
 
         with open(f"uploads/{id}.jpeg", "wb") as f:
             f.write(content)
+
         im = fb.bucket.blob(f'postImages/{id}.jpeg')
         im.upload_from_filename(f"uploads/{id}.jpeg")
 
@@ -97,7 +99,6 @@ def post_comment():
                 "comment" : content["comment"]
                 }])
         })
-
         return {}
     else:
         return {}
@@ -106,14 +107,18 @@ def post_comment():
 def get_user_posts(uid):
     if request.method == "GET":
         user_doc =fb.firestore.collection("users").document(uid).get().to_dict()
-        user_posts = []
-        for i in user_doc["posts"]:
-            post = fb.firestore.collection("posts").document(i).get().to_dict()
-            user_posts.append(post)
-        print("\n\n",user_posts)
-        return jsonify({
-            "posts": user_posts
-        })
+        try:
+            user_posts = []
+            for i in user_doc["posts"]:
+                post = fb.firestore.collection("posts").document(i).get().to_dict()
+                user_posts.append(post)
+            return jsonify({
+                "posts": user_posts
+            })
+        except:
+            return jsonify(({
+                "posts": []
+            }))
     else:
         return {}
 
@@ -121,15 +126,10 @@ def get_user_posts(uid):
 def get_all_posts():
     if request.method == "GET":
         posts_list = []
-
         posts = fb.firestore.collection("posts").get()
-
         for i in posts:
             posts_list.append(i.to_dict())
             
-      
-        print("\n\n",posts_list)
-
         return jsonify({
             "posts": posts_list
         })

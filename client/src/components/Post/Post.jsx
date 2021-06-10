@@ -27,9 +27,12 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
   try {
     fb.storage
       .ref()
-      .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
+      .child(`profileImages/${userId}.jpeg`)
       .getDownloadURL()
-      .then((data) => setProfilePic(data));
+      .then((data) => (!data ? setProfilePic(data) : ""))
+      .catch(() => {
+        console.log("");
+      });
   } catch {
     setProfilePic("");
   }
