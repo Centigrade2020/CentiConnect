@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "./SearchBar.css";
 
 function SearchBar() {
   const history = useHistory();
-
+  const uid = localStorage.getItem("userId");
+  const { handle } = useParams()
   function getUsernames() {
     if (!!sessionStorage.getItem("usernames")) {
       var str = sessionStorage.getItem("usernames");
@@ -34,7 +35,7 @@ function SearchBar() {
                 className="searchResult"
                 key={name}
                 onClick={() => {
-                  history.push("searchuser");
+                  history.push(uid);
                 }}
               >
                 <div className="imageContainer">

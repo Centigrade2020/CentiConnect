@@ -1,7 +1,11 @@
 import { Symbols, Post } from "../../components";
 import "./Profile.css";
 import { useState, useEffect } from "react";
+
 import { useHistory, useLocation } from "react-router";
+
+import { useHistory } from "react-router";
+
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import fb from "../../services/firebase";
@@ -51,6 +55,12 @@ function Profile() {
   } catch {
     setProfilePic("");
   }
+
+  const logout = () => {
+    fb.auth.signOut().then(() => {
+      history.push("login");
+    });
+  };
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [image, setImage] = useState(null);
@@ -144,9 +154,7 @@ function Profile() {
                   <Symbols.Image size="100" /> Select image
                 </div>
               </div>
-              <div className="text">
-                <Symbols.Image size="100" /> Select image
-              </div>
+
               {result ? (
                 <img
                   src={result}
@@ -247,7 +255,7 @@ function Profile() {
                 setEditMode(false);
               }}
             >
-              <Symbols.Settings size="30" />
+              <Symbols.Save size="30" />
             </div>
           ) : (
             <div
@@ -262,6 +270,9 @@ function Profile() {
 
           <div className="profileBannerLinkButton">
             <Symbols.Settings size="30" />
+          </div>
+          <div className="profileBannerLinkButton" onClick={() => logout()}>
+            <Symbols.Logout size="30" />
           </div>
         </div>
         {selectedFile && (
