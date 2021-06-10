@@ -66,9 +66,6 @@ def images():
 
         with open(f"uploads/{id}.jpeg", "wb") as f:
             f.write(content)
-
-        # upload_to_storage(id, f"uploads/{id}.jpeg")
-
         im = fb.bucket.blob(f'postImages/{id}.jpeg')
         im.upload_from_filename(f"uploads/{id}.jpeg")
         
@@ -86,10 +83,12 @@ def images():
 def update_user():
     if request.method == "POST":
         content = request.get_json()
-        fb.firestore.collection("users").document(content["userId"]).set({
+
+        fb.firestore.collection("users").document(content["userId"]).update({
             "username": content["username"],
             "about": content["about"]
-        }, merge=True)
+        })
+        return {}
     else:
         return {}
 
