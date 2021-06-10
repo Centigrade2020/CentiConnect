@@ -106,7 +106,7 @@ def post_comment():
 @app.route("/getuserposts/<uid>", methods=["POST", "GET"])
 def get_user_posts(uid):
     if request.method == "GET":
-        user_doc =fb.firestore.collection("users").document(uid).get().to_dict()
+        user_doc = fb.firestore.collection("users").document(uid).get().to_dict()
         try:
             user_posts = []
             for i in user_doc["posts"]:
