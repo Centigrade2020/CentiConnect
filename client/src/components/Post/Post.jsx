@@ -2,6 +2,7 @@ import { useState } from "react";
 import fb from "../../services/firebase";
 import { Symbols } from "../../components";
 import "./Post.css";
+import Comment from "../Comment/Comment";
 
 const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
   const [link, setLink] = useState("");
@@ -43,19 +44,21 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
   }
 
   const postComment = () => {
-    fb.firestore
-      .collection("users")
-      .doc(localStorage.getItem("userId"))
-      .get()
-      .then((doc) => {
-        if (comment.split(" ").join() !== "") {
-          const content = {
-            username: doc.data().username,
-            comment: comment,
-          };
-          console.log(content);
-        }
+    if (comment.split(" ").join() != "") {
+      const content = {
+        userId: localStorage.getItem("userId"),
+        comment: comment,
+        postId: postId,
+      };
+      fetch("/postcomment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(content),
       });
+      console.log(content);
+    }
   };
 
   return (
@@ -91,12 +94,16 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
       <section className="commentSection">
         <div className="comments">
           {!!comments &&
-            comments.map((i) => (
-              <div className="comment" key={`id${i.username}`}>
-                <h4>{i.username}</h4>
-                <p>{i.comment}</p>
-              </div>
-            ))}
+            comments.map((i, key) => {
+              return (
+                <Comment
+                  userId={i.userId}
+                  comment={i.comment}
+                  keyName={key}
+                  key={key}
+                />
+              );
+            })}
         </div>
 
         <div className="description">

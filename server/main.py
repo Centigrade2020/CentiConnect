@@ -89,6 +89,23 @@ def update_user():
     else:
         return {}
 
+@app.route("/postcomment", methods=["POST", "GET"])
+def post_comment():
+    if request.method == "POST":
+        content = request.get_json()
+
+        fb.firestore.collection("posts").document(content["postId"]).update({
+            "comments": fb.functions.ArrayUnion([{
+                "userId" : content["userId"],
+                "comment" : content["comment"]
+                }])
+        })
+
+        return {}
+    else:
+        return {}
+
+
 
 @ app.route("/")
 def index():

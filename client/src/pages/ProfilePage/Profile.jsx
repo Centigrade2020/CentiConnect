@@ -32,11 +32,9 @@ function Profile() {
           .get()
           .then((docs) => {
             var li = [];
-
             docs.forEach((doc) => {
               li.push(doc.data());
               setPosts(li);
-              console.log(li);
             });
           });
       } catch {
