@@ -303,10 +303,10 @@ function Profile() {
 
       <div className="currentUserPosts">
         {posts &&
-          posts.map((i) => {
+          posts.map((i, key) => {
             return (
               <Post
-                key={i.postId}
+                key={key}
                 postId={i.postId}
                 userId={i.userId}
                 comments={i.comments}
