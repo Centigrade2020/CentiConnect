@@ -9,7 +9,6 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
   const [profilePic, setProfilePic] = useState("");
 
   const [comment, setComment] = useState("");
-  const [commentorUsername, setCommenterUsername] = useState("");
 
   fb.firestore
     .collection("users")
@@ -45,7 +44,13 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
       .doc(localStorage.getItem("userId"))
       .get()
       .then((doc) => {
-        console.log(doc.data());
+        if (comment.split(" ").join() !== "") {
+          const content = {
+            username: doc.data().username,
+            comment: comment,
+          };
+          console.log(content);
+        }
       });
   };
 
