@@ -17,18 +17,18 @@ function NavBar() {
         .then((doc) => {
           setUsername(doc.data().username);
         });
+
+      try {
+        fb.storage
+          .ref()
+          .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
+          .getDownloadURL()
+          .then((data) => setProfilePic(data));
+      } catch {
+        setProfilePic("");
+      }
     }
   }, []);
-
-  try {
-    fb.storage
-      .ref()
-      .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
-      .getDownloadURL()
-      .then((data) => setProfilePic(data));
-  } catch {
-    setProfilePic("");
-  }
 
   return (
     <div className="NavBar">
