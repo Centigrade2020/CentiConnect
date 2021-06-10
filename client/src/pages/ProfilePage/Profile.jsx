@@ -1,7 +1,7 @@
 import { Symbols, Post } from "../../components";
 import "./Profile.css";
 import { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import fb from "../../services/firebase";
@@ -14,34 +14,22 @@ function Profile() {
   const [username, setUsername] = useState("");
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
+  const [postIds, setPostIds] = useState([]);
 
   const userDoc = fb.firestore
     .collection("users")
     .doc(localStorage.getItem("userId"));
 
-  useEffect(() => {
-    if (!!localStorage.getItem("userId")) {
-      userDoc.get().then((doc) => {
-        setUsername(doc.data().username);
-        setAbout(doc.data().about);
-      });
+  if (!!localStorage.getItem("userId")) {
+    userDoc.get().then((doc) => {
+      setUsername(doc.data().username);
+      setAbout(doc.data().about);
+    });
+  }
 
-      try {
-        fb.firestore
-          .collection("posts")
-          .get()
-          .then((docs) => {
-            var li = [];
-            docs.forEach((doc) => {
-              li.push(doc.data());
-              setPosts(li);
-            });
-          });
-      } catch {
-        console.log("");
-      }
-    }
-  }, []);
+  // userDoc.get().then((doc) => {
+  //   setPostIds(doc.data().posts);
+  // });
 
   try {
     fb.storage
@@ -144,6 +132,25 @@ function Profile() {
     }
     setEditMode(true);
   };
+
+  // useEffect(() => {
+  //   if (!!localStorage.getItem("userId")) {
+  //     try {
+  //       fb.firestore
+  //         .collection("posts")
+  //         .get()
+  //         .then((docs) => {
+  //           var li = [];
+  //           docs.forEach((doc) => {
+  //             li.push(doc.data());
+  //           });
+  //           setPosts(li);
+  //         });
+  //     } catch {
+  //       console.log("");
+  //     }
+  //   }
+  // }, []);
 
   return (
     <div className="Profile">
@@ -302,7 +309,7 @@ function Profile() {
       </div>
 
       <div className="currentUserPosts">
-        {posts &&
+        {/* {posts &&
           posts.map((i, key) => {
             return (
               <Post
@@ -316,7 +323,7 @@ function Profile() {
                 caption={i.caption}
               />
             );
-          })}
+          })} */}
       </div>
     </div>
   );

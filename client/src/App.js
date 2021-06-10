@@ -33,6 +33,8 @@ function App() {
         history.push(!!authUser ? "/" : "signup");
       } else if (location.pathname === "/user") {
         history.push(!!authUser ? "/user" : "/login");
+      } else if (location.pathname === "/") {
+        history.push(!!authUser ? "/" : "/login");
       } else {
         history.push(!!authUser ? "/" : "login");
       }

@@ -10,6 +10,7 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
   const [profilePic, setProfilePic] = useState("");
 
   const [comment, setComment] = useState("");
+  const [commented, setCommented] = useState(false);
 
   try {
     fb.firestore
@@ -44,7 +45,7 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
   }
 
   const postComment = () => {
-    if (comment.split(" ").join() != "") {
+    if (comment.split(" ").join() !== "") {
       const content = {
         userId: localStorage.getItem("userId"),
         comment: comment,
@@ -59,6 +60,7 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
       });
       console.log(content);
     }
+    setCommented(true);
   };
 
   return (
@@ -93,17 +95,26 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
       </section>
       <section className="commentSection">
         <div className="comments">
+          {commented && (
+            <Comment
+              userId={localStorage.getItem("userId")}
+              comment={comment}
+            />
+          )}
           {!!comments &&
-            comments.map((i, key) => {
-              return (
-                <Comment
-                  userId={i.userId}
-                  comment={i.comment}
-                  keyName={key}
-                  key={key}
-                />
-              );
-            })}
+            comments
+              .slice(0)
+              .reverse()
+              .map((i, key) => {
+                return (
+                  <Comment
+                    userId={i.userId}
+                    comment={i.comment}
+                    keyName={key}
+                    key={key}
+                  />
+                );
+              })}
         </div>
 
         <div className="description">
