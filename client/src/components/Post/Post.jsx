@@ -8,7 +8,7 @@ const Post = ({ postId, comments, username, upvotes, downvotes, caption }) => {
 
   fb.storage
     .ref()
-    .child(`postImages/${postId}.jpg`)
+    .child(`postImages/${postId}.jpeg`)
     .getDownloadURL()
     .then((data) => setLink(data));
 

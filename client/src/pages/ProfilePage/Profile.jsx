@@ -41,7 +41,7 @@ function Profile() {
   };
 
   const post2 = {
-    postId: "test2",
+    postId: "bf41a0d210224e189b06ac2f98959e0e",
     comments: {
       senpai: "Looking gud broo!!",
       dharundds: "Wow.. Awesome!!",

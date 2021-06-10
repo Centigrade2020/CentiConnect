@@ -46,6 +46,7 @@ function App() {
         <Route path="/createpost" component={CreatePost} />
         <Route path="/profile" component={Profile} />
         <Route path="/searchuser" component={SearchUser} />
+        {/* <Route path="/user/:uid" component={UserProfile} /> */}
       </>
     </Switch>
   );
