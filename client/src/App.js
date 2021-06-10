@@ -8,7 +8,7 @@ import CreatePost from "./pages/CreatePost";
 import NavBar from "./components/NavBar";
 import Profile from "./pages/ProfilePage";
 import fb from "./services/firebase";
-import UserProfile from "./pages/UserProfile"
+import UserProfile from "./pages/UserProfile";
 function App() {
   const history = useHistory();
   const location = useLocation();
@@ -29,10 +29,11 @@ function App() {
         history.push(!!authUser ? "/createpost" : "login");
       } else if (location.pathname === "/profile") {
         history.push(!!authUser ? "/profile" : "login");
+      } else if (location.pathname === "/signup") {
+        history.push(!!authUser ? "/" : "signup");
       } else if (location.pathname === "/user") {
-        history.push(!!authUser ? '/user' : '/login')
-      }
-      else {
+        history.push(!!authUser ? "/user" : "/login");
+      } else {
         history.push(!!authUser ? "/" : "login");
       }
     }

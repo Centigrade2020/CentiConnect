@@ -8,6 +8,8 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
 
+  const [comment, setComment] = useState("");
+
   fb.firestore
     .collection("users")
     .doc(userId)
@@ -19,6 +21,16 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
   try {
     fb.storage
       .ref()
+      .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
+      .getDownloadURL()
+      .then((data) => setProfilePic(data));
+  } catch {
+    setProfilePic("");
+  }
+
+  try {
+    fb.storage
+      .ref()
       .child(`postImages/${postId}.jpeg`)
       .getDownloadURL()
       .then((data) => setLink(data));
@@ -26,15 +38,21 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
     console.log("No image");
   }
 
-  try {
-    fb.storage
-      .ref()
-      .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
-      .getDownloadURL()
-      .then((data) => setProfilePic(data));
-  } catch {
-    setProfilePic("");
-  }
+  const postComment = () => {
+    fb.firestore
+      .collection("users")
+      .doc(localStorage.getItem("userId"))
+      .get()
+      .then((doc) => {
+        if (comment.split(" ").join() !== "") {
+          const content = {
+            username: doc.data().username,
+            comment: comment,
+          };
+          console.log(content);
+        }
+      });
+  };
 
   return (
     <div className="Post" key={postId}>
@@ -68,21 +86,12 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
       </section>
       <section className="commentSection">
         <div className="comments">
-          {/* {Object.keys(comments).map((i) => (
-            <div className="comment" key={i}>
-              <h4>{i}</h4>
-              <p>{comments[`${i}`]}</p>
+          {comments.map((i) => (
+            <div className="comment" key={`id${i.username}`}>
+              <h4>{i.username}</h4>
+              <p>{i.comment}</p>
             </div>
-          ))} */}
-
-          {comments.map((i) => {
-            return (
-              <div className="comment" key={`id${i.username}`}>
-                <h4>{i.username}</h4>
-                <p>{i.comment}</p>
-              </div>
-            );
-          })}
+          ))}
         </div>
 
         <div className="description">
@@ -103,10 +112,17 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
             </p>
           </div>
         </div>
-        <form className="addComment">
-          <textarea placeholder="Enter your comment"></textarea>
-          <button className="postComment">Post</button>
-        </form>
+        <div className="addComment">
+          <textarea
+            placeholder="Enter your comment"
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+          ></textarea>
+          <button className="postComment" onClick={postComment}>
+            Post
+          </button>
+        </div>
       </section>
     </div>
   );

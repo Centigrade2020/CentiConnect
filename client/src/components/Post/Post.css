@@ -22,7 +22,7 @@
   border: 4px solid white;
 }
 
-.profile {
+.Post .profile {
   width: 100%;
   height: var(--profileHeight);
   position: absolute;
@@ -34,7 +34,7 @@
   border-bottom: 1px solid rgb(235, 235, 235);
 }
 
-.profile .profileIcon {
+.Post .profile .profileIcon {
   width: var(--profilePicDim);
   height: var(--profilePicDim);
   background-color: rgb(192, 192, 192);
@@ -43,24 +43,25 @@
   margin: 0 var(--padding10);
 }
 
-.profile .profileIcon img {
+.Post .profile .profileIcon img {
   width: 100%;
   height: 100%;
 }
 
-.profile .settings {
+.Post .profile .settings {
   position: absolute;
   right: var(--padding10);
 }
 
-.imageSection {
+.Post .imageSection {
   position: absolute;
   top: var(--profileHeight);
   left: 0;
   right: calc(100% - var(--imageDim));
   bottom: 0;
 }
-.commentSection {
+
+.Post .commentSection {
   position: absolute;
   height: var(--commentSectHeight);
   width: (var(--commentSectWidth));
@@ -70,13 +71,13 @@
   border-left: 1px solid rgb(235, 235, 235);
 }
 
-.commentSection .comments {
+.Post .commentSection .comments {
   height: calc(var(--commentSectHeight) * 0.625);
   border-bottom: 1px solid rgb(235, 235, 235);
   overflow: scroll;
 }
 
-.imageSection .imageContainer {
+.Post .imageSection .imageContainer {
   width: var(--imageDim);
   height: var(--imageDim);
   overflow: hidden;
@@ -87,7 +88,7 @@
   position: relative;
 }
 
-.imageSection .imageContainer img {
+.Post .imageSection .imageContainer img {
   /* max-width: var(--imageDim); */
   /* max-height: var(--imageDim); */
   width: 100%;
@@ -98,38 +99,39 @@
   user-select: none;
 }
 
-.Post .ThreeDots {
+.Post .Post .ThreeDots {
   margin-top: 3px;
   fill: gray;
 }
 
-.postLinks {
+.Post .postLinks {
   display: flex;
   padding: calc(var(--padding10) / 2);
   font-size: var(--fontSize);
   height: calc(var(--commentSectHeight) * 0.075);
 }
 
-.postLinks > * {
+.Post .postLinks > * {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: calc(var(--padding10) * 3);
 }
-.postLinks .UpVote,
-.postLinks .DownVote {
+
+.Post .postLinks .UpVote,
+.Post .postLinks .DownVote {
   fill: gray;
   margin-right: calc(var(--padding10) / 2);
 }
 
-.commentSection .comment {
+.Post .commentSection .comment {
   background-color: rgb(235, 235, 235);
   padding: var(--padding10);
   margin: var(--padding10);
   border-radius: var(--padding10);
 }
 
-.addComment {
+.Post .addComment {
   height: calc(var(--commentSectHeight) * 0.11);
   display: flex;
   width: 100%;
@@ -137,7 +139,8 @@
   justify-content: space-between;
   border-top: 1px solid rgb(235, 235, 235);
 }
-.addComment textarea {
+
+.Post .addComment textarea {
   width: 80%;
   height: 100%;
   padding: var(--padding10);
@@ -147,13 +150,13 @@
   font-size: var(--fontSize);
 }
 
-.addComment textarea::placeholder {
+.Post .addComment textarea::placeholder {
   transform: translate(var(--padding10), calc(var(--padding10) / 2.3));
   font-size: var(--fontSize2);
   color: rgb(189, 189, 189);
 }
 
-.addComment button {
+.Post .addComment button {
   width: 20%;
   height: 100%;
   outline: none;
@@ -170,28 +173,29 @@
   justify-content: center;
 }
 
-.addComment button:hover {
+.Post .addComment button:hover {
   background-color: var(--violet2);
 }
 
-.description {
+.Post .description {
   height: calc(var(--commentSectHeight) * 0.25);
 }
 
-.descriptionContent {
+.Post .descriptionContent {
   height: calc(var(--commentSectHeight) * 0.2);
   overflow: scroll;
   padding: 0 calc(var(--padding10) / 2);
 }
 
-.descriptionContent::-webkit-scrollbar-thumb {
+.Post .descriptionContent::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
-.descriptionContent .profileName {
+.Post .descriptionContent .profileName {
   font-weight: bold;
+  margin-right: 10px;
 }
 
-.imageSection .imageContainer .Loading {
+.Post .imageSection .imageContainer .Loading {
   fill: gray;
   position: absolute;
   top: 50%;

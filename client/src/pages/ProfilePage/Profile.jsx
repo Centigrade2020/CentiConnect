@@ -1,12 +1,11 @@
 import { Symbols, Post } from "../../components";
 import "./Profile.css";
 import { useState, useEffect } from "react";
-
 import { useHistory, useLocation } from "react-router";
-
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import fb from "../../services/firebase";
+
 function Profile() {
   const history = useHistory();
 
@@ -138,10 +137,26 @@ function Profile() {
     return new Blob([ab], { type: mimeString });
   }
 
+  const editModehandler = () => {
+    if (!!localStorage.getItem("userId")) {
+      userDoc.get().then((doc) => {
+        setEditUsername(doc.data().username);
+        setEditAbout(doc.data().about);
+      });
+    }
+    setEditMode(true);
+  };
+
   return (
     <div className="Profile">
       <div className="ProfileBanner">
-        <div className="profilePicContainer">
+        <div
+          className={
+            editMode
+              ? "profilePicContainer profilePicContainerEditMode"
+              : "profilePicContainer"
+          }
+        >
           {editMode ? (
             <>
               <div className="input">
@@ -258,12 +273,7 @@ function Profile() {
               <Symbols.Save size="30" />
             </div>
           ) : (
-            <div
-              className="profileBannerLinkButton"
-              onClick={() => {
-                setEditMode(true);
-              }}
-            >
+            <div className="profileBannerLinkButton" onClick={editModehandler}>
               <Symbols.Edit size="30" />
             </div>
           )}
