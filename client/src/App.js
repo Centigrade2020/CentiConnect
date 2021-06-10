@@ -5,11 +5,10 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost";
-import SearchUser from "./pages/SearchUser";
 import NavBar from "./components/NavBar";
 import Profile from "./pages/ProfilePage";
 import fb from "./services/firebase";
-
+import UserProfile from "./pages/UserProfile"
 function App() {
   const history = useHistory();
   const location = useLocation();
@@ -30,7 +29,10 @@ function App() {
         history.push(!!authUser ? "/createpost" : "login");
       } else if (location.pathname === "/profile") {
         history.push(!!authUser ? "/profile" : "login");
-      } else {
+      } else if (location.pathname === "/user") {
+        history.push(!!authUser ? '/user' : '/login')
+      }
+      else {
         history.push(!!authUser ? "/" : "login");
       }
     }
@@ -45,8 +47,8 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/createpost" component={CreatePost} />
         <Route path="/profile" component={Profile} />
-        <Route path="/searchuser" component={SearchUser} />
-        {/* <Route path="/user/:uid" component={UserProfile} /> */}
+
+        <Route path="/user" component={UserProfile} />
       </>
     </Switch>
   );
