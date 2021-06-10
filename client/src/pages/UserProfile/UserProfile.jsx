@@ -1,14 +1,14 @@
 import "./UserProfile.css";
 import { Symbols, Post } from "../../components";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router";
+import { useHistory,useLocation } from "react-router-dom";
 import fb from "../../services/firebase";
 import "../ProfilePage/Profile.css"
-function UserProfile() {
+function UserProfile(props) {
     const history = useHistory();
-
+    const location = useLocation()
     const [username, setusername] = useState("")
-
+    
     const [image, setImage] = useState(null);
     const post = {
         postId: "2a1fe1e7207c478399551b472ca6cd70",
@@ -67,7 +67,7 @@ function UserProfile() {
                 <div className="profileBannerContent">
 
 
-                    <p className="username">{username}</p>
+                    <p className="username">{location.username}</p>
 
                     <div className="userInfo">
                         <p className="posts">
@@ -90,10 +90,10 @@ function UserProfile() {
                 </div>
             </div>
             <div className="currentUserPosts">
-                <Post
+                {/* <Post
                     postId={post.postId}
                     comments={post.comments}
-                    username={post.username}
+                    //username={post.username}
                     upvotes={post.upvotes}
                     downvotes={post.downvotes}
                     caption={post.caption}
@@ -101,11 +101,11 @@ function UserProfile() {
                 <Post
                     postId={post2.postId}
                     comments={post2.comments}
-                    username={post2.username}
+                    //username={post2.username}
                     upvotes={post2.upvotes}
                     downvotes={post2.downvotes}
                     caption={post2.caption}
-                />
+                /> */}
             </div>
 
 

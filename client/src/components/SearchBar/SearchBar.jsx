@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import "./SearchBar.css";
+//import "./SearchBar.css";
 
 function SearchBar() {
   const history = useHistory();
@@ -35,9 +35,15 @@ function SearchBar() {
                 className="searchResult"
                 key={name}
                 onClick={() => {
-                  history.push(uid);
+                  console.log("clicked")
+                  history.push({
+                    pathname:'user',
+                    search:`?username=${name}`,
+                    username: name
+                  });
                 }}
               >
+               
                 <div className="imageContainer">
                   <img src="" alt="" />
                 </div>
