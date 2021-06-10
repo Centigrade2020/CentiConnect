@@ -26,7 +26,6 @@ def signup():
             return jsonify({"uid": f"{user.uid}", "loggedIn": True})
         except BaseException as e:
             return jsonify({"error": f"{e.code}"})
-   
 
     else:
         return {}
@@ -46,14 +45,11 @@ def create_post():
             "downvotes": 0
         })
         fb.firestore.collection("users").document(content["userId"]).update({
-                "posts": fb.functions.ArrayUnion([content["postId"]])
-            })
+            "posts": fb.functions.ArrayUnion([content["postId"]])
+        })
         return {}
     else:
         return {}
-
-
-
 
 
 @ app.route('/images', methods=["POST", "GET"])
@@ -68,16 +64,17 @@ def images():
             f.write(content)
         im = fb.bucket.blob(f'postImages/{id}.jpeg')
         im.upload_from_filename(f"uploads/{id}.jpeg")
-        
+
         if os.path.exists(f"uploads/{id}.jpeg"):
             os.remove(f"uploads/{id}.jpeg")
-        
+
         return jsonify({
-            "uuid" : id
+            "uuid": id
         })
 
     else:
         return{}
+
 
 @app.route('/updateprofile', methods=["POST", "GET"])
 def update_user():
@@ -93,11 +90,11 @@ def update_user():
         return {}
 
 
-
 @ app.route("/")
 def index():
     return jsonify({
-        "Hello": "World"
+        "Centigrade": "CentiConnect",
+        "Developed by": "Dharundds,DharunVS,HrithikMJ"
     })
 
 
