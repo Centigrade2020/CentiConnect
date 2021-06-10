@@ -1,6 +1,6 @@
 import { Symbols, Post } from "../../components";
 import "./Profile.css";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 // import { useHistory } from "react-router";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
@@ -8,19 +8,19 @@ import fb from "../../services/firebase";
 function Profile() {
   // const history = useHistory();
   const [editMode, setEditMode] = useState(false);
-  const [username,setusername] = useState("")
+  const [username, setusername] = useState("")
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
       const uid = localStorage.getItem("userId");
       var docRef = fb.firestore.collection("users").doc(uid);
-      
+
       docRef.get().then((doc) => {
         setusername(doc.data().username)
-        
+
       });
     }
   }, []);
- 
+
   const post = {
     postId: "test",
     comments: {
@@ -136,9 +136,7 @@ function Profile() {
                   <Symbols.Image size="100" /> Select image
                 </div>
               </div>
-              <div className="text">
-                <Symbols.Image size="100" /> Select image
-              </div>
+
               {result ? (
                 <img
                   src={result}
