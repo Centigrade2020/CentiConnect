@@ -15,7 +15,6 @@ function Home() {
         return res.json();
       })
       .then((res) => {
-        console.log(res.posts);
         setPosts(res.posts);
       });
   }, []);
