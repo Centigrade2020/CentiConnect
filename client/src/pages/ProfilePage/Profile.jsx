@@ -304,20 +304,21 @@ function Profile() {
       </div>
 
       <div className="currentUserPosts">
-        {posts.map((i) => {
-          return (
-            <Post
-              key={i.postId}
-              postId={i.postId}
-              userId={i.userId}
-              comments={i.comments}
-              username={i.username}
-              upvotes={i.upvotes}
-              downvotes={i.downvotes}
-              caption={i.caption}
-            />
-          );
-        })}
+        {posts &&
+          posts.map((i) => {
+            return (
+              <Post
+                key={i.postId}
+                postId={i.postId}
+                userId={i.userId}
+                comments={i.comments}
+                username={i.username}
+                upvotes={i.upvotes}
+                downvotes={i.downvotes}
+                caption={i.caption}
+              />
+            );
+          })}
       </div>
     </div>
   );

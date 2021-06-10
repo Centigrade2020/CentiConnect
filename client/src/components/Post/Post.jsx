@@ -10,13 +10,17 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
 
   const [comment, setComment] = useState("");
 
-  fb.firestore
-    .collection("users")
-    .doc(userId)
-    .get()
-    .then((doc) => {
-      setUsername(doc.data().username);
-    });
+  try {
+    fb.firestore
+      .collection("users")
+      .doc(userId)
+      .get()
+      .then((doc) => {
+        setUsername(doc.data().username);
+      });
+  } catch {
+    console.log("");
+  }
 
   try {
     fb.storage
@@ -86,12 +90,13 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
       </section>
       <section className="commentSection">
         <div className="comments">
-          {comments.map((i) => (
-            <div className="comment" key={`id${i.username}`}>
-              <h4>{i.username}</h4>
-              <p>{i.comment}</p>
-            </div>
-          ))}
+          {!!comments &&
+            comments.map((i) => (
+              <div className="comment" key={`id${i.username}`}>
+                <h4>{i.username}</h4>
+                <p>{i.comment}</p>
+              </div>
+            ))}
         </div>
 
         <div className="description">
