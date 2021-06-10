@@ -39,7 +39,13 @@
   height: var(--profilePicDim);
   background-color: rgb(192, 192, 192);
   border-radius: 50%;
+  overflow: hidden;
   margin: 0 var(--padding10);
+}
+
+.profile .profileIcon img {
+  width: 100%;
+  height: 100%;
 }
 
 .profile .settings {

@@ -1,53 +1,56 @@
 import { Symbols, Post } from "../../components";
 import "./Profile.css";
-import { useState,useEffect } from "react";
-// import { useHistory } from "react-router";
+import { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import fb from "../../services/firebase";
 function Profile() {
-  // const history = useHistory();
   const [editMode, setEditMode] = useState(false);
-  const [username,setusername] = useState("")
+  const [profilePic, setProfilePic] = useState("");
+  const [username, setUsername] = useState("");
+  const [about, setAbout] = useState("");
+  const [posts, setPosts] = useState([]);
+
+  const userDoc = fb.firestore
+    .collection("users")
+    .doc(localStorage.getItem("userId"));
+
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
-      const uid = localStorage.getItem("userId");
-      var docRef = fb.firestore.collection("users").doc(uid);
-      
-      docRef.get().then((doc) => {
-        setusername(doc.data().username)
-        
+      userDoc.get().then((doc) => {
+        setUsername(doc.data().username);
+        setAbout(doc.data().about);
       });
+
+      try {
+        fb.firestore
+          .collection("posts")
+          .get()
+          .then((docs) => {
+            var li = [];
+
+            docs.forEach((doc) => {
+              li.push(doc.data());
+              setPosts(li);
+              console.log(li);
+            });
+          });
+      } catch {
+        console.log("");
+      }
     }
   }, []);
- 
-  const post = {
-    postId: "test",
-    comments: {
-      senpai: "Looking gud broo!!",
-      dharundds: "Wow.. Awesome!!",
-      hrithik: "waste ra dei!!",
-    },
-    username: "legend",
-    upvotes: 24,
-    downvotes: 3,
-    caption:
-      "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit v Hello frands.. Diwali outfit",
-  };
 
-  const post2 = {
-    postId: "test2",
-    comments: {
-      senpai: "Looking gud broo!!",
-      dharundds: "Wow.. Awesome!!",
-      hrithik: "waste ra dei!!",
-    },
-    username: "legend",
-    upvotes: 24,
-    downvotes: 3,
-    caption:
-      "Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit Hello frands.. Diwali outfit v Hello frands.. Diwali outfit",
-  };
+  try {
+    fb.storage
+      .ref()
+      .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
+      .getDownloadURL()
+      .then((data) => setProfilePic(data));
+  } catch {
+    setProfilePic("");
+  }
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [image, setImage] = useState(null);
@@ -67,17 +70,22 @@ function Profile() {
     }
   };
 
-  const postUploadhandler = (e) => {
+  const saveEditHandler = (e) => {
     e.preventDefault();
 
     const content = {
+      userId: localStorage.getItem("userId"),
       about: editAbout,
       username: editUsername,
     };
 
-    if (!!finalFile) {
-      console.log(content);
-    }
+    fetch("/updateprofile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(content),
+    });
   };
 
   function getCroppedImg() {
@@ -171,7 +179,7 @@ function Profile() {
             </>
           ) : (
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/centiconnect.appspot.com/o/postImages%2F63cd11a998da4ef38ca4967fdf64c88a.jpeg?alt=media&token=2ae5afcd-2e23-4a98-a98d-487980654099"
+              src={profilePic}
               alt=" "
               onDragStart={(e) => {
                 e.preventDefault();
@@ -211,19 +219,21 @@ function Profile() {
           </div>
 
           <div className="bio">
-            <p className="userInfoText">About</p>
+            <p className="userInfoText">
+              {about !== "" || !!editMode ? "About" : ""}
+            </p>
             {editMode ? (
               <textarea
                 type="text"
                 className="bioTextEdit"
-                defaultValue="Centiconnect will launched soon"
+                defaultValue={about}
                 placeholder="About"
                 cols="30"
                 rows="3"
                 onChange={(e) => setEditAbout(e.target.value)}
               ></textarea>
             ) : (
-              <p className="bioText">Centiconnect will launched soon</p>
+              <p className="bioText">{about}</p>
             )}
           </div>
         </div>
@@ -233,7 +243,7 @@ function Profile() {
             <div
               className="profileBannerLinkButton"
               onClick={(e) => {
-                postUploadhandler(e);
+                saveEditHandler(e);
                 setEditMode(false);
               }}
             >
@@ -273,22 +283,20 @@ function Profile() {
       </div>
 
       <div className="currentUserPosts">
-        <Post
-          postId={post.postId}
-          comments={post.comments}
-          username={post.username}
-          upvotes={post.upvotes}
-          downvotes={post.downvotes}
-          caption={post.caption}
-        />
-        <Post
-          postId={post2.postId}
-          comments={post2.comments}
-          username={post2.username}
-          upvotes={post2.upvotes}
-          downvotes={post2.downvotes}
-          caption={post2.caption}
-        />
+        {posts.map((i) => {
+          return (
+            <Post
+              key={i.postId}
+              postId={i.postId}
+              userId={i.userId}
+              comments={i.comments}
+              username={i.username}
+              upvotes={i.upvotes}
+              downvotes={i.downvotes}
+              caption={i.caption}
+            />
+          );
+        })}
       </div>
     </div>
   );

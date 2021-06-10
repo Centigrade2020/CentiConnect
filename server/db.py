@@ -12,7 +12,8 @@ def create_user(email, password, username):
         user = fb.auth.create_user(email=email, password=password)
         fb.firestore.collection("users").document(user.uid).set({
             "username": username,
-            "privacy": False
+            "private": False,
+            "about": ""
         })
         fb.firestore.collection("root").document("AdditionalData").update({
             "usernames": fb.functions.ArrayUnion([username])
@@ -34,8 +35,7 @@ def new_post(username, caption, postId):
     })
 
 
-def remove_post(imageId):
-    fb.firestore.collection('posts').document(imageId).delete()
+
 
 
 def get_user(email):

@@ -71,7 +71,7 @@ function Home() {
   return (
     <div className="Home">
       <div className="posts">
-        <Post
+        {/* <Post
           postId={post.postId}
           comments={post.comments}
           username={post.username}
@@ -86,7 +86,7 @@ function Home() {
           upvotes={post2.upvotes}
           downvotes={post2.downvotes}
           caption={post2.caption}
-        />
+        /> */}
       </div>
       <div
         className="createPostButton"

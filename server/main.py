@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, json
 from services import firebase as fb
 import os
-from db import *
+# from db import *
 import uuid
 
 app = Flask(__name__)
@@ -11,10 +11,23 @@ app = Flask(__name__)
 def signup():
     if request.method == "POST":
         content = request.get_json()
-        data = create_user(
-            content["email"], content["password"], content["username"])
+        # data = create_user(
+        #     content["email"], content["password"], content["username"])
+        try:
+            user = fb.auth.create_user(content["email"], content["password"])
+            fb.firestore.collection("users").document(user.uid).set({
+                "username": content["username"],
+                "private": False,
+                "about": ""
+            })
+            fb.firestore.collection("root").document("AdditionalData").update({
+                "usernames": fb.functions.ArrayUnion([content["username"]])
+            })
+            return jsonify({"uid": f"{user.uid}", "loggedIn": True})
+        except BaseException as e:
+            return jsonify({"error": f"{e.code}"})
+   
 
-        return jsonify(data)
     else:
         return {}
 
@@ -23,23 +36,27 @@ def signup():
 def create_post():
     if request.method == "POST":
         content = request.get_json()
-        new_post(content["username"], content["caption"], content["postId"])
+        # new_post(content["username"], content["caption"], content["postId"])
+        fb.firestore.collection('posts').document(content["postId"]).set({
+            "postId": content["postId"],
+            "userId": content["userId"],
+            "caption": content["caption"],
+            "comments": [],
+            "upvotes": 0,
+            "downvotes": 0
+        })
+        fb.firestore.collection("users").document(content["userId"]).update({
+                "posts": fb.functions.ArrayUnion([content["postId"]])
+            })
         return {}
     else:
         return {}
 
 
-@app.route('/deletepost', methods=["POST", "GET"])
-def deletepost():
-    if request.method == "POST":
-        content = request.get_json()
-        data = remove_post(content['imageId'])
-        return jsonify(data)
-    else:
-        return {}
 
 
-@ app.route('/images', methods=["POST", "GET", "PUT"])
+
+@ app.route('/images', methods=["POST", "GET"])
 def images():
     if request.method == "POST":
         content = request.get_data()
@@ -50,7 +67,10 @@ def images():
         with open(f"uploads/{id}.jpeg", "wb") as f:
             f.write(content)
 
-        upload_to_storage(id, f"uploads/{id}.jpeg")
+        # upload_to_storage(id, f"uploads/{id}.jpeg")
+
+        im = fb.bucket.blob(f'postImages/{id}.jpeg')
+        im.upload_from_filename(f"uploads/{id}.jpeg")
         
         if os.path.exists(f"uploads/{id}.jpeg"):
             os.remove(f"uploads/{id}.jpeg")
@@ -62,6 +82,16 @@ def images():
     else:
         return{}
 
+@app.route('/updateprofile', methods=["POST", "GET"])
+def update_user():
+    if request.method == "POST":
+        content = request.get_json()
+        fb.firestore.collection("users").document(content["userId"]).set({
+            "username": content["username"],
+            "about": content["about"]
+        }, merge=True)
+    else:
+        return {}
 
 
 

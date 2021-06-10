@@ -37,6 +37,7 @@ function CreatePost() {
           return res.json();
         })
         .then((res) => {
+          console.log(res.uuid);
           fetch("/createpost", {
             method: "POST",
             headers: {
@@ -44,7 +45,7 @@ function CreatePost() {
             },
             body: JSON.stringify({
               caption: description,
-              username: "username",
+              userId: localStorage.getItem("userId"),
               postId: res.uuid,
             }),
           });
