@@ -141,7 +141,7 @@ def get_all_posts():
 def index():
     return jsonify({
         "Centigrade": "CentiConnect",
-        "Developed by": {"Dharundds", "DharunVS", "HrithikMJ"}
+        "Developed by": ["Dharundds", "DharunVS", "HrithikMJ"]
     })
 
 
