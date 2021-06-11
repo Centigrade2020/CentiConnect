@@ -73,6 +73,12 @@ function Profile() {
       about: editAbout,
       username: editUsername,
     };
+    if (!!finalFile) {
+      fetch(`/updateprofilepic/${localStorage.getItem("userId")}`, {
+        method: "POST",
+        body: finalFile,
+      });
+    }
 
     fetch("/updateprofile", {
       method: "POST",
@@ -191,7 +197,7 @@ function Profile() {
                 />
               ) : (
                 <img
-                  src=""
+                  src={profilePic}
                   alt=" "
                   onDragStart={(e) => {
                     e.preventDefault();

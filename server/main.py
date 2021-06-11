@@ -147,9 +147,22 @@ def get_all_posts():
     else:
         return {}
 
-# @app.route("/getprofilepic/<uid>", method=["POST", "GET"])
-# def get_profile_pic(uid):
-#     pass
+@app.route("/updateprofilepic/<uid>", methods=["POST", "GET"])
+def update_profile_pic(uid):
+    if request.method == "POST":
+        content = request.get_data()
+        with open(f"defaults/{uid}.jpeg", "wb") as w:
+            w.write(content)
+
+        im = fb.bucket.blob(f'profileImages/{uid}.jpeg')
+        im.upload_from_filename(f"defaults/{uid}.jpeg")
+
+        if os.path.exists(f"defaults/{uid}.jpeg"):
+            os.remove(f"defaults/{uid}.jpeg")
+        
+        return {}
+    else:
+        return {}
 
 
 @ app.route("/")
