@@ -2,12 +2,32 @@ import "./UserProfile.css";
 import { Symbols, Post } from "../../components";
 import { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import fb from "../../services/firebase";
-import "../ProfilePage/Profile.css";
-function UserProfile(props) {
-  const history = useHistory();
-  const location = useLocation();
 
+import { useParams } from "react-router-dom";
+import fb from "../../services/firebase";
+
+function UserProfile() {
+
+
+
+  const { uid } = useParams();
+  console.log(uid)
+  const history = useHistory();
+  const [profilePic, setProfilePic] = useState("");
+  const [username, setUsername] = useState("");
+  const [about, setAbout] = useState("");
+  const [posts, setPosts] = useState([]);
+  const userDoc = fb.firestore
+    .collection("users")
+    .doc(localStorage.getItem("userId"));
+  useEffect(() => {
+    if (!!localStorage.getItem("userId")) {
+      userDoc.get().then((doc) => {
+        setUsername(doc.data().username);
+        setAbout(doc.data().about);
+      });
+    }
+  })
   return (
     <div className="UserProfile">
       <div className="ProfileBanner">
@@ -30,7 +50,7 @@ function UserProfile(props) {
         </div>
 
         <div className="profileBannerContent">
-          <p className="username">{location.username}</p>
+          <p className="username">{uid}</p>
 
           <div className="userInfo">
             <p className="posts">
@@ -51,6 +71,21 @@ function UserProfile(props) {
         </div>
       </div>
       <div className="currentUserPosts">
+        {posts &&
+          posts.map((i) => {
+            return (
+              <Post
+                key={i.postId}
+                postId={i.postId}
+                userId={i.userId}
+                comments={i.comments}
+                username={i.username}
+                upvotes={i.upvotes}
+                downvotes={i.downvotes}
+                caption={i.caption}
+              />
+            );
+          })}
         {/* <Post
                     postId={post.postId}
                     comments={post.comments}
@@ -70,5 +105,6 @@ function UserProfile(props) {
       </div>
     </div>
   );
+
 }
 export default UserProfile;

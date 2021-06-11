@@ -35,7 +35,7 @@
 }
 
 .NavBar .navBarContainer > .profileContainer > .profilePicContainer:hover {
-  box-shadow: 0 0 0 4px var(--violet3);
+  box-shadow: 0 0 0 3px rgb(195, 186, 231);
 }
 
 .NavBar .profileName {

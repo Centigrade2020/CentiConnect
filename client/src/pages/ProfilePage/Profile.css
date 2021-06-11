@@ -222,7 +222,10 @@
 .profilePicContainer:hover .input {
   opacity: 1;
 }
-
+.profilePicContainer:hover {
+  transition: 300ms ease-in-out;
+  box-shadow: 0 0 0 5px var(--violet);
+}
 .profilePicContainer .input input {
   background-color: black;
   width: 100%;

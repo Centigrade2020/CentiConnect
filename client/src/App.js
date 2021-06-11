@@ -57,7 +57,7 @@ function App() {
         <Route path="/createpost" component={CreatePost} />
         <Route path="/profile" component={Profile} />
 
-        <Route path="/user" component={UserProfile} />
+        <Route path="/user/:uid" component={UserProfile} />
       </>
     </Switch>
   );
