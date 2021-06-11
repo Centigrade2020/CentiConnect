@@ -106,7 +106,7 @@ function Profile() {
   }
 
   useEffect(() => {
-    fetch(`/getuserposts/${localStorage.getItem("userId")}`, {
+    fetch(`getuserposts/${localStorage.getItem("userId")}`, {
       method: "GET",
     })
       .then((res) => {
