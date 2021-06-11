@@ -1,7 +1,21 @@
-from flask import Flask, jsonify, request, json
-from services import firebase as fb
+from flask import Flask, jsonify, request
 import os
 import uuid
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore, auth, storage
+
+cred = credentials.Certificate("services/serviceAccountKey.json")
+app = firebase_admin.initialize_app(cred, {
+    'storageBucket': 'centiconnect.appspot.com'
+
+})
+
+functions = firestore
+fbfirestore = firestore.client()
+fbauth = auth
+bucket = storage.bucket()
+
 
 app = Flask(__name__)
 
@@ -11,16 +25,16 @@ def signup():
     if request.method == "POST":
         content = request.get_json()
         try:
-            user = fb.auth.create_user(
+            user = fbauth.create_user(
                 email=content["email"], password=content["password"])
-            fb.firestore.collection("users").document(user.uid).set({
+            fbfirestore.collection("users").document(user.uid).set({
                 "username": content["username"],
                 "private": False,
                 "about": "",
                 "post": []
             })
-            fb.firestore.collection("root").document("AdditionalData").update({
-                "usernames": fb.functions.ArrayUnion([content["username"]])
+            fbfirestore.collection("root").document("AdditionalData").update({
+                "usernames": functions.ArrayUnion([content["username"]])
             })
 
             with open("defaults/defaultProfile.jpeg", "rb") as r:
@@ -28,7 +42,7 @@ def signup():
                 with open(f"defaults/{user.uid}.jpeg", "wb") as w:
                     w.write(data)
 
-            im = fb.bucket.blob(f'profileImages/{user.uid}.jpeg')
+            im = bucket.blob(f'profileImages/{user.uid}.jpeg')
             im.upload_from_filename(f"defaults/{user.uid}.jpeg")
 
             if os.path.exists(f"defaults/{user.uid}.jpeg"):
@@ -46,7 +60,7 @@ def signup():
 def create_post():
     if request.method == "POST":
         content = request.get_json()
-        fb.firestore.collection('posts').document(content["postId"]).set({
+        fbfirestore.collection('posts').document(content["postId"]).set({
             "postId": content["postId"],
             "userId": content["userId"],
             "caption": content["caption"],
@@ -54,8 +68,8 @@ def create_post():
             "upvotes": 0,
             "downvotes": 0
         })
-        fb.firestore.collection("users").document(content["userId"]).update({
-            "posts": fb.functions.ArrayUnion([content["postId"]])
+        fbfirestore.collection("users").document(content["userId"]).update({
+            "posts": functions.ArrayUnion([content["postId"]])
         })
         return {}
     else:
@@ -73,7 +87,7 @@ def images():
         with open(f"uploads/{id}.jpeg", "wb") as f:
             f.write(content)
 
-        im = fb.bucket.blob(f'postImages/{id}.jpeg')
+        im = bucket.blob(f'postImages/{id}.jpeg')
         im.upload_from_filename(f"uploads/{id}.jpeg")
 
         if os.path.exists(f"uploads/{id}.jpeg"):
@@ -92,7 +106,7 @@ def update_user():
     if request.method == "POST":
         content = request.get_json()
 
-        fb.firestore.collection("users").document(content["userId"]).update({
+        fbfirestore.collection("users").document(content["userId"]).update({
             "username": content["username"],
             "about": content["about"]
         })
@@ -106,8 +120,8 @@ def post_comment():
     if request.method == "POST":
         content = request.get_json()
 
-        fb.firestore.collection("posts").document(content["postId"]).update({
-            "comments": fb.functions.ArrayUnion([{
+        fbfirestore.collection("posts").document(content["postId"]).update({
+            "comments": functions.ArrayUnion([{
                 "userId": content["userId"],
                 "comment": content["comment"]
             }])
@@ -120,12 +134,12 @@ def post_comment():
 @app.route("/getuserposts/<uid>", methods=["POST", "GET"])
 def get_user_posts(uid):
     if request.method == "GET":
-        user_doc = fb.firestore.collection(
+        user_doc = fbfirestore.collection(
             "users").document(uid).get().to_dict()
         try:
             user_posts = []
             for i in user_doc["posts"]:
-                post = fb.firestore.collection(
+                post = fbfirestore.collection(
                     "posts").document(i).get().to_dict()
                 user_posts.append(post)
             return jsonify({
@@ -144,7 +158,7 @@ def get_user_posts(uid):
 def get_all_posts():
     if request.method == "GET":
         posts_list = []
-        posts = fb.firestore.collection("posts").get()
+        posts = fbfirestore.collection("posts").get()
         for i in posts:
             posts_list.append(i.to_dict())
 
@@ -162,7 +176,7 @@ def update_profile_pic(uid):
         with open(f"defaults/{uid}.jpeg", "wb") as w:
             w.write(content)
 
-        im = fb.bucket.blob(f'profileImages/{uid}.jpeg')
+        im = bucket.blob(f'profileImages/{uid}.jpeg')
         im.upload_from_filename(f"defaults/{uid}.jpeg")
 
         if os.path.exists(f"defaults/{uid}.jpeg"):

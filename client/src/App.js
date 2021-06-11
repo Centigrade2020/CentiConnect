@@ -23,24 +23,6 @@ function App() {
       sessionStorage.setItem("usernames", doc.data().usernames);
     });
 
-  // useEffect(() => {
-  //   if (authResolved) {
-  //     if (location.pathname === "/createpost") {
-  //       history.push(!!authUser ? "/createpost" : "login");
-  //     } else if (location.pathname === "/profile") {
-  //       history.push(!!authUser ? "/profile" : "login");
-  //     } else if (location.pathname === "/signup") {
-  //       history.push(!!authUser ? "/" : "signup");
-  //     } else if (location.pathname === "/user") {
-  //       history.push(!!authUser ? "/user" : "/login");
-  //     } else if (location.pathname === "/") {
-  //       history.push(!!authUser ? "/" : "/login");
-  //     } else {
-  //       history.push(!!authUser ? "/" : "login");
-  //     }
-  //   }
-  // }, [authResolved, authUser, history, location.pathname]);
-
   useEffect(() => {
     if (authResolved) {
       history.push(!authUser && "login");
