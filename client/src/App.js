@@ -39,7 +39,7 @@ function App() {
         <Route path="/createpost" component={CreatePost} />
         <Route path="/profile" component={Profile} />
 
-        <Route path="/user/:uid" component={UserProfile} />
+        <Route path="/user" component={UserProfile} />
       </>
     </Switch>
   );

@@ -6,28 +6,41 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import fb from "../../services/firebase";
 
-function UserProfile() {
+function UserProfile(props) {
 
 
 
-  const { uid } = useParams();
-  console.log(uid)
+  // const { uid } = useParams();
+
+  const location = useLocation()
+
+
+  console.log()
+
+
   const history = useHistory();
   const [profilePic, setProfilePic] = useState("");
-  const [username, setUsername] = useState("");
+  const [usernam, setUsernam] = useState("");
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
   const userDoc = fb.firestore
     .collection("users")
     .doc(localStorage.getItem("userId"));
-  useEffect(() => {
-    if (!!localStorage.getItem("userId")) {
-      userDoc.get().then((doc) => {
-        setUsername(doc.data().username);
-        setAbout(doc.data().about);
-      });
-    }
-  })
+  // useEffect(() => {
+  //   if (!!localStorage.getItem("userId")) {
+  //     userDoc.get().then((doc) => {
+  //       setUsername(doc.data().username);
+  //       setAbout(doc.data().about);
+  //     });
+  //   }
+  // })
+  // fb.firestore
+  //   .collection("users")
+  //   .doc(uid)
+  //   .get('username')
+  //   .then((doc) => {
+  //     setUsername(doc.data().username);
+  //   });
   return (
     <div className="UserProfile">
       <div className="ProfileBanner">
@@ -50,7 +63,7 @@ function UserProfile() {
         </div>
 
         <div className="profileBannerContent">
-          <p className="username">{uid}</p>
+          <p className="username">{location.username}</p>
 
           <div className="userInfo">
             <p className="posts">
