@@ -14,6 +14,7 @@ function Profile() {
   const [username, setUsername] = useState("");
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
+  const [noOfPosts, setnoOfPosts] = useState(0);
 
   const userDoc = fb.firestore
     .collection("users")
@@ -156,10 +157,10 @@ function Profile() {
       })
       .then((res) => {
         setPosts(res.posts);
-       if(res.noOfPost !== undefined){
-         console.log(res.noOfPost)
-         setnoOfPosts(res.noOfPost)
-       }
+        if (res.noOfPost !== undefined) {
+          console.log(res.noOfPost);
+          setnoOfPosts(res.noOfPost);
+        }
       });
   }, []);
 
@@ -247,7 +248,7 @@ function Profile() {
           )}
 
           <div className="userInfo">
-            <p className="posts">      
+            <p className="posts">
               <span className="userInfoNum">{noOfPosts}</span>
               <span className="userInfoText">Posts</span>
             </p>
