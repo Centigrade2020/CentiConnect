@@ -31,7 +31,7 @@ function Profile() {
           .ref()
           .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
           .getDownloadURL()
-          .then((data) => (!data ? setProfilePic(data) : console.log("")))
+          .then((data) => setProfilePic(data))
           .catch(() => {
             "";
           });

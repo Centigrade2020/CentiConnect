@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request, json
 from services import firebase as fb
 import os
-# from db import *
 import uuid
 
 app = Flask(__name__)
@@ -12,7 +11,7 @@ def signup():
     if request.method == "POST":
         content = request.get_json()
         try:
-            user = fb.auth.create_user(content["email"], content["password"])
+            user = fb.auth.create_user(email=content["email"], password=content["password"])
             fb.firestore.collection("users").document(user.uid).set({
                 "username": content["username"],
                 "private": False,
@@ -22,6 +21,18 @@ def signup():
             fb.firestore.collection("root").document("AdditionalData").update({
                 "usernames": fb.functions.ArrayUnion([content["username"]])
             })
+
+            with open("defaults/defaultProfile.jpeg", "rb") as r:
+                data = r.read()
+                with open(f"defaults/{user.uid}.jpeg", "wb") as w:
+                    w.write(data)
+
+            im = fb.bucket.blob(f'profileImages/{user.uid}.jpeg')
+            im.upload_from_filename(f"defaults/{user.uid}.jpeg")
+
+            if os.path.exists(f"defaults/{user.uid}.jpeg"):
+                os.remove(f"defaults/{user.uid}.jpeg")
+
             return jsonify({"uid": f"{user.uid}", "loggedIn": True})
         except BaseException as e:
             return jsonify({"error": f"{e.code}"})
@@ -135,6 +146,10 @@ def get_all_posts():
         })
     else:
         return {}
+
+# @app.route("/getprofilepic/<uid>", method=["POST", "GET"])
+# def get_profile_pic(uid):
+#     pass
 
 
 @ app.route("/")

@@ -24,28 +24,47 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
     console.log("");
   }
 
-  try {
-    fb.storage
-      .ref()
-      .child(`profileImages/${userId}.jpeg`)
-      .getDownloadURL()
-      .then((data) => (!data ? setProfilePic(data) : ""))
-      .catch(() => {
-        console.log("");
-      });
-  } catch {
-    setProfilePic("");
-  }
+  fb.storage
+    .ref()
+    .child(`profileImages/${userId}.jpeg`)
+    .getDownloadURL()
+    .then((data) => setProfilePic(data))
+    .catch(() => {
+      console.log("");
+    });
 
-  try {
-    fb.storage
-      .ref()
-      .child(`postImages/${postId}.jpeg`)
-      .getDownloadURL()
-      .then((data) => setLink(data));
-  } catch {
-    console.log("No image");
-  }
+  fb.storage
+    .ref()
+    .child(`postImages/${postId}.jpeg`)
+    .getDownloadURL()
+    .then((data) => setLink(data));
+
+  /////////////////////
+  // DON'T UNCOMMENT //
+  ////////////////////
+
+  // try {
+  //   fb.storage
+  //     .ref()
+  //     .child(`profileImages/${userId}.jpeg`)
+  //     .getDownloadURL()
+  //     .then((data) => setProfilePic(data))
+  //     .catch(() => {
+  //       console.log("");
+  //     });
+  // } catch {
+  //   setProfilePic("");
+  // }
+
+  // try {
+  //   fb.storage
+  //     .ref()
+  //     .child(`postImages/${postId}.jpeg`)
+  //     .getDownloadURL()
+  //     .then((data) => setLink(data));
+  // } catch {
+  //   console.log("No image");
+  // }
 
   const postComment = () => {
     if (comment.split(" ").join() !== "") {
