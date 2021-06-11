@@ -5,15 +5,19 @@ export function FormField({
   label,
   type = "text",
   autoComplete = "off",
+  rows = "1",
+  as = "input",
 }) {
   return (
     <label>
       <Field
-        className="formField"
+        className="formField formTextArea"
         type={type}
         name={name}
         placeholder={label}
         autoComplete={autoComplete}
+        rows={rows}
+        as={as}
       />
       <div className="errorContainer">
         <ErrorMessage className="error" component="p" name={name} />

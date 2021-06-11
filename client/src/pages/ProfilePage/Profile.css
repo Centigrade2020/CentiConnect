@@ -149,6 +149,7 @@
   border-radius: 50%;
   cursor: pointer;
   transition: all 200ms ease-in-out;
+  position: relative;
 }
 
 .profileBannerLinkButton:hover {
@@ -323,4 +324,16 @@
 }
 .cropContainer button:hover {
   background-color: var(--violet2);
+}
+
+.floatingInfo {
+  position: absolute;
+  bottom: -25px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.profileBannerLinkButton:hover > .floatingInfo {
+  opacity: 1;
 }

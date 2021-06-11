@@ -106,6 +106,17 @@ def update_user():
     if request.method == "POST":
         content = request.get_json()
 
+        user_doc = fbfirestore.collection(
+            "users").document(content["userId"]).get().to_dict()
+
+        fbfirestore.collection("root").document("AdditionalData").update({
+            "usernames": functions.ArrayRemove([user_doc["username"]])
+        })
+
+        fbfirestore.collection("root").document("AdditionalData").update({
+            "usernames": functions.ArrayUnion([content["username"]])
+        })
+
         fbfirestore.collection("users").document(content["userId"]).update({
             "username": content["username"],
             "about": content["about"]

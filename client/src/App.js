@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost";
+import Settings from "./pages/Settings";
 import NavBar from "./components/NavBar";
 import Profile from "./pages/ProfilePage";
 import fb from "./services/firebase";
@@ -15,18 +16,17 @@ function App() {
   const authUser = useAuth();
   const authResolved = useResolved(authUser);
 
-  fb.firestore
-    .collection("root")
-    .doc("AdditionalData")
-    .get()
-    .then((doc) => {
-      sessionStorage.setItem("usernames", doc.data().usernames);
-    });
-
   useEffect(() => {
     if (authResolved) {
       history.push(!authUser && "login");
     }
+    fb.firestore
+      .collection("root")
+      .doc("AdditionalData")
+      .get()
+      .then((doc) => {
+        sessionStorage.setItem("usernames", doc.data().usernames);
+      });
   }, [authResolved, authUser, history]);
 
   return (
@@ -38,7 +38,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/createpost" component={CreatePost} />
         <Route path="/profile" component={Profile} />
-
+        <Route path="/settings" component={Settings} />
         <Route path="/user" component={UserProfile} />
       </>
     </Switch>

@@ -1,0 +1,121 @@
+.Settings {
+  width: 800px;
+  margin: 5vh auto;
+  background-color: var(--violet);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settingOptionContainer {
+  border-radius: 15px;
+  background-color: white;
+  padding: 20px;
+}
+
+.settingsDisplay {
+  padding: 30px;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.settingOptionContainer {
+  width: 35%;
+  border-right: 2px solid var(--violet);
+}
+
+.settingsDisplay {
+  width: 63%;
+}
+
+.settingsLinks li {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.selectedSettingsLink {
+  background-color: var(--violet);
+  color: white;
+}
+
+.profileScreen {
+  width: 100%;
+}
+
+.Settings .profilePicContainer {
+  width: 250px;
+  height: 250px;
+  margin: auto;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: rgb(235, 235, 235);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Settings form * {
+  width: 100%;
+}
+
+.Settings form h1 {
+  color: var(--violet);
+  font-size: 1.4rem;
+  margin: 5px 0;
+}
+
+.formField,
+.formTextArea {
+  border: none;
+  margin: auto;
+  padding: 15px;
+  border-radius: 2px;
+  background-color: rgb(235, 235, 235);
+  border: 1px solid rgb(235, 235, 235);
+  color: rgb(110, 110, 110);
+  resize: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.Settings .errorContainer {
+  min-height: 30px;
+  text-align: left;
+}
+
+.Settings .error {
+  font-size: 0.8rem;
+  color: red;
+}
+
+.Settings button {
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: var(--violet);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.Settings button:hover {
+  background-color: var(--violet2);
+}
+
+.Settings button:disabled {
+  background-color: rgb(235, 235, 235);
+  border: 1px solid rgb(235, 235, 235);
+  color: rgb(197, 197, 197);
+  cursor: not-allowed;
+}
