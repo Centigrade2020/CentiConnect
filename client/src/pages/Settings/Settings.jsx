@@ -160,20 +160,6 @@ function Settings() {
               />
             )}
           </>
-
-          {/* <img
-            src={profilePic}
-            alt=" "
-            onDragStart={(e) => {
-              e.preventDefault();
-            }}
-            onContextMenu={(e) => {
-              e.preventDefault();
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          /> */}
         </div>
         <Formik
           onSubmit={saveChanges}
@@ -244,6 +230,7 @@ function Settings() {
       <div className="settingOptionContainer">
         <ul className="settingsLinks">
           <li
+            className={screen == "profile" && "selectedSettingsLink"}
             onClick={() => {
               setScreen("profile");
             }}
@@ -251,6 +238,7 @@ function Settings() {
             Edit profile
           </li>
           <li
+            className={screen == "email" && "selectedSettingsLink"}
             onClick={() => {
               setScreen("email");
             }}
@@ -258,6 +246,7 @@ function Settings() {
             Change email
           </li>
           <li
+            className={screen == "password" && "selectedSettingsLink"}
             onClick={() => {
               setScreen("password");
             }}
@@ -265,6 +254,7 @@ function Settings() {
             Change password
           </li>
           <li
+            className={screen == "account" && "selectedSettingsLink"}
             onClick={() => {
               setScreen("account");
             }}
