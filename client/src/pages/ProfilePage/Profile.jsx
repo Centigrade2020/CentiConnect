@@ -156,13 +156,10 @@ function Profile() {
       })
       .then((res) => {
         setPosts(res.posts);
-<<<<<<< Updated upstream
-=======
        if(res.noOfPost !== undefined){
          console.log(res.noOfPost)
          setnoOfPosts(res.noOfPost)
        }
->>>>>>> Stashed changes
       });
   }, []);
 
@@ -250,13 +247,8 @@ function Profile() {
           )}
 
           <div className="userInfo">
-<<<<<<< Updated upstream
-            <p className="posts">
-              <span className="userInfoNum">2</span>
-=======
             <p className="posts">      
               <span className="userInfoNum">{noOfPosts}</span>
->>>>>>> Stashed changes
               <span className="userInfoText">Posts</span>
             </p>
             <p className="connections">
