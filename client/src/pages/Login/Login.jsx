@@ -29,6 +29,7 @@ function Login() {
       .finally(() => {
         setSubmitting(false);
         localStorage.setItem("userId", fb.auth.currentUser?.uid);
+        history.push("/");
       });
   };
 

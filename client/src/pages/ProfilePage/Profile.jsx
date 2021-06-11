@@ -1,4 +1,4 @@
-import { Symbols, Post } from "../../components";
+import { Symbols, Post, Settings } from "../../components";
 import "./Profile.css";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
@@ -9,12 +9,13 @@ import fb from "../../services/firebase";
 function Profile() {
   const history = useHistory();
 
-  const [editMode, setEditMode] = useState(false);
   const [profilePic, setProfilePic] = useState("");
   const [username, setUsername] = useState("");
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
-  const [noOfPosts, setnoOfPosts] = useState(0);
+  const [postCount, setPostCount] = useState(0);
+
+  const [submitState, setSubmiteState] = useState(false);
 
   const userDoc = fb.firestore
     .collection("users")
@@ -50,8 +51,6 @@ function Profile() {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [image, setImage] = useState(null);
-  const [editAbout, setEditAbout] = useState("");
-  const [editUsername, setEditUsername] = useState("");
   const [finalFile, setFinalfile] = useState(null);
   const [result, setResult] = useState(null);
   const [crop, setCrop] = useState({
@@ -64,38 +63,6 @@ function Profile() {
     } catch {
       console.log("");
     }
-  };
-
-  const saveEditHandler = (e) => {
-    e.preventDefault();
-
-    const content = {
-      userId: localStorage.getItem("userId"),
-      about: editAbout,
-      username: editUsername,
-    };
-
-    if (!!finalFile) {
-      fetch(`/updateprofilepic/${localStorage.getItem("userId")}`, {
-        method: "POST",
-        body: finalFile,
-      });
-    }
-
-    fetch("/updateprofile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(content),
-    }).then(() => {
-      if (!!localStorage.getItem("userId")) {
-        userDoc.get().then((doc) => {
-          setUsername(doc.data().username);
-          setAbout(doc.data().about);
-        });
-      }
-    });
   };
 
   function getCroppedImg() {
@@ -138,16 +105,6 @@ function Profile() {
     return new Blob([ab], { type: mimeString });
   }
 
-  const editModehandler = () => {
-    if (!!localStorage.getItem("userId")) {
-      userDoc.get().then((doc) => {
-        setEditUsername(doc.data().username);
-        setEditAbout(doc.data().about);
-      });
-    }
-    setEditMode(true);
-  };
-
   useEffect(() => {
     fetch(`/getuserposts/${localStorage.getItem("userId")}`, {
       method: "GET",
@@ -158,8 +115,7 @@ function Profile() {
       .then((res) => {
         setPosts(res.posts);
         if (res.noOfPost !== undefined) {
-          console.log(res.noOfPost);
-          setnoOfPosts(res.noOfPost);
+          setPostCount(res.noOfPost);
         }
       });
   }, []);
@@ -167,89 +123,28 @@ function Profile() {
   return (
     <div className="Profile">
       <div className="ProfileBanner">
-        <div
-          className={
-            editMode
-              ? "profilePicContainer profilePicContainerEditMode"
-              : "profilePicContainer"
-          }
-        >
-          {editMode ? (
-            <>
-              <div className="input">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={fileSelectHandler}
-                />
-                <div className="text">
-                  <Symbols.Image size="100" /> Select image
-                </div>
-              </div>
-
-              {result ? (
-                <img
-                  src={result}
-                  alt=" "
-                  onDragStart={(e) => {
-                    e.preventDefault();
-                  }}
-                  onContextMenu={(e) => {
-                    e.preventDefault();
-                  }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
-                />
-              ) : (
-                <img
-                  src={profilePic}
-                  alt=" "
-                  onDragStart={(e) => {
-                    e.preventDefault();
-                  }}
-                  onContextMenu={(e) => {
-                    e.preventDefault();
-                  }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
-                />
-              )}
-            </>
-          ) : (
-            <img
-              src={profilePic}
-              alt=" "
-              onDragStart={(e) => {
-                e.preventDefault();
-              }}
-              onContextMenu={(e) => {
-                e.preventDefault();
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-            />
-          )}
+        <div className="profilePicContainer">
+          <img
+            src={profilePic}
+            alt=" "
+            onDragStart={(e) => {
+              e.preventDefault();
+            }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          />
         </div>
 
         <div className="profileBannerContent">
-          {editMode ? (
-            <input
-              type="text"
-              className="usernameEdit"
-              defaultValue={username}
-              placeholder={username}
-              onChange={(e) => setEditUsername(e.target.value)}
-            />
-          ) : (
-            <p className="username">{username}</p>
-          )}
+          <p className="username">{username}</p>
 
           <div className="userInfo">
             <p className="posts">
-              <span className="userInfoNum">{noOfPosts}</span>
+              <span className="userInfoNum">{postCount}</span>
               <span className="userInfoText">Posts</span>
             </p>
             <p className="connections">
@@ -259,46 +154,24 @@ function Profile() {
           </div>
 
           <div className="bio">
-            <p className="userInfoText">
-              {about !== "" || !!editMode ? "About" : ""}
-            </p>
-            {editMode ? (
-              <textarea
-                type="text"
-                className="bioTextEdit"
-                defaultValue={about}
-                placeholder="About"
-                cols="30"
-                rows="3"
-                onChange={(e) => setEditAbout(e.target.value)}
-              ></textarea>
-            ) : (
-              <p className="bioText">{about}</p>
-            )}
+            <p className="userInfoText">About</p>
+
+            <p className="bioText">{about}</p>
           </div>
         </div>
 
         <div className="profileBannerLinks">
-          {editMode ? (
-            <div
-              className="profileBannerLinkButton"
-              onClick={(e) => {
-                saveEditHandler(e);
-                setEditMode(false);
-              }}
-            >
-              <Symbols.Save size="30" />
-            </div>
-          ) : (
-            <div className="profileBannerLinkButton" onClick={editModehandler}>
-              <Symbols.Edit size="30" />
-            </div>
-          )}
-
           <div className="profileBannerLinkButton">
             <Symbols.Settings size="30" />
           </div>
-          <div className="profileBannerLinkButton" onClick={() => logout()}>
+          <div
+            className="profileBannerLinkButton"
+            alt="logout"
+            onMouseOver={() => {
+              console.log("hello");
+            }}
+            onClick={() => logout()}
+          >
             <Symbols.Logout size="30" />
           </div>
         </div>
@@ -335,6 +208,8 @@ function Profile() {
             />
           ))}
       </div>
+
+      <Settings />
     </div>
   );
 }
