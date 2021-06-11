@@ -11,7 +11,8 @@ def signup():
     if request.method == "POST":
         content = request.get_json()
         try:
-            user = fb.auth.create_user(email=content["email"], password=content["password"])
+            user = fb.auth.create_user(
+                email=content["email"], password=content["password"])
             fb.firestore.collection("users").document(user.uid).set({
                 "username": content["username"],
                 "private": False,
@@ -99,6 +100,7 @@ def update_user():
     else:
         return {}
 
+
 @app.route("/postcomment", methods=["POST", "GET"])
 def post_comment():
     if request.method == "POST":
@@ -106,25 +108,29 @@ def post_comment():
 
         fb.firestore.collection("posts").document(content["postId"]).update({
             "comments": fb.functions.ArrayUnion([{
-                "userId" : content["userId"],
-                "comment" : content["comment"]
-                }])
+                "userId": content["userId"],
+                "comment": content["comment"]
+            }])
         })
         return {}
     else:
         return {}
 
+
 @app.route("/getuserposts/<uid>", methods=["POST", "GET"])
 def get_user_posts(uid):
     if request.method == "GET":
-        user_doc = fb.firestore.collection("users").document(uid).get().to_dict()
+        user_doc = fb.firestore.collection(
+            "users").document(uid).get().to_dict()
         try:
             user_posts = []
             for i in user_doc["posts"]:
-                post = fb.firestore.collection("posts").document(i).get().to_dict()
+                post = fb.firestore.collection(
+                    "posts").document(i).get().to_dict()
                 user_posts.append(post)
             return jsonify({
-                "posts": user_posts
+                "posts": user_posts,
+                "noOfPost": len(user_posts)
             })
         except:
             return jsonify(({
@@ -133,6 +139,7 @@ def get_user_posts(uid):
     else:
         return {}
 
+
 @app.route("/getallposts", methods=["POST", "GET"])
 def get_all_posts():
     if request.method == "GET":
@@ -140,12 +147,13 @@ def get_all_posts():
         posts = fb.firestore.collection("posts").get()
         for i in posts:
             posts_list.append(i.to_dict())
-            
+
         return jsonify({
             "posts": posts_list
         })
     else:
         return {}
+
 
 @app.route("/updateprofilepic/<uid>", methods=["POST", "GET"])
 def update_profile_pic(uid):
@@ -159,7 +167,7 @@ def update_profile_pic(uid):
 
         if os.path.exists(f"defaults/{uid}.jpeg"):
             os.remove(f"defaults/{uid}.jpeg")
-        
+
         return {}
     else:
         return {}
@@ -171,10 +179,6 @@ def index():
         "Centigrade": "CentiConnect",
         "Developed by": ["Dharundds", "DharunVS", "HrithikMJ"]
     })
-
-
-
-
 
 
 if __name__ == "__main__":

@@ -53,6 +53,7 @@ function Profile() {
   const [editUsername, setEditUsername] = useState("");
   const [finalFile, setFinalfile] = useState(null);
   const [result, setResult] = useState(null);
+  const [noOfPosts,setnoOfPosts]= useState(0);
   const [crop, setCrop] = useState({
     aspect: 1 / 1,
   });
@@ -155,6 +156,7 @@ function Profile() {
       })
       .then((res) => {
         setPosts(res.posts);
+        setnoOfPosts(res.noOfPost)
       });
   }, []);
 
@@ -243,7 +245,7 @@ function Profile() {
 
           <div className="userInfo">
             <p className="posts">
-              <span className="userInfoNum">2</span>
+              <span className="userInfoNum">{noOfPosts}</span>
               <span className="userInfoText">Posts</span>
             </p>
             <p className="connections">
