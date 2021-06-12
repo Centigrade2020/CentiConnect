@@ -227,50 +227,53 @@ function Settings() {
 
   return (
     <div className="Settings">
-      <div className="settingOptionContainer">
-        <ul className="settingsLinks">
-          <li
-            className={screen == "profile" && "selectedSettingsLink"}
-            onClick={() => {
-              setScreen("profile");
-            }}
-          >
-            Edit profile
-          </li>
-          <li
-            className={screen == "email" && "selectedSettingsLink"}
-            onClick={() => {
-              setScreen("email");
-            }}
-          >
-            Change email
-          </li>
-          <li
-            className={screen == "password" && "selectedSettingsLink"}
-            onClick={() => {
-              setScreen("password");
-            }}
-          >
-            Change password
-          </li>
-          <li
-            className={screen == "account" && "selectedSettingsLink"}
-            onClick={() => {
-              setScreen("account");
-            }}
-          >
-            Delect Account
-          </li>
-        </ul>
-      </div>
-      <div className="settingsDisplay">
-        {screen === "profile"
-          ? renderProfileScreen()
-          : screen === "email"
-          ? renderEmailScreen()
-          : screen === "password"
-          ? renderPasswordScreen()
-          : renderAccountScreen()}
+      <div className="settingsWrapper">
+        <div className="settingOptionContainer">
+          <ul className="settingsLinks">
+            <li
+              className={screen == "profile" && "selectedSettingsLink"}
+              onClick={() => {
+                setScreen("profile");
+              }}
+            >
+              Edit profile
+            </li>
+            <li
+              className={screen == "email" && "selectedSettingsLink"}
+              onClick={() => {
+                setScreen("email");
+              }}
+            >
+              Change email
+            </li>
+            <li
+              className={screen == "password" && "selectedSettingsLink"}
+              onClick={() => {
+                setScreen("password");
+              }}
+            >
+              Change password
+            </li>
+            <li
+              className={screen == "account" && "selectedSettingsLink"}
+              onClick={() => {
+                setScreen("account");
+              }}
+            >
+              Delect Account
+            </li>
+          </ul>
+        </div>
+
+        <div className="settingsDisplay">
+          {screen === "profile"
+            ? renderProfileScreen()
+            : screen === "email"
+            ? renderEmailScreen()
+            : screen === "password"
+            ? renderPasswordScreen()
+            : renderAccountScreen()}
+        </div>
       </div>
     </div>
   );
