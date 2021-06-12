@@ -88,7 +88,7 @@ function Profile() {
               <span className="userInfoText">Posts</span>
             </p>
             <p className="connections">
-              <span className="userInfoNum">69</span>
+              <span className="userInfoNum">3</span>
               <span className="userInfoText">Connections</span>
             </p>
           </div>
