@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import os
 import uuid
+from services import fbConfig as fb
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore, auth, storage
@@ -198,7 +199,13 @@ def update_profile_pic(uid):
         return {}
 
 
-@ app.route("/")
+@app.route("/getfirebase", methods=["GET"])
+def get_firebase():
+    firebaseConfig = fb.firebaseConfig
+    return jsonify(firebaseConfig)
+
+
+@app.route("/")
 def index():
     return jsonify({
         "Centigrade": "CentiConnect",

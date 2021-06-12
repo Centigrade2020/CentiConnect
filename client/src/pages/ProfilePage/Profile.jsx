@@ -13,16 +13,16 @@ function Profile() {
   const [posts, setPosts] = useState([]);
   const [postCount, setPostCount] = useState(0);
 
-  const userDoc = fb.firestore
-    .collection("users")
-    .doc(localStorage.getItem("userId"));
-
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
-      userDoc.get().then((doc) => {
-        setUsername(doc.data().username);
-        setAbout(doc.data().about);
-      });
+      fb.firestore
+        .collection("users")
+        .doc(localStorage.getItem("userId"))
+        .get()
+        .then((doc) => {
+          setUsername(doc.data().username);
+          setAbout(doc.data().about);
+        });
 
       try {
         fb.storage

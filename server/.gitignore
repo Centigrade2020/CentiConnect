@@ -1,5 +1,4 @@
 /services/serviceAccountKey.json
-/services/fbConfig.py
-/services/__pycache__
+/services/*
 /__pycache__
 /log.txt

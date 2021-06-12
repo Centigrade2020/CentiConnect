@@ -12,10 +12,6 @@ function Settings() {
   const [profilePic, setProfilePic] = useState("");
   const [screen, setScreen] = useState("profile");
 
-  const userDoc = fb.firestore
-    .collection("users")
-    .doc(localStorage.getItem("userId"));
-
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
       try {
@@ -215,8 +211,6 @@ function Settings() {
     );
   };
 
-  const renderEmailScreen = () => <div className="emailScreen">Email</div>;
-
   const renderPasswordScreen = () => (
     <div className="passwordScreen">Password</div>
   );
@@ -231,23 +225,16 @@ function Settings() {
         <div className="settingOptionContainer">
           <ul className="settingsLinks">
             <li
-              className={screen == "profile" && "selectedSettingsLink"}
+              className={screen === "profile" ? "selectedSettingsLink" : ""}
               onClick={() => {
                 setScreen("profile");
               }}
             >
               Edit profile
             </li>
+
             <li
-              className={screen == "email" && "selectedSettingsLink"}
-              onClick={() => {
-                setScreen("email");
-              }}
-            >
-              Change email
-            </li>
-            <li
-              className={screen == "password" && "selectedSettingsLink"}
+              className={screen === "password" ? "selectedSettingsLink" : ""}
               onClick={() => {
                 setScreen("password");
               }}
@@ -255,7 +242,7 @@ function Settings() {
               Change password
             </li>
             <li
-              className={screen == "account" && "selectedSettingsLink"}
+              className={screen === "account" ? "selectedSettingsLink" : ""}
               onClick={() => {
                 setScreen("account");
               }}
@@ -269,8 +256,6 @@ function Settings() {
           {screen === "profile"
             ? renderProfileScreen()
             : screen === "email"
-            ? renderEmailScreen()
-            : screen === "password"
             ? renderPasswordScreen()
             : renderAccountScreen()}
         </div>

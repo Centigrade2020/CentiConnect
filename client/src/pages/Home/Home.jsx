@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Symbols, Post } from "../../components";
-import fb from "../../services/firebase";
 import "./Home.css";
 
 function Home() {
   const history = useHistory();
-
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
