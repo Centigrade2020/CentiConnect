@@ -21,7 +21,6 @@ try {
     appId: fbConfig.f48d3029740a4910928863cad4ab864a,
     measurementId: fbConfig.b003a73e346040539ee2bf698f4d41a7,
   });
-  sessionStorage.clear();
 } catch (error) {
   if (!/already exists/u.test(error.message)) {
     console.error("Firebase admin initialization error", error.stack);

@@ -45,6 +45,7 @@ function Signup() {
           }
           console.log(res.error);
         } else {
+          fb.auth.signInWithEmailAndPassword(email, password);
           history.push("login");
         }
       })

@@ -1,7 +1,7 @@
+import fb from "./services/firebase";
 import { useEffect } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { useAuth, useResolved } from "./hooks";
-import fb from "./services/firebase";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
