@@ -7,6 +7,8 @@ function NavBar() {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  // const user = fb.auth.currentUser?.uid
+  // console.log(user)
 
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
@@ -30,8 +32,31 @@ function NavBar() {
       } catch {
         setProfilePic("");
       }
+      //   try {
+      //     console.log("hrithik69")
+      //     fb.firestore
+      //       .collection("root")
+      //       .doc("uid")
+      //       .collection("users")
+      //       .doc("hrithik69")
+      //       .get()
+      //       .then((doc) => {
+
+      //         if (doc.exists) {
+      //           var data = doc.data()
+      //           console.log(data)
+      //         }
+      //         else {
+      //           console.log("hey")
+      //         }
+      //       })
+      //   }
+      //   catch {
+      //     console.log("h")
+      //   }
     }
   }, []);
+
 
   return (
     <div className="NavBar">
@@ -51,7 +76,7 @@ function NavBar() {
         <div
           className="profileContainer"
           onClick={() => {
-            history.push("profile");
+            history.push("/" + "profile");
           }}
           title="profiletab"
         >

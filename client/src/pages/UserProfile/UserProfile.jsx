@@ -1,28 +1,30 @@
 import "./UserProfile.css";
 import { Symbols, Post } from "../../components";
 import { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import fb from "../../services/firebase";
 
 function UserProfile(props) {
 
 
 
-  // const { uid } = useParams();
+  const { uname } = useParams();
+  // console.log(uname)
 
-  const location = useLocation()
+  // const location = useLocation()
 
 
-  console.log()
+
 
 
   const history = useHistory();
   const [profilePic, setProfilePic] = useState("");
-  const [usernam, setUsernam] = useState("");
+  const [username, setUsername] = useState("");
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
+  const [uid, setuid] = useState("")
+  const [postCount, setPostCount] = useState(0);
+
   const userDoc = fb.firestore
     .collection("users")
     .doc(localStorage.getItem("userId"));
@@ -41,13 +43,74 @@ function UserProfile(props) {
   //   .then((doc) => {
   //     setUsername(doc.data().username);
   //   });
+  try {
+    fb.firestore
+      .collection("root")
+      .doc("uid")
+      .get()
+      .then((doc) => {
+
+        if (doc.exists) {
+          var data = doc.data()
+          //console.log(data)
+          setuid(data.users[`${uname}`])
+        }
+      });
+  }
+  catch {
+    console.error("something went wrong")
+  }
+  useEffect(async () => {
+
+    await fetch(`/getuserposts/${uid}`, {
+      method: "GET",
+    }).then((res) => {
+      return res.json()
+    }).then((res) => {
+      setPosts(res.posts);
+
+      if (res.noOfPost !== undefined) {
+        setPostCount(res.noOfPost);
+      }
+    })
+
+    try {
+      fb.firestore
+        .collection("users")
+        .doc(uid)
+        .get()
+        .then((doc) => {
+          setUsername(doc.data().username);
+          setAbout(doc.data().about);
+        });
+    }
+    catch {
+      setUsername("");
+      setAbout("");
+    }
+    try {
+      fb.storage
+        .ref()
+        .child(`profileImages/${uid}.jpeg`)
+        .getDownloadURL()
+        .then((data) => {
+          setProfilePic(data)
+        }
+
+        )
+    } catch {
+      setProfilePic("");
+    }
+  }, [uid])
+
+
   return (
     <div className="UserProfile">
       <div className="ProfileBanner">
         <div className="profilePicContainer">
           <>
             <img
-              src=""
+              src={profilePic}
               alt=" "
               onDragStart={(e) => {
                 e.preventDefault();
@@ -63,11 +126,11 @@ function UserProfile(props) {
         </div>
 
         <div className="profileBannerContent">
-          <p className="username">{location.username}</p>
+          <p className="username">{username}</p>
 
           <div className="userInfo">
             <p className="posts">
-              <span className="userInfoNum">2</span>
+              <span className="userInfoNum">{postCount}</span>
               <span className="userInfoText">Posts</span>
             </p>
             <p className="connections">
@@ -79,23 +142,39 @@ function UserProfile(props) {
           <div className="bio">
             <p className="userInfoText">About</p>
 
-            <p className="bioText">Centiconnect will launched soon</p>
+            <p className="bioText">{about}</p>
           </div>
         </div>
       </div>
       <div className="currentUserPosts">
         {posts &&
-          posts.map((i) => {
+          posts.map((i, key) => {
             return (
               <Post
-                key={i.postId}
+                key={key}
                 postId={i.postId}
                 userId={i.userId}
                 comments={i.comments}
                 username={i.username}
-                upvotes={i.upvotes}
-                downvotes={i.downvotes}
+                upvotes={i.upvotes.length}
+                downvotes={i.downvotes.length}
                 caption={i.caption}
+                voteState={() => {
+                  if (i.upvotes.length > 0) {
+                    for (var j in i.upvotes) {
+                      if (i.upvotes[j] === uid) {
+                        return true;
+                      }
+                    }
+                  } else if (i.downvotes.length > 0) {
+                    for (var k in i.downvotes) {
+                      if (i.downvotes[k] === uid) {
+                        return false;
+                      }
+                    }
+                  }
+                  return null;
+                }}
               />
             );
           })}
