@@ -13,7 +13,7 @@ function Settings() {
   const [screen, setScreen] = useState("profile");
   const [warningCheckbox, setWarningCheckbox] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
-  const [emailButton, setEmailButton] = useState(false);
+  const [emailForPasswordSent, setEmailForPasswordSent] = useState(false);
 
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
@@ -220,30 +220,43 @@ function Settings() {
     };
     return (
       <div className="accountScreen">
+        <div className="changeEmailTab">
+          <h1>Change email</h1>
+
+          <button className="accSettingsButton">Change email</button>
+        </div>
         <div className="changePasswordTab">
           <h1>Change password</h1>
-          {emailButton !== false && (
+          {emailForPasswordSent ? (
             <div className="emailMessage">
               <h1>
                 <Symbols.Tick size="38" /> Email sent
               </h1>
-              <p>{emailMessage}</p>
+              <p>
+                Password reset email has been sent to{" "}
+                <span className="settingsEmail">{emailMessage}</span> <br />
+                Follow the link in email to reset you password.
+              </p>
             </div>
+          ) : (
+            <p className="message">
+              To change your password, request a reset email by clicking the
+              button below
+            </p>
           )}
 
           <button
-            disabled={emailButton}
+            disabled={setEmailForPasswordSent}
             onClick={() => {
               const email = fb.auth.currentUser.email;
               fb.auth.sendPasswordResetEmail(email).then(() => {
-                setEmailMessage(
-                  `Password reset email has been sent to ${email}`
-                );
-                setEmailButton(true);
+                setEmailMessage(`${email}`);
+                setEmailForPasswordSent(true);
               });
             }}
+            className="accSettingsButton"
           >
-            click me
+            Send reset email
           </button>
         </div>
         <div className="deleteAccountTab">
@@ -270,7 +283,11 @@ function Settings() {
               Read the warning
             </label>
           </div>
-          <button disabled={!warningCheckbox} onClick={deleteAccount}>
+          <button
+            disabled={!warningCheckbox}
+            onClick={deleteAccount}
+            className="accSettingsButton"
+          >
             Delete Account
           </button>
         </div>
