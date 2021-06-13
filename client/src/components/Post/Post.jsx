@@ -5,13 +5,17 @@ import "./Post.css";
 import Comment from "../Comment/Comment";
 
 const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
+  const upVotes = []
+  const downVotes = []
   const [link, setLink] = useState("");
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
-
   const [comment, setComment] = useState("");
+  const [upvote,setupvote] = useState(upVotes.length)
+  const [downvote,setdownvote] = useState(0)
+  const [voted,setvoted] = useState("notVoted")
   const [commented, setCommented] = useState(false);
-
+ 
   try {
     fb.firestore
       .collection("users")
@@ -57,6 +61,41 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
     }
     setCommented(true);
   };
+
+const upvoting = ()=>{
+ // setvoted("upvote")
+  
+    //console.log(upVotes.includes(`${userId}`))
+    if(upVotes.indexOf(`${userId}`) == -1){
+       upVotes.push(`${userId}`)
+       //setupvote(upVotes.length)
+      
+    }else{
+      console.log(upVotes)
+      const index = upVotes.indexOf(`${userId}`)
+      upVotes.splice(index,1)
+     // setupvote(upVotes.length)
+    }
+  
+}
+
+
+const downvoting = ()=>{
+  //setvoted("downvote")
+ 
+    //console.log(upVotes.includes(`${userId}`))
+    if(downVotes.indexOf(`${userId}`) == -1){
+       downVotes.push(`${userId}`)
+      
+      
+    }else{
+      console.log(downVotes)
+      const index = downVotes.indexOf(`${userId}`)
+      downVotes.splice(index,1)
+     
+    }
+  
+}
 
   return (
     <div className="Post" key={postId}>
@@ -114,13 +153,13 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
 
         <div className="description">
           <div className="postLinks">
-            <div className="upVote">
+            <div className="upVote" onClick={upvoting} >
               <Symbols.UpVote size="20" />
-              {upvotes}
+              {upvote}
             </div>
-            <div className="downVote">
+            <div className="downVote" onClick={downvoting} >
               <Symbols.DownVote size="20" />
-              {downvotes}
+              {downvote}
             </div>
           </div>
           <div className="descriptionContent">
