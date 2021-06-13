@@ -246,10 +246,13 @@ function Settings() {
           )}
 
           <button
-            disabled={setEmailForPasswordSent}
+            disabled={emailForPasswordSent}
             onClick={() => {
               const email = fb.auth.currentUser.email;
+              console.log("sent");
+
               fb.auth.sendPasswordResetEmail(email).then(() => {
+                console.log("sent");
                 setEmailMessage(`${email}`);
                 setEmailForPasswordSent(true);
               });
