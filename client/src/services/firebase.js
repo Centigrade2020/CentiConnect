@@ -20,6 +20,7 @@ try {
 }
 
 const fb = {
+  firebase: firebase,
   auth: firebase.auth(),
   storage: firebase.storage(),
   firestore: firebase.firestore(),

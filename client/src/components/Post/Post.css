@@ -116,12 +116,38 @@
   align-items: center;
   justify-content: center;
   margin-right: calc(var(--padding10) * 3);
+  padding: 5px;
+  cursor: pointer;
 }
 
-.Post .postLinks .UpVote,
-.Post .postLinks .DownVote {
+.voteContainer .UpVote,
+.voteContainer .DownVote {
+  transition: all 200ms ease-in-out;
   fill: gray;
+}
+
+.voteContainer {
   margin-right: calc(var(--padding10) / 2);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease-in-out;
+}
+
+.voted1 {
+  background-color: rgb(0, 110, 255);
+  transition: all 200ms ease-in-out;
+}
+.voted0 {
+  background-color: rgb(255, 77, 77);
+  transition: all 200ms ease-in-out;
+}
+.voted > .UpVote,
+.voted > .DownVote {
+  fill: white;
 }
 
 .Post .commentSection .comment {

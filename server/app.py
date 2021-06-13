@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request
 import os
 import uuid
-from services import fbConfig as fb
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore, auth, storage
@@ -244,12 +243,6 @@ def delete_user(uid):
     return jsonify({
         "status": "failed"
     })
-
-
-@app.route("/getfirebase", methods=["GET"])
-def get_firebase():
-    firebaseConfig = fb.firebaseConfig
-    return jsonify(firebaseConfig)
 
 
 @app.route("/")

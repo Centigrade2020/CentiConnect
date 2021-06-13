@@ -4,18 +4,26 @@ import { Symbols } from "../../components";
 import "./Post.css";
 import Comment from "../Comment/Comment";
 
-const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
-  const upVotes = []
-  const downVotes = []
+const Post = ({
+  postId,
+  comments,
+  userId,
+  upvotes,
+  downvotes,
+  caption,
+  voteState,
+}) => {
   const [link, setLink] = useState("");
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [comment, setComment] = useState("");
-  const [upvote,setupvote] = useState(upVotes.length)
-  const [downvote,setdownvote] = useState(0)
-  const [voted,setvoted] = useState("notVoted")
+  const [disUpvotes, setDisUpvotes] = useState(upvotes);
+  const [disDownvotes, setDisDownvotes] = useState(downvotes);
+  const [vote, setVote] = useState(voteState);
   const [commented, setCommented] = useState(false);
- 
+
+  const postRef = fb.firestore.collection("posts").doc(postId);
+
   try {
     fb.firestore
       .collection("users")
@@ -62,40 +70,73 @@ const Post = ({ postId, comments, userId, upvotes, downvotes, caption }) => {
     setCommented(true);
   };
 
-const upvoting = ()=>{
- // setvoted("upvote")
-  
-    //console.log(upVotes.includes(`${userId}`))
-    if(upVotes.indexOf(`${userId}`) == -1){
-       upVotes.push(`${userId}`)
-       //setupvote(upVotes.length)
-      
-    }else{
-      console.log(upVotes)
-      const index = upVotes.indexOf(`${userId}`)
-      upVotes.splice(index,1)
-     // setupvote(upVotes.length)
+  const upVoteHandler = () => {
+    if (vote == null) {
+      setVote(true);
+      setDisUpvotes(disUpvotes + 1);
+      postRef.update({
+        upvotes: fb.firebase.firestore.FieldValue.arrayUnion(
+          localStorage.getItem("userId")
+        ),
+      });
+    } else if (vote == false) {
+      setVote(true);
+      setDisUpvotes(disUpvotes + 1);
+      postRef.update({
+        upvotes: fb.firebase.firestore.FieldValue.arrayUnion(
+          localStorage.getItem("userId")
+        ),
+      });
+      setDisDownvotes(disDownvotes - 1);
+      postRef.update({
+        downvotes: fb.firebase.firestore.FieldValue.arrayRemove(
+          localStorage.getItem("userId")
+        ),
+      });
+    } else if (vote == true) {
+      setVote(null);
+      setDisUpvotes(disUpvotes - 1);
+      postRef.update({
+        upvotes: fb.firebase.firestore.FieldValue.arrayRemove(
+          localStorage.getItem("userId")
+        ),
+      });
     }
-  
-}
+  };
 
-
-const downvoting = ()=>{
-  //setvoted("downvote")
- 
-    //console.log(upVotes.includes(`${userId}`))
-    if(downVotes.indexOf(`${userId}`) == -1){
-       downVotes.push(`${userId}`)
-      
-      
-    }else{
-      console.log(downVotes)
-      const index = downVotes.indexOf(`${userId}`)
-      downVotes.splice(index,1)
-     
+  const downVoteHandler = () => {
+    if (vote == null) {
+      setVote(false);
+      setDisDownvotes(disDownvotes + 1);
+      postRef.update({
+        downvotes: fb.firebase.firestore.FieldValue.arrayUnion(
+          localStorage.getItem("userId")
+        ),
+      });
+    } else if (vote == true) {
+      setVote(false);
+      setDisDownvotes(disDownvotes + 1);
+      postRef.update({
+        downvotes: fb.firebase.firestore.FieldValue.arrayUnion(
+          localStorage.getItem("userId")
+        ),
+      });
+      setDisUpvotes(disUpvotes - 1);
+      postRef.update({
+        upvotes: fb.firebase.firestore.FieldValue.arrayRemove(
+          localStorage.getItem("userId")
+        ),
+      });
+    } else if (vote == false) {
+      setVote(null);
+      setDisDownvotes(disDownvotes - 1);
+      postRef.update({
+        downvotes: fb.firebase.firestore.FieldValue.arrayRemove(
+          localStorage.getItem("userId")
+        ),
+      });
     }
-  
-}
+  };
 
   return (
     <div className="Post" key={postId}>
@@ -153,13 +194,29 @@ const downvoting = ()=>{
 
         <div className="description">
           <div className="postLinks">
-            <div className="upVote" onClick={upvoting} >
-              <Symbols.UpVote size="20" />
-              {upvote}
+            <div className="upVote" onClick={upVoteHandler}>
+              <div
+                className={
+                  vote == true
+                    ? "voteContainer voted voted1"
+                    : " voteContainer null"
+                }
+              >
+                <Symbols.UpVote size="22" />
+              </div>
+              {disUpvotes}
             </div>
-            <div className="downVote" onClick={downvoting} >
-              <Symbols.DownVote size="20" />
-              {downvote}
+            <div className="downVote" onClick={downVoteHandler}>
+              <div
+                className={
+                  vote == false
+                    ? "voteContainer voted voted0"
+                    : " voteContainer null"
+                }
+              >
+                <Symbols.DownVote size="22" />
+              </div>
+              {disDownvotes}
             </div>
           </div>
           <div className="descriptionContent">
