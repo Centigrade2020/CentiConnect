@@ -18,10 +18,9 @@ function getProfileData() {
   } catch {
     return {
       username: "",
-      about: ""
-    }
+      about: "",
+    };
   }
-
 }
 
 const initialValues = {

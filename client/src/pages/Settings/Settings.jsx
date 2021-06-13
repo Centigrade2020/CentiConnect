@@ -11,6 +11,7 @@ import "./Settings.css";
 function Settings() {
   const [profilePic, setProfilePic] = useState("");
   const [screen, setScreen] = useState("profile");
+  const [warningCheckbox, setWarningCheckbox] = useState(false);
 
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
@@ -211,13 +212,45 @@ function Settings() {
     );
   };
 
-  const renderPasswordScreen = () => (
-    <div className="passwordScreen">Password</div>
-  );
-
-  const renderAccountScreen = () => (
-    <div className="accountScreen">Account</div>
-  );
+  const renderAccountScreen = () => {
+    const deleteAccount = () => {
+      fetch(`/deleteuserdocuments/${localStorage.getItem("userId")}`);
+    };
+    return (
+      <div className="accountScreen">
+        <div className="changePasswordTab">
+          <h1>Change password</h1>
+        </div>
+        <div className="deleteAccountTab">
+          <h1>Delete account</h1>
+          <div className="deleteAccountText">
+            <h1>
+              <Symbols.Warning size="38" /> Warning
+            </h1>
+            <p>
+              Deleting your account is irreversible. All the posts you've
+              posted, the comments and votes will be removed.
+            </p>
+          </div>
+          <div className="deleteAccountCheckBox">
+            <label class="checkboxContainer">
+              <input
+                type="checkbox"
+                onChange={() => {
+                  setWarningCheckbox(!warningCheckbox);
+                }}
+              />
+              <span class="checkmark"></span>
+              Read the warning
+            </label>
+          </div>
+          <button disabled={!warningCheckbox} onClick={deleteAccount}>
+            Delete Account
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="Settings">
@@ -230,34 +263,22 @@ function Settings() {
                 setScreen("profile");
               }}
             >
-              Edit profile
+              Profile
             </li>
 
-            <li
-              className={screen === "password" ? "selectedSettingsLink" : ""}
-              onClick={() => {
-                setScreen("password");
-              }}
-            >
-              Change password
-            </li>
             <li
               className={screen === "account" ? "selectedSettingsLink" : ""}
               onClick={() => {
                 setScreen("account");
               }}
             >
-              Delect Account
+              Account
             </li>
           </ul>
         </div>
 
         <div className="settingsDisplay">
-          {screen === "profile"
-            ? renderProfileScreen()
-            : screen === "email"
-            ? renderPasswordScreen()
-            : renderAccountScreen()}
+          {screen === "profile" ? renderProfileScreen() : renderAccountScreen()}
         </div>
       </div>
     </div>

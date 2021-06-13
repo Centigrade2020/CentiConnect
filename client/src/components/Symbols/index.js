@@ -8,6 +8,7 @@ import Settings from "./Settings";
 import Image from "./Image";
 import Logout from "./Logout";
 import Save from "./save";
+import Warning from "./Warning";
 
 const Symbols = {
   Plus,
@@ -20,6 +21,7 @@ const Symbols = {
   Image,
   Logout,
   Save,
+  Warning,
 };
 
 export default Symbols;

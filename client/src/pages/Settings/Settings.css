@@ -124,7 +124,110 @@
 
 .Settings button:disabled {
   background-color: rgb(235, 235, 235);
-  border: 1px solid rgb(235, 235, 235);
   color: rgb(197, 197, 197);
   cursor: not-allowed;
+}
+
+.deleteAccountTab {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.accountScreen > * > h1 {
+  color: var(--violet);
+  font-size: 1.4rem;
+  margin: 10px 0;
+}
+
+.deleteAccountTab .deleteAccountText {
+  padding: 20px;
+  background-color: rgb(255, 244, 221);
+  border-radius: 10px;
+}
+
+.deleteAccountTab button {
+  background-color: rgb(173, 0, 0);
+}
+
+.deleteAccountTab button:hover {
+  background-color: rgb(255, 75, 75);
+}
+
+.deleteAccountTab button:disabled {
+  background-color: rgb(235, 235, 235);
+  color: rgb(197, 197, 197);
+  cursor: not-allowed;
+}
+
+.deleteAccountText h1 {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  color: rgb(131, 0, 0);
+}
+
+.deleteAccountText p {
+  padding: 10px;
+}
+.deleteAccountText h1 .Warning {
+  fill: rgb(131, 0, 0);
+  margin-right: 10px;
+}
+
+.checkboxContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  user-select: none;
+  margin: 20px 0;
+}
+
+.checkboxContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.checkboxContainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.checkboxContainer input:checked ~ .checkmark {
+  background-color: var(--violet);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkboxContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkboxContainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }

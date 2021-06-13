@@ -198,6 +198,53 @@ def update_profile_pic(uid):
     else:
         return {}
 
+@app.route("/deleteuserdocuments/<uid>", methods=["GET"])
+def delete_user_documents(uid):
+    user_doc = fbfirestore.collection(
+            "users").document(uid).get().to_dict()
+
+    username = user_doc["username"]
+    posts = user_doc["posts"]
+
+    print(posts)
+
+    if len(posts) > 0:
+        for post in posts: 
+            fbfirestore.collection("posts").document(post).delete()
+            try:
+                blob = bucket.blob(f'postImages/{post}.jpeg')
+                blob.delete()
+            except:
+                print("")
+
+    fbfirestore.collection("root").document("AdditionalData").update({
+            "usernames": functions.ArrayRemove([username])
+        })
+
+    fbfirestore.collection("users").document(uid).delete()
+
+    try:
+        blob = bucket.blob(f'profileImages/{uid}.jpeg')
+        blob.delete()
+    except:
+        print("")
+
+    fbauth.delete_user(uid)
+    
+
+    return jsonify({
+        "status": "success"
+    })
+
+@app.route("/deleteuser/<uid>", methods=["GET"])
+def delete_user(uid):
+    user_doc = fbfirestore.collection(
+            "users").document(uid).get().to_dict()
+
+    return jsonify({
+        "status": "failed"
+    })
+
 
 @app.route("/getfirebase", methods=["GET"])
 def get_firebase():
