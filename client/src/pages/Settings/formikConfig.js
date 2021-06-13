@@ -2,18 +2,25 @@ import * as yup from "yup";
 import fb from "../../services/firebase";
 
 function getProfileData() {
-  fb.firestore
-    .collection("users")
-    .doc(localStorage.getItem("userId"))
-    .get()
-    .then((doc) => {
-      localStorage.setItem("username", doc.data().username);
-      localStorage.setItem("about", doc.data().about);
-    });
-  return {
-    username: localStorage.getItem("username"),
-    about: localStorage.getItem("about"),
-  };
+  try {
+    fb.firestore
+      .collection("users")
+      .doc(localStorage.getItem("userId"))
+      .get()
+      .then((doc) => {
+        localStorage.setItem("username", doc.data().username);
+        localStorage.setItem("about", doc.data().about);
+      });
+    return {
+      username: localStorage.getItem("username"),
+      about: localStorage.getItem("about"),
+    };
+  } catch {
+    return {
+      username: "",
+      about: "",
+    };
+  }
 }
 
 const initialValues = {
