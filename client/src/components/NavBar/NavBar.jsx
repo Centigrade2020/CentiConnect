@@ -53,6 +53,7 @@ function NavBar() {
           onClick={() => {
             history.push("profile");
           }}
+          title="profiletab"
         >
           <p className="profileName">{username}</p>
           <div className="profilePicContainer">

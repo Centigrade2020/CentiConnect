@@ -12,6 +12,8 @@ function Settings() {
   const [profilePic, setProfilePic] = useState("");
   const [screen, setScreen] = useState("profile");
   const [warningCheckbox, setWarningCheckbox] = useState(false);
+  const [emailMessage, setEmailMessage] = useState("");
+  const [emailButton, setEmailButton] = useState(false);
 
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
@@ -220,6 +222,29 @@ function Settings() {
       <div className="accountScreen">
         <div className="changePasswordTab">
           <h1>Change password</h1>
+          {emailButton !== false && (
+            <div className="emailMessage">
+              <h1>
+                <Symbols.Tick size="38" /> Email sent
+              </h1>
+              <p>{emailMessage}</p>
+            </div>
+          )}
+
+          <button
+            disabled={emailButton}
+            onClick={() => {
+              const email = fb.auth.currentUser.email;
+              fb.auth.sendPasswordResetEmail(email).then(() => {
+                setEmailMessage(
+                  `Password reset email has been sent to ${email}`
+                );
+                setEmailButton(true);
+              });
+            }}
+          >
+            click me
+          </button>
         </div>
         <div className="deleteAccountTab">
           <h1>Delete account</h1>
@@ -228,19 +253,20 @@ function Settings() {
               <Symbols.Warning size="38" /> Warning
             </h1>
             <p>
-              Deleting your account is irreversible. All the posts you've
-              posted, the comments and votes will be removed.
+              Deleting your account is irreversible. All the posts you've posted
+              and the comments will be removed. However the votes will not be
+              removed in order to maintain the popularity of the post
             </p>
           </div>
           <div className="deleteAccountCheckBox">
-            <label class="checkboxContainer">
+            <label className="checkboxContainer">
               <input
                 type="checkbox"
                 onChange={() => {
                   setWarningCheckbox(!warningCheckbox);
                 }}
               />
-              <span class="checkmark"></span>
+              <span className="checkmark"></span>
               Read the warning
             </label>
           </div>

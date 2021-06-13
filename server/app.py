@@ -66,8 +66,8 @@ def create_post():
             "userId": content["userId"],
             "caption": content["caption"],
             "comments": [],
-            "upvotes": 0,
-            "downvotes": 0
+            "upvotes": [],
+            "downvotes": []
         })
         fbfirestore.collection("users").document(content["userId"]).update({
             "posts": functions.ArrayUnion([content["postId"]])

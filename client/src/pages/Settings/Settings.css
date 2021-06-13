@@ -128,16 +128,37 @@
   cursor: not-allowed;
 }
 
-.deleteAccountTab {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .accountScreen > * > h1 {
   color: var(--violet);
   font-size: 1.4rem;
   margin: 10px 0;
+}
+
+.emailMessage {
+  padding: 20px;
+  background-color: rgb(232, 255, 221);
+  border-radius: 10px;
+}
+
+.emailMessage h1 {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  color: rgb(0, 63, 16);
+}
+
+.emailMessage p {
+  padding: 10px;
+}
+.emailMessage h1 .Tick {
+  fill: rgb(0, 63, 16);
+  margin-right: 10px;
+}
+
+.deleteAccountTab {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .deleteAccountTab .deleteAccountText {
