@@ -4,6 +4,7 @@ import uuid
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore, auth, storage
+import time
 
 cred = credentials.Certificate("services/serviceAccountKey.json")
 app = firebase_admin.initialize_app(cred, {
@@ -16,13 +17,13 @@ fbfirestore = firestore.client()
 fbauth = auth
 bucket = storage.bucket()
 
-
 app = Flask(__name__)
 
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
+        begin = time.time()
         content = request.get_json()
         try:
             user = fbauth.create_user(
@@ -48,6 +49,8 @@ def signup():
             if os.path.exists(f"defaults/{user.uid}.jpeg"):
                 os.remove(f"defaults/{user.uid}.jpeg")
 
+            end = time.time()
+            print(f" {end - begin} s")
             return jsonify({"uid": f"{user.uid}", "loggedIn": True})
         except BaseException as e:
             return jsonify({"error": f"{e.code}"})
@@ -59,6 +62,7 @@ def signup():
 @app.route('/createpost', methods=["GET", "POST"])
 def create_post():
     if request.method == "POST":
+        begin = time.time()
         content = request.get_json()
         fbfirestore.collection('posts').document(content["postId"]).set({
             "postId": content["postId"],
@@ -71,6 +75,10 @@ def create_post():
         fbfirestore.collection("users").document(content["userId"]).update({
             "posts": functions.ArrayUnion([content["postId"]])
         })
+
+        end = time.time()
+        print(f" {end - begin} s")
+
         return {}
     else:
         return {}
@@ -79,6 +87,7 @@ def create_post():
 @ app.route('/images', methods=["POST", "GET"])
 def images():
     if request.method == "POST":
+        begin = time.time()
         content = request.get_data()
 
         id = str(uuid.uuid4()).split("-")
@@ -93,6 +102,8 @@ def images():
         if os.path.exists(f"uploads/{id}.jpeg"):
             os.remove(f"uploads/{id}.jpeg")
 
+        end = time.time()
+        print(f" {end - begin} s")
         return jsonify({
             "uuid": id
         })
@@ -104,6 +115,7 @@ def images():
 @app.route('/updateprofile', methods=["POST", "GET"])
 def update_user():
     if request.method == "POST":
+        begin = time.time()
         content = request.get_json()
 
         user_doc = fbfirestore.collection(
@@ -121,6 +133,8 @@ def update_user():
             "username": content["username"],
             "about": content["about"]
         })
+        end = time.time()
+        print(f" {end - begin} s")
         return {}
     else:
         return {}
@@ -129,6 +143,7 @@ def update_user():
 @app.route("/postcomment", methods=["POST", "GET"])
 def post_comment():
     if request.method == "POST":
+        begin = time.time()
         content = request.get_json()
 
         fbfirestore.collection("posts").document(content["postId"]).update({
@@ -137,6 +152,8 @@ def post_comment():
                 "comment": content["comment"]
             }])
         })
+        end = time.time()
+        print(f" {end - begin} s")
         return {}
     else:
         return {}
@@ -145,6 +162,7 @@ def post_comment():
 @app.route("/getuserposts/<uid>", methods=["POST", "GET"])
 def get_user_posts(uid):
     if request.method == "GET":
+        begin = time.time()
         user_doc = fbfirestore.collection(
             "users").document(uid).get().to_dict()
         try:
@@ -153,6 +171,8 @@ def get_user_posts(uid):
                 post = fbfirestore.collection(
                     "posts").document(i).get().to_dict()
                 user_posts.append(post)
+            end = time.time()
+            print(f" {end - begin} s")
             return jsonify({
                 "posts": user_posts,
                 "noOfPost": len(user_posts)
@@ -168,21 +188,26 @@ def get_user_posts(uid):
 @app.route("/getallposts", methods=["POST", "GET"])
 def get_all_posts():
     if request.method == "GET":
+        begin = time.time()
         posts_list = []
         posts = fbfirestore.collection("posts").get()
         for i in posts:
             posts_list.append(i.to_dict())
-
+        end = time.time()
+        print(f" {end - begin} s")
         return jsonify({
             "posts": posts_list
         })
     else:
+        end = time.time()
+        print(f" {end - begin} s")
         return {}
 
 
 @app.route("/updateprofilepic/<uid>", methods=["POST", "GET"])
 def update_profile_pic(uid):
     if request.method == "POST":
+        begin = time.time()
         content = request.get_data()
         with open(f"defaults/{uid}.jpeg", "wb") as w:
             w.write(content)
@@ -192,15 +217,18 @@ def update_profile_pic(uid):
 
         if os.path.exists(f"defaults/{uid}.jpeg"):
             os.remove(f"defaults/{uid}.jpeg")
-
+        end = time.time()
+        print(f" {end - begin} s")
         return {}
     else:
         return {}
 
+
 @app.route("/deleteuserdocuments/<uid>", methods=["GET"])
 def delete_user_documents(uid):
+    begin = time.time()
     user_doc = fbfirestore.collection(
-            "users").document(uid).get().to_dict()
+        "users").document(uid).get().to_dict()
 
     username = user_doc["username"]
     posts = user_doc["posts"]
@@ -208,7 +236,7 @@ def delete_user_documents(uid):
     print(posts)
 
     if len(posts) > 0:
-        for post in posts: 
+        for post in posts:
             fbfirestore.collection("posts").document(post).delete()
             try:
                 blob = bucket.blob(f'postImages/{post}.jpeg')
@@ -217,8 +245,8 @@ def delete_user_documents(uid):
                 print("")
 
     fbfirestore.collection("root").document("AdditionalData").update({
-            "usernames": functions.ArrayRemove([username])
-        })
+        "usernames": functions.ArrayRemove([username])
+    })
 
     fbfirestore.collection("users").document(uid).delete()
 
@@ -229,16 +257,17 @@ def delete_user_documents(uid):
         print("")
 
     fbauth.delete_user(uid)
-    
-
+    end = time.time()
+    print(f" {end - begin} s")
     return jsonify({
         "status": "success"
     })
 
+
 @app.route("/deleteuser/<uid>", methods=["GET"])
 def delete_user(uid):
     user_doc = fbfirestore.collection(
-            "users").document(uid).get().to_dict()
+        "users").document(uid).get().to_dict()
 
     return jsonify({
         "status": "failed"
@@ -247,6 +276,9 @@ def delete_user(uid):
 
 @app.route("/")
 def index():
+    begin = time.time()
+    end = time.time()
+    print(f" {end - begin} s")
     return jsonify({
         "Centigrade": "CentiConnect",
         "Developed by": ["Dharundds", "DharunVS", "HrithikMJ"]
