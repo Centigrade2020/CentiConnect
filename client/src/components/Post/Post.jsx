@@ -16,6 +16,7 @@ const Post = ({
   const [link, setLink] = useState("");
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  const [fakeComments, setFakeComments] = useState([]);
   const [comment, setComment] = useState("");
   const [disUpvotes, setDisUpvotes] = useState(upvotes);
   const [disDownvotes, setDisDownvotes] = useState(downvotes);
@@ -64,9 +65,14 @@ const Post = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify(content),
+      }).then(() => {
+        setFakeComments((args) => [
+          { userId: userId, comment: comment },
+          ...args,
+        ]);
       });
-      console.log(content);
     }
+    setComment("");
     setCommented(true);
   };
 
@@ -170,12 +176,17 @@ const Post = ({
       </section>
       <section className="commentSection">
         <div className="comments">
-          {commented && (
-            <Comment
-              userId={localStorage.getItem("userId")}
-              comment={comment}
-            />
-          )}
+          {commented &&
+            fakeComments.map((i, key) => {
+              return (
+                <Comment
+                  userId={localStorage.getItem("userId")}
+                  comment={i.comment}
+                  key={key}
+                  keyName={key}
+                />
+              );
+            })}
           {!!comments &&
             comments
               .slice(0)
@@ -232,6 +243,7 @@ const Post = ({
             onChange={(e) => {
               setComment(e.target.value);
             }}
+            value={comment}
           ></textarea>
           <button className="postComment" onClick={postComment}>
             Post

@@ -89,8 +89,6 @@
 }
 
 .Post .imageSection .imageContainer img {
-  /* max-width: var(--imageDim); */
-  /* max-height: var(--imageDim); */
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -152,9 +150,32 @@
 
 .Post .commentSection .comment {
   background-color: rgb(235, 235, 235);
+  width: calc(100% - (var(--padding10)));
   padding: var(--padding10);
   margin: var(--padding10);
   border-radius: var(--padding10);
+  display: flex;
+}
+
+.commentProfilePicContainer {
+  width: var(--profilePicDim);
+  height: var(--profilePicDim);
+  overflow: hidden;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--padding10);
+}
+
+.commentProfilePicContainer img {
+  width: inherit;
+  height: inherit;
+}
+
+.commentText {
+  width: 80%;
+  word-wrap: break-word;
 }
 
 .Post .addComment {
@@ -218,7 +239,7 @@
 }
 .Post .descriptionContent .profileName {
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: var(--padding10);
 }
 
 .Post .imageSection .imageContainer .Loading {
