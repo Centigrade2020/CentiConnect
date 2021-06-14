@@ -21,7 +21,7 @@ function App() {
     if (authResolved) {
       history.push(!authUser && "login");
     }
-    if (location.pathname == "/login" && !!authUser) {
+    if (location.pathname === "/login" && !!authUser) {
       history.push("/");
     }
     fb.firestore

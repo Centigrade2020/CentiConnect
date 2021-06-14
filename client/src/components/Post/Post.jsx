@@ -102,7 +102,7 @@ const Post = ({
           localStorage.getItem("userId")
         ),
       });
-    } else if (vote == true) {
+    } else if (vote === true) {
       setVote(null);
       setDisUpvotes(disUpvotes - 1);
       postRef.update({
@@ -114,7 +114,7 @@ const Post = ({
   };
 
   const downVoteHandler = () => {
-    if (vote == null) {
+    if (vote === null) {
       setVote(false);
       setDisDownvotes(disDownvotes + 1);
       postRef.update({
@@ -122,7 +122,7 @@ const Post = ({
           localStorage.getItem("userId")
         ),
       });
-    } else if (vote == true) {
+    } else if (vote === true) {
       setVote(false);
       setDisDownvotes(disDownvotes + 1);
       postRef.update({
@@ -136,7 +136,7 @@ const Post = ({
           localStorage.getItem("userId")
         ),
       });
-    } else if (vote == false) {
+    } else if (vote === false) {
       setVote(null);
       setDisDownvotes(disDownvotes - 1);
       postRef.update({
@@ -183,7 +183,7 @@ const Post = ({
           />
         </div>
         <p className="profileName">{username}</p>
-        {location.pathname == "/profile" && (
+        {location.pathname === "/profile" && (
           <div className="deletePost" onClick={deletePost}>
             <Symbols.Trash size="40" />
           </div>
@@ -242,7 +242,7 @@ const Post = ({
             <div className="upVote" onClick={upVoteHandler}>
               <div
                 className={
-                  vote == true
+                  vote === true
                     ? "voteContainer voted voted1"
                     : " voteContainer null"
                 }
@@ -254,7 +254,7 @@ const Post = ({
             <div className="downVote" onClick={downVoteHandler}>
               <div
                 className={
-                  vote == false
+                  vote === false
                     ? "voteContainer voted voted0"
                     : " voteContainer null"
                 }

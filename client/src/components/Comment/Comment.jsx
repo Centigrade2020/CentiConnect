@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import fb from "../../services/firebase";
 
 function Comment({ userId, comment, keyName }) {

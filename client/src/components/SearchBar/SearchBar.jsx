@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useHistory, Redirect, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import fb from "../../services/firebase";
-//import "./SearchBar.css";
+import "./SearchBar.css";
 
 function SearchBar() {
   const history = useHistory();
@@ -24,33 +24,45 @@ function SearchBar() {
   function dynamicSearch() {
     if (searchTerm !== "" && searchTerm.length >= 1) {
       return (
-        <ul className="searchList" id="searchList">
-          {getUsernames()
-            .filter((name) =>
-              name.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .map((name) => (
-              <button
-                className="searchResult"
-                key={name}
-                onClick={() => history.push(`/user` + `/${name}`)}
-
-              >
-                <div className="imageContainer">
-                  <img src="" alt="" />
-                </div>
-                <p>{name}</p>
-              </button>
-            ))}
-        </ul>
+        <div className="searchListContainer">
+          <ul className="searchList" id="searchList">
+            {getUsernames()
+              .filter((name) =>
+                name.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((name) => (
+                <button
+                  className="searchResult"
+                  key={name}
+                  onClick={() => {
+                    fb.firestore
+                      .collection("root")
+                      .doc("uid")
+                      .get()
+                      .then((doc) => {
+                        const users = doc.data().users;
+                        for (var i in users) {
+                          if (users[i].username === name) {
+                            console.log(users[i].username, users[i].userId);
+                            history.push(`/user/${users[i].username}`, {
+                              uid: users[i].userId,
+                            });
+                          }
+                        }
+                      });
+                    setSearchTerm("");
+                  }}
+                >
+                  <div className="imageContainer">
+                    <img src="" alt="" />
+                  </div>
+                  <p>{name}</p>
+                </button>
+              ))}
+          </ul>
+        </div>
       );
     }
-
-    return (
-      <ul className="searchList" id="searchList">
-        <li className="searchResultNoUsers">No users</li>
-      </ul>
-    );
   }
 
   return (
@@ -62,7 +74,7 @@ function SearchBar() {
         placeholder="Search"
         className="searchInput"
       />
-      <div className="searchListContainer">{dynamicSearch()}</div>
+      {dynamicSearch()}
     </div>
   );
 }

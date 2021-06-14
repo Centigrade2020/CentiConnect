@@ -6,7 +6,6 @@ import {
   profileInitialValues,
   profileValidationSchema,
 } from "./profileFormikConfig";
-import { emailInitialValues, emailValidationSchema } from "./emailFormikConfig";
 import { Symbols } from "../../components";
 import fb from "../../services/firebase";
 import ReactCrop from "react-image-crop";
@@ -15,8 +14,6 @@ import "./Settings.css";
 
 function Settings() {
   const history = useHistory();
-
-  const [serverEmailError, setServerEmailError] = useState("");
 
   const [profilePic, setProfilePic] = useState("");
   const [screen, setScreen] = useState("profile");
