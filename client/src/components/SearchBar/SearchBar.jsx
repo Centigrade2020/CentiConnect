@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect, Link } from "react-router-dom";
 import fb from "../../services/firebase";
-import "./SearchBar.css";
+//import "./SearchBar.css";
 
 function SearchBar() {
   const history = useHistory();
@@ -33,10 +33,8 @@ function SearchBar() {
               <button
                 className="searchResult"
                 key={name}
-                onClick={() => {
-                  console.log("clicked");
-                  history.push(`/user` + `/${name}`);
-                }}
+                onClick={() => history.push(`/user` + `/${name}`)}
+
               >
                 <div className="imageContainer">
                   <img src="" alt="" />

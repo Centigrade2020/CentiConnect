@@ -80,7 +80,7 @@ const Post = ({
   };
 
   const upVoteHandler = () => {
-    if (vote == null) {
+    if (vote === null) {
       setVote(true);
       setDisUpvotes(disUpvotes + 1);
       postRef.update({
@@ -88,7 +88,7 @@ const Post = ({
           localStorage.getItem("userId")
         ),
       });
-    } else if (vote == false) {
+    } else if (vote === false) {
       setVote(true);
       setDisUpvotes(disUpvotes + 1);
       postRef.update({

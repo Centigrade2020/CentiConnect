@@ -138,13 +138,13 @@ function Profile() {
               voteState={() => {
                 if (i.upvotes.length > 0) {
                   for (var j in i.upvotes) {
-                    if (i.upvotes[j] == localStorage.getItem("userId")) {
+                    if (i.upvotes[j] === localStorage.getItem("userId")) {
                       return true;
                     }
                   }
                 } else if (i.downvotes.length > 0) {
                   for (var k in i.downvotes) {
-                    if (i.downvotes[k] == localStorage.getItem("userId")) {
+                    if (i.downvotes[k] === localStorage.getItem("userId")) {
                       return false;
                     }
                   }

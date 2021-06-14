@@ -38,6 +38,10 @@ def signup():
                 "usernames": functions.ArrayUnion([content["username"]])
             })
 
+            fbfirestore.collection("root").document("uid").update({
+                content['username']: user.uid
+            })
+
             with open("defaults/defaultProfile.jpeg", "rb") as r:
                 data = r.read()
                 with open(f"defaults/{user.uid}.jpeg", "wb") as w:
@@ -82,6 +86,7 @@ def create_post():
         return {}
     else:
         return {}
+
 
 @app.route('/deletepost', methods=["GET", "POST"])
 def delete_post():
@@ -215,7 +220,7 @@ def get_all_posts():
         })
 
     else:
-        return  jsonify({
+        return jsonify({
             "posts": []
         })
 
@@ -254,11 +259,10 @@ def delete_user_documents(uid):
 
     try:
         fbfirestore.collection("root").document("AdditionalData").update({
-                "usernames": functions.ArrayRemove([user_doc["username"]])
-            })
+            "usernames": functions.ArrayRemove([user_doc["username"]])
+        })
     except:
         print("")
-    
 
     if len(posts) > 0:
         for post in posts:
@@ -280,8 +284,6 @@ def delete_user_documents(uid):
         blob.delete()
     except:
         print("")
-
-    
 
     fbauth.delete_user(uid)
     return jsonify({

@@ -50,6 +50,7 @@ function Signup() {
           history.push("login");
         }
       })
+
       .catch(() => {
         setServerError("Trouble signing up. Try again");
       })

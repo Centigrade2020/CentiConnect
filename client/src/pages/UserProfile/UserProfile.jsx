@@ -1,23 +1,11 @@
 import "./UserProfile.css";
-import { Symbols, Post } from "../../components";
+import { Post } from "../../components";
 import { useState, useEffect } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import fb from "../../services/firebase";
 
-function UserProfile(props) {
-
-
-
+function UserProfile() {
   const { uname } = useParams();
-  // console.log(uname)
-
-  // const location = useLocation()
-
-
-
-
-
-  const history = useHistory();
   const [profilePic, setProfilePic] = useState("");
   const [username, setUsername] = useState("");
   const [about, setAbout] = useState("");
@@ -25,44 +13,26 @@ function UserProfile(props) {
   const [uid, setuid] = useState("")
   const [postCount, setPostCount] = useState(0);
 
-  const userDoc = fb.firestore
-    .collection("users")
-    .doc(localStorage.getItem("userId"));
-  // useEffect(() => {
-  //   if (!!localStorage.getItem("userId")) {
-  //     userDoc.get().then((doc) => {
-  //       setUsername(doc.data().username);
-  //       setAbout(doc.data().about);
-  //     });
-  //   }
-  // })
-  // fb.firestore
-  //   .collection("users")
-  //   .doc(uid)
-  //   .get('username')
-  //   .then((doc) => {
-  //     setUsername(doc.data().username);
-  //   });
   try {
     fb.firestore
       .collection("root")
       .doc("uid")
       .get()
       .then((doc) => {
-
         if (doc.exists) {
           var data = doc.data()
-          //console.log(data)
-          setuid(data.users[`${uname}`])
+          //console.log(uname)
+          //console.log(data[`${uname}`])
+          setuid(data[`${uname}`])
         }
       });
   }
   catch {
     console.error("something went wrong")
   }
-  useEffect(async () => {
+  useEffect(() => {
 
-    await fetch(`/getuserposts/${uid}`, {
+    fetch(`/getuserposts/${uid}`, {
       method: "GET",
     }).then((res) => {
       return res.json()
