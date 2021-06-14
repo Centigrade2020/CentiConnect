@@ -17,8 +17,9 @@ function NavBar() {
         .then((doc) => {
           if (doc.data() !== undefined) {
             setUsername(doc.data().username);
+          } else {
+            setUsername("");
           }
-          setUsername("");
         });
 
       try {

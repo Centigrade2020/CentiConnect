@@ -63,7 +63,7 @@
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
-  background-color: rgb(235, 235, 235);
+  background-color: var(--lightgray);
   position: relative;
   display: flex;
   align-items: center;
@@ -86,8 +86,8 @@
   margin: auto;
   padding: 15px;
   border-radius: 2px;
-  background-color: rgb(235, 235, 235);
-  border: 1px solid rgb(235, 235, 235);
+  background-color: var(--lightgray);
+  border: 1px solid var(--lightgray);
   color: rgb(110, 110, 110);
   resize: none;
   outline: none;
@@ -123,7 +123,7 @@
 }
 
 .Settings button:disabled {
-  background-color: rgb(235, 235, 235);
+  background-color: var(--lightgray);
   color: rgb(197, 197, 197);
   cursor: not-allowed;
 }

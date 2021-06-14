@@ -15,7 +15,7 @@
   --violet: rgb(133, 105, 243);
   --violet2: rgb(107, 84, 201);
   --violet3: rgb(98, 0, 255);
-  --whiteTrans: rgba(255, 255, 255, 0.404);
+  --lightgray: rgb(236, 236, 236);
 }
 
 *::-webkit-scrollbar {

@@ -26,7 +26,19 @@ function Comment({ userId, comment, keyName }) {
     return (
       <div className="comment" key={keyName}>
         <div className="commentProfilePicContainer">
-          <img src={profilePic} alt="profileIcon" />
+          <img
+            src={profilePic}
+            alt="profileIcon"
+            onDragStart={(e) => {
+              e.preventDefault();
+            }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          />
         </div>
         <div className="commentText">
           <h4>{username}</h4>

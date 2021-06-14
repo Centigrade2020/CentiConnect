@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import fb from "../../services/firebase";
 import { Symbols } from "../../components";
 import "./Post.css";
@@ -13,6 +14,8 @@ const Post = ({
   caption,
   voteState,
 }) => {
+  const location = useLocation();
+
   const [link, setLink] = useState("");
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
@@ -148,12 +151,26 @@ const Post = ({
     <div className="Post" key={postId}>
       <div className="profile">
         <div className="profileIcon">
-          <img src={profilePic} alt="profileicon" />
+          <img
+            src={profilePic}
+            alt="profileicon"
+            onDragStart={(e) => {
+              e.preventDefault();
+            }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          />
         </div>
         <p className="profileName">{username}</p>
-        <div className="settings">
-          <Symbols.ThreeDots size="40" />
-        </div>
+        {location.pathname == "/profile" && (
+          <div className="settings">
+            <Symbols.ThreeDots size="40" />
+          </div>
+        )}
       </div>
       <section className="imageSection">
         <div className="imageContainer">

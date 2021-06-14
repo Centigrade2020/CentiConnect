@@ -261,11 +261,11 @@ function Settings() {
             onClick={() => {
               const email = fb.auth.currentUser.email;
               console.log("sent");
+              setEmailForPasswordSent(true);
 
               fb.auth.sendPasswordResetEmail(email).then(() => {
                 console.log("sent");
                 setEmailMessage(`${email}`);
-                setEmailForPasswordSent(true);
               });
             }}
             className="accSettingsButton"

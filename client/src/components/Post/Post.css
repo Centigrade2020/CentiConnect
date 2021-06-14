@@ -31,13 +31,13 @@
   right: 0;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgb(235, 235, 235);
+  border-bottom: 1px solid var(--lightgray);
 }
 
 .Post .profile .profileIcon {
   width: var(--profilePicDim);
   height: var(--profilePicDim);
-  background-color: rgb(192, 192, 192);
+  background-color: var(--lightgray);
   border-radius: 50%;
   overflow: hidden;
   margin: 0 var(--padding10);
@@ -68,12 +68,12 @@
   top: var(--profileHeight);
   left: var(--imageDim);
   right: 0;
-  border-left: 1px solid rgb(235, 235, 235);
+  border-left: 1px solid var(--lightgray);
 }
 
 .Post .commentSection .comments {
   height: calc(var(--commentSectHeight) * 0.625);
-  border-bottom: 1px solid rgb(235, 235, 235);
+  border-bottom: 1px solid var(--lightgray);
   overflow: scroll;
 }
 
@@ -84,7 +84,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(240, 240, 240);
+  background-color: var(--lightgray);
   position: relative;
 }
 
@@ -97,8 +97,7 @@
   user-select: none;
 }
 
-.Post .Post .ThreeDots {
-  margin-top: 3px;
+.Post .ThreeDots {
   fill: gray;
 }
 
@@ -114,7 +113,7 @@
   align-items: center;
   justify-content: center;
   margin-right: calc(var(--padding10) * 3);
-  padding: 5px;
+  padding: calc(var(--padding10) / 2);
   cursor: pointer;
 }
 
@@ -149,7 +148,7 @@
 }
 
 .Post .commentSection .comment {
-  background-color: rgb(235, 235, 235);
+  background-color: var(--lightgray);
   width: calc(100% - (var(--padding10)));
   padding: var(--padding10);
   margin: var(--padding10);
@@ -184,7 +183,7 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgb(235, 235, 235);
+  border-top: 1px solid var(--lightgray);
 }
 
 .Post .addComment textarea {
@@ -200,7 +199,7 @@
 .Post .addComment textarea::placeholder {
   transform: translate(var(--padding10), calc(var(--padding10) / 2.3));
   font-size: var(--fontSize2);
-  color: rgb(189, 189, 189);
+  color: var(--lightgray);
 }
 
 .Post .addComment button {
