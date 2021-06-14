@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { FormFieldClass } from "../../components";
-import { initialValues, validationSchema } from "./formikConfig";
+import {
+  profileInitialValues,
+  profileValidationSchema,
+} from "./profileFormikConfig";
+import { emailInitialValues, emailValidationSchema } from "./emailFormikConfig";
 import { Symbols } from "../../components";
 import fb from "../../services/firebase";
 import ReactCrop from "react-image-crop";
@@ -9,6 +14,10 @@ import "react-image-crop/dist/ReactCrop.css";
 import "./Settings.css";
 
 function Settings() {
+  const history = useHistory();
+
+  const [serverEmailError, setServerEmailError] = useState("");
+
   const [profilePic, setProfilePic] = useState("");
   const [screen, setScreen] = useState("profile");
   const [warningCheckbox, setWarningCheckbox] = useState(false);
@@ -111,7 +120,6 @@ function Settings() {
         body: JSON.stringify(content),
       }).then(() => {
         setSubmitting(false);
-        window.location.reload();
       });
     };
     return (
@@ -163,8 +171,8 @@ function Settings() {
         <Formik
           onSubmit={saveChanges}
           validateOnMount={true}
-          initialValues={initialValues}
-          validationSchema={validationSchema}
+          initialValues={profileInitialValues}
+          validationSchema={profileValidationSchema}
         >
           {({ isValid, isSubmitting }) => (
             <Form>
@@ -216,15 +224,18 @@ function Settings() {
 
   const renderAccountScreen = () => {
     const deleteAccount = () => {
-      fetch(`/deleteuserdocuments/${localStorage.getItem("userId")}`);
+      fb.auth.signOut().then(() => {
+        fetch(`/deleteuserdocuments/${localStorage.getItem("userId")}`).then(
+          () => {
+            localStorage.clear();
+            sessionStorage.clear();
+          }
+        );
+      });
     };
+
     return (
       <div className="accountScreen">
-        <div className="changeEmailTab">
-          <h1>Change email</h1>
-
-          <button className="accSettingsButton">Change email</button>
-        </div>
         <div className="changePasswordTab">
           <h1>Change password</h1>
           {emailForPasswordSent ? (
@@ -233,8 +244,8 @@ function Settings() {
                 <Symbols.Tick size="38" /> Email sent
               </h1>
               <p>
-                Password reset email has been sent to{" "}
-                <span className="settingsEmail">{emailMessage}</span> <br />
+                Password reset email has been sent to
+                <span className="settingsEmail"> {emailMessage} </span> <br />
                 Follow the link in email to reset you password.
               </p>
             </div>
@@ -262,6 +273,7 @@ function Settings() {
             Send reset email
           </button>
         </div>
+        <div className="line"></div>
         <div className="deleteAccountTab">
           <h1>Delete account</h1>
           <div className="deleteAccountText">

@@ -262,3 +262,10 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.accountScreen .line {
+  width: 100%;
+  height: 1px;
+  margin: 20px auto;
+  background-color: var(--violet3);
+}

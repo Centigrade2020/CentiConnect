@@ -51,7 +51,7 @@ def signup():
 
             end = time.time()
             print(f" {end - begin} s")
-            return jsonify({"uid": f"{user.uid}", "loggedIn": True})
+            return jsonify({"uid": f"{user.uid}"})
         except BaseException as e:
             return jsonify({"error": f"{e.code}"})
 
@@ -188,20 +188,18 @@ def get_user_posts(uid):
 @app.route("/getallposts", methods=["POST", "GET"])
 def get_all_posts():
     if request.method == "GET":
-        begin = time.time()
         posts_list = []
         posts = fbfirestore.collection("posts").get()
         for i in posts:
             posts_list.append(i.to_dict())
-        end = time.time()
-        print(f" {end - begin} s")
         return jsonify({
             "posts": posts_list
         })
+
     else:
-        end = time.time()
-        print(f" {end - begin} s")
-        return {}
+        return  jsonify({
+            "posts": []
+        })
 
 
 @app.route("/updateprofilepic/<uid>", methods=["POST", "GET"])
@@ -226,14 +224,23 @@ def update_profile_pic(uid):
 
 @app.route("/deleteuserdocuments/<uid>", methods=["GET"])
 def delete_user_documents(uid):
-    begin = time.time()
     user_doc = fbfirestore.collection(
         "users").document(uid).get().to_dict()
 
-    username = user_doc["username"]
-    posts = user_doc["posts"]
+    try:
+        username = user_doc["username"]
+        posts = user_doc["posts"]
+    except:
+        username = ""
+        posts = []
 
-    print(posts)
+    try:
+        fbfirestore.collection("root").document("AdditionalData").update({
+                "usernames": functions.ArrayRemove([user_doc["username"]])
+            })
+    except:
+        print("")
+    
 
     if len(posts) > 0:
         for post in posts:
@@ -256,22 +263,22 @@ def delete_user_documents(uid):
     except:
         print("")
 
+    
+
     fbauth.delete_user(uid)
-    end = time.time()
-    print(f" {end - begin} s")
     return jsonify({
         "status": "success"
     })
 
 
-@app.route("/deleteuser/<uid>", methods=["GET"])
-def delete_user(uid):
-    user_doc = fbfirestore.collection(
-        "users").document(uid).get().to_dict()
+# @app.route("/deleteuser/<uid>", methods=["GET"])
+# def delete_user(uid):
+#     user_doc = fbfirestore.collection(
+#         "users").document(uid).get().to_dict()
 
-    return jsonify({
-        "status": "failed"
-    })
+#     return jsonify({
+#         "status": "failed"
+#     })
 
 
 @app.route("/")

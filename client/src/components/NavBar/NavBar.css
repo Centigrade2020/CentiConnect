@@ -34,7 +34,7 @@
   transition: all 200ms ease-in-out;
 }
 
-.NavBar .navBarContainer > .profileContainer > .profilePicContainer:hover {
+.NavBar .navBarContainer > .profileContainer:hover > .profilePicContainer {
   box-shadow: 0 0 0 3px rgb(195, 186, 231);
 }
 

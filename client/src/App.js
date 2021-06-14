@@ -1,6 +1,6 @@
 import fb from "./services/firebase";
 import { useEffect } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { useAuth, useResolved } from "./hooks";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
@@ -9,16 +9,20 @@ import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost";
 import Settings from "./pages/Settings";
 import UserProfile from "./pages/UserProfile";
-import Profile from "./pages/ProfilePage";
+import Profile from "./pages/Profile";
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
   const authUser = useAuth();
   const authResolved = useResolved(authUser);
 
   useEffect(() => {
     if (authResolved) {
       history.push(!authUser && "login");
+    }
+    if (location.pathname == "/login" && !!authUser) {
+      history.push("/");
     }
     fb.firestore
       .collection("root")

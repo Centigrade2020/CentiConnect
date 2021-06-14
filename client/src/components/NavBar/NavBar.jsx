@@ -7,8 +7,6 @@ function NavBar() {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
-  // const user = fb.auth.currentUser?.uid
-  // console.log(user)
 
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
@@ -17,7 +15,10 @@ function NavBar() {
         .doc(localStorage.getItem("userId"))
         .get()
         .then((doc) => {
-          setUsername(doc.data().username);
+          if (doc.data() !== undefined) {
+            setUsername(doc.data().username);
+          }
+          setUsername("");
         });
 
       try {
@@ -32,31 +33,8 @@ function NavBar() {
       } catch {
         setProfilePic("");
       }
-      //   try {
-      //     console.log("hrithik69")
-      //     fb.firestore
-      //       .collection("root")
-      //       .doc("uid")
-      //       .collection("users")
-      //       .doc("hrithik69")
-      //       .get()
-      //       .then((doc) => {
-
-      //         if (doc.exists) {
-      //           var data = doc.data()
-      //           console.log(data)
-      //         }
-      //         else {
-      //           console.log("hey")
-      //         }
-      //       })
-      //   }
-      //   catch {
-      //     console.log("h")
-      //   }
     }
   }, []);
-
 
   return (
     <div className="NavBar">
@@ -78,7 +56,6 @@ function NavBar() {
           onClick={() => {
             history.push("/" + "profile");
           }}
-          title="profiletab"
         >
           <p className="profileName">{username}</p>
           <div className="profilePicContainer">

@@ -25,11 +25,17 @@ function Login() {
         } else {
           setServerError("Something went wrong");
         }
+        return err;
       })
-      .finally(() => {
+      .then((err) => {
+        if (!err) {
+          history.push("/");
+        }
+      })
+      .finally((err) => {
         setSubmitting(false);
+
         localStorage.setItem("userId", fb.auth.currentUser?.uid);
-        history.push("/");
       });
   };
 

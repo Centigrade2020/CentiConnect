@@ -41,6 +41,8 @@ function Profile() {
 
   const logout = () => {
     fb.auth.signOut().then(() => {
+      localStorage.clear();
+      sessionStorage.clear();
       history.push("login");
     });
   };

@@ -8,8 +8,13 @@ function getProfileData() {
       .doc(localStorage.getItem("userId"))
       .get()
       .then((doc) => {
-        localStorage.setItem("username", doc.data().username);
-        localStorage.setItem("about", doc.data().about);
+        if (doc.data() !== undefined) {
+          localStorage.setItem("username", doc.data().username);
+          localStorage.setItem("about", doc.data().about);
+        } else {
+          localStorage.setItem("username", "");
+          localStorage.setItem("about", "");
+        }
       });
     return {
       username: localStorage.getItem("username"),
@@ -23,7 +28,7 @@ function getProfileData() {
   }
 }
 
-const initialValues = {
+const profileInitialValues = {
   username: getProfileData().username,
   about: getProfileData().about,
 };
@@ -40,7 +45,7 @@ function getUsernames() {
   return [];
 }
 
-const validationSchema = yup.object().shape({
+const profileValidationSchema = yup.object().shape({
   username: yup
     .string()
     .required("Required")
@@ -51,4 +56,4 @@ const validationSchema = yup.object().shape({
     .min(3, "Must atleast be 3 characters"),
 });
 
-export { initialValues, validationSchema };
+export { profileInitialValues, profileValidationSchema };

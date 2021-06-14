@@ -46,7 +46,7 @@ function Signup() {
           console.log(res.error);
         } else {
           fb.auth.signInWithEmailAndPassword(email, password);
-
+          localStorage.setItem("userId", res.uid);
           history.push("login");
         }
       })
