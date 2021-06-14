@@ -7,9 +7,10 @@ import Edit from "./Edit";
 import Settings from "./Settings";
 import Image from "./Image";
 import Logout from "./Logout";
-import Save from "./save";
+import Save from "./Save";
 import Warning from "./Warning";
 import Tick from "./Tick";
+import Trash from "./Trash";
 
 const Symbols = {
   Plus,
@@ -24,6 +25,7 @@ const Symbols = {
   Save,
   Warning,
   Tick,
+  Trash,
 };
 
 export default Symbols;

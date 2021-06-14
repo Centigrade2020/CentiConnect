@@ -83,6 +83,24 @@ def create_post():
     else:
         return {}
 
+@app.route('/deletepost', methods=["GET", "POST"])
+def delete_post():
+    if request.method == "POST":
+        content = request.get_json()
+        print(content)
+        fbfirestore.collection("users").document(content["userId"]).update({
+            "posts": functions.ArrayRemove([content["postId"]])
+        })
+        fbfirestore.collection("posts").document(content["postId"]).delete()
+        try:
+            blob = bucket.blob(f'postImages/{content["postId"]}.jpeg')
+            blob.delete()
+        except:
+            print("")
+        return {}
+    else:
+        return {}
+
 
 @ app.route('/images', methods=["POST", "GET"])
 def images():

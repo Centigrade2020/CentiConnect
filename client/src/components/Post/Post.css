@@ -48,9 +48,10 @@
   height: 100%;
 }
 
-.Post .profile .settings {
+.Post .profile .deletePost {
   position: absolute;
   right: var(--padding10);
+  cursor: pointer;
 }
 
 .Post .imageSection {
@@ -97,8 +98,13 @@
   user-select: none;
 }
 
-.Post .ThreeDots {
+.Post .profile .deletePost .Trash {
   fill: gray;
+  transition: fill 200ms ease-in-out;
+}
+
+.Post .profile .deletePost:hover .Trash {
+  fill: rgb(163, 0, 0);
 }
 
 .Post .postLinks {

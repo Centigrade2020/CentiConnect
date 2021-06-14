@@ -147,6 +147,23 @@ const Post = ({
     }
   };
 
+  const deletePost = () => {
+    const content = {
+      postId: postId,
+      userId: userId,
+    };
+
+    fetch("/deletepost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(content),
+    }).then(() => {
+      window.location.reload();
+    });
+  };
+
   return (
     <div className="Post" key={postId}>
       <div className="profile">
@@ -167,8 +184,8 @@ const Post = ({
         </div>
         <p className="profileName">{username}</p>
         {location.pathname == "/profile" && (
-          <div className="settings">
-            <Symbols.ThreeDots size="40" />
+          <div className="deletePost" onClick={deletePost}>
+            <Symbols.Trash size="40" />
           </div>
         )}
       </div>
