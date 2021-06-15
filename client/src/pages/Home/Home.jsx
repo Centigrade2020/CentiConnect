@@ -56,7 +56,7 @@ function Home() {
           history.push("createpost");
         }}
       >
-        <Symbols.Plus size="38" />
+        <Symbols.Plus size="64" />
       </div>
     </div>
   );

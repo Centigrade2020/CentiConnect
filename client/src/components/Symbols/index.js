@@ -12,6 +12,7 @@ import Warning from "./Warning";
 import Tick from "./Tick";
 import Trash from "./Trash";
 import Request from "./Request";
+import Person from "./Person";
 
 const Symbols = {
   Plus,
@@ -28,6 +29,7 @@ const Symbols = {
   Tick,
   Trash,
   Request,
+  Person,
 };
 
 export default Symbols;

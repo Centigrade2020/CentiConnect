@@ -51,7 +51,6 @@
 .Post .profile .deletePost {
   position: absolute;
   right: var(--padding10);
-  cursor: pointer;
 }
 
 .Post .imageSection {
@@ -254,6 +253,41 @@
   left: 50%;
   transform: translate(-50%, -50%);
   animation: rotation 4s infinite linear;
+}
+
+.confirmDeletePost {
+  padding: 10px;
+}
+
+.confirmDeletePost button {
+  padding: 5px 10px;
+  outline: none;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+  background-color: white;
+  margin-left: 10px;
+}
+
+.deleteYes {
+  color: red;
+  border: 1px solid red;
+}
+
+.deleteYes:hover {
+  background-color: red;
+  color: white;
+}
+
+.deleteNo {
+  color: var(--violet);
+  border: 1px solid var(--violet);
+}
+
+.deleteNo:hover {
+  background-color: var(--violet);
+  color: white;
 }
 
 @keyframes rotation {

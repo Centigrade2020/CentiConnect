@@ -25,6 +25,7 @@ const Post = ({
   const [disDownvotes, setDisDownvotes] = useState(downvotes);
   const [vote, setVote] = useState(voteState);
   const [commented, setCommented] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
 
   const postRef = fb.firestore.collection("posts").doc(postId);
 
@@ -216,8 +217,33 @@ const Post = ({
         </div>
         <p className="profileName">{username}</p>
         {location.pathname === "/profile" && (
-          <div className="deletePost" onClick={deletePost}>
-            <Symbols.Trash size="40" />
+          <div className="deletePost">
+            {!deleteMode ? (
+              <div
+                className="trashContainer"
+                onClick={() => {
+                  console.log("hello");
+                  setDeleteMode(true);
+                }}
+              >
+                <Symbols.Trash size="40" />
+              </div>
+            ) : (
+              <div className="confirmDeletePost">
+                Delete this post?
+                <button className="deleteYes" onClick={deletePost}>
+                  Yes
+                </button>
+                <button
+                  className="deleteNo"
+                  onClick={() => {
+                    setDeleteMode(false);
+                  }}
+                >
+                  No
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

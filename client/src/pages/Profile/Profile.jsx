@@ -130,6 +130,16 @@ function Profile() {
         <div className="profileBannerLinks">
           <div
             className="profileBannerLinkButton"
+            // onClick={}
+          >
+            <Symbols.Person size="30" />
+            <p className="floatingInfo">Requests</p>
+            <div className="requestNo">
+              <p>0</p>
+            </div>
+          </div>
+          <div
+            className="profileBannerLinkButton"
             onClick={() => {
               history.push("settings");
             }}
@@ -178,6 +188,15 @@ function Profile() {
               }}
             />
           ))}
+      </div>
+      <div
+        className="createPostButton"
+        onClick={() => {
+          history.push("createpost");
+        }}
+      >
+        <Symbols.Plus size="64" />
+        <p className="createPostFloat">Create Post</p>
       </div>
     </div>
   );
