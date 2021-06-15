@@ -6,17 +6,17 @@ import fb from "../../services/firebase";
 
 function UserProfile() {
   const history = useHistory();
+
   const [uid, setUid] = useState("");
-
-  useEffect(() => {
-    setUid(localStorage.getItem("searchUser"));
-  }, [localStorage.getItem("searchUser")]);
-
   const [profilePic, setProfilePic] = useState("");
   const [username, setUsername] = useState("");
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
   const [postCount, setPostCount] = useState(0);
+
+  useEffect(() => {
+    setUid(localStorage.getItem("searchUser"));
+  }, [localStorage.getItem("searchUser")]);
 
   useEffect(() => {
     if (uid !== "") {
@@ -115,6 +115,12 @@ function UserProfile() {
             <p className="userInfoText">About</p>
 
             <p className="bioText">{about}</p>
+          </div>
+        </div>
+        <div className="profileBannerLinks">
+          <div className="profileBannerLinkButton">
+            <Symbols.Request size="30" />
+            <p className="floatingInfo">Request</p>
           </div>
         </div>
       </div>

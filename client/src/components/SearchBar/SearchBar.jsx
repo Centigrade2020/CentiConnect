@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { SearchElement } from "../../components";
 import fb from "../../services/firebase";
 import "./SearchBar.css";
 
 function SearchBar() {
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fb.firestore
@@ -16,8 +16,6 @@ function SearchBar() {
         setUsers(doc.data().users);
       });
   }, []);
-
-  const [searchTerm, setSearchTerm] = useState("");
 
   function editSearchTerm(e) {
     var value = e.target.value;
