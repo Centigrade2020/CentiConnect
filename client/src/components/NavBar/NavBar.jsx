@@ -55,7 +55,7 @@ function NavBar() {
         <div
           className="profileContainer"
           onClick={() => {
-            history.push("/" + "profile");
+            history.push("/profile");
           }}
         >
           <p className="profileName">{username}</p>

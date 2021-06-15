@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { FormFieldClass } from "../../components";
 import {
   profileInitialValues,
   profileValidationSchema,
 } from "./profileFormikConfig";
-import { emailInitialValues, emailValidationSchema } from "./emailFormikConfig";
 import { Symbols } from "../../components";
 import fb from "../../services/firebase";
 import ReactCrop from "react-image-crop";
@@ -14,10 +12,6 @@ import "react-image-crop/dist/ReactCrop.css";
 import "./Settings.css";
 
 function Settings() {
-  const history = useHistory();
-
-  const [serverEmailError, setServerEmailError] = useState("");
-
   const [profilePic, setProfilePic] = useState("");
   const [screen, setScreen] = useState("profile");
   const [warningCheckbox, setWarningCheckbox] = useState(false);

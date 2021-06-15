@@ -11,6 +11,7 @@ import Save from "./Save";
 import Warning from "./Warning";
 import Tick from "./Tick";
 import Trash from "./Trash";
+import Request from "./Request";
 
 const Symbols = {
   Plus,
@@ -26,6 +27,7 @@ const Symbols = {
   Warning,
   Tick,
   Trash,
+  Request,
 };
 
 export default Symbols;

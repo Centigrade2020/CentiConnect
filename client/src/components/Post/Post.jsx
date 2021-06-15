@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import fb from "../../services/firebase";
 import { Symbols } from "../../components";
@@ -28,32 +28,64 @@ const Post = ({
 
   const postRef = fb.firestore.collection("posts").doc(postId);
 
-  try {
-    fb.firestore
-      .collection("users")
-      .doc(userId)
-      .get()
-      .then((doc) => {
-        setUsername(doc.data().username);
-      });
-  } catch {
-    console.log("");
-  }
+  useEffect(() => {
+    let unmounted = false;
 
-  fb.storage
-    .ref()
-    .child(`profileImages/${userId}.jpeg`)
-    .getDownloadURL()
-    .then((data) => setProfilePic(data))
-    .catch(() => {
+    try {
+      fb.firestore
+        .collection("users")
+        .doc(userId)
+        .get()
+        .then((doc) => {
+          if (!unmounted) {
+            setUsername(doc.data().username);
+          } else {
+            console.log("");
+          }
+        });
+    } catch {
       console.log("");
-    });
+    }
 
-  fb.storage
-    .ref()
-    .child(`postImages/${postId}.jpeg`)
-    .getDownloadURL()
-    .then((data) => setLink(data));
+    try {
+      fb.storage
+        .ref()
+        .child(`profileImages/${userId}.jpeg`)
+        .getDownloadURL()
+        .then((data) => {
+          if (!unmounted) {
+            setProfilePic(data);
+          } else {
+            console.log("");
+          }
+        })
+        .catch(() => {
+          console.log("");
+        });
+    } catch {
+      console.log("");
+    }
+
+    try {
+      fb.storage
+        .ref()
+        .child(`postImages/${postId}.jpeg`)
+        .getDownloadURL()
+        .then((data) => {
+          if (!unmounted) {
+            setLink(data);
+          } else {
+            console.log("");
+          }
+        });
+    } catch {
+      console.log("");
+    }
+
+    return () => {
+      unmounted = true;
+    };
+  }, []);
 
   const postComment = () => {
     if (comment.split(" ").join() !== "") {
@@ -74,9 +106,9 @@ const Post = ({
           ...args,
         ]);
       });
+      setCommented(true);
     }
     setComment("");
-    setCommented(true);
   };
 
   const upVoteHandler = () => {
@@ -102,7 +134,7 @@ const Post = ({
           localStorage.getItem("userId")
         ),
       });
-    } else if (vote == true) {
+    } else if (vote === true) {
       setVote(null);
       setDisUpvotes(disUpvotes - 1);
       postRef.update({
@@ -114,7 +146,7 @@ const Post = ({
   };
 
   const downVoteHandler = () => {
-    if (vote == null) {
+    if (vote === null) {
       setVote(false);
       setDisDownvotes(disDownvotes + 1);
       postRef.update({
@@ -122,7 +154,7 @@ const Post = ({
           localStorage.getItem("userId")
         ),
       });
-    } else if (vote == true) {
+    } else if (vote === true) {
       setVote(false);
       setDisDownvotes(disDownvotes + 1);
       postRef.update({
@@ -136,7 +168,7 @@ const Post = ({
           localStorage.getItem("userId")
         ),
       });
-    } else if (vote == false) {
+    } else if (vote === false) {
       setVote(null);
       setDisDownvotes(disDownvotes - 1);
       postRef.update({
@@ -183,7 +215,7 @@ const Post = ({
           />
         </div>
         <p className="profileName">{username}</p>
-        {location.pathname == "/profile" && (
+        {location.pathname === "/profile" && (
           <div className="deletePost" onClick={deletePost}>
             <Symbols.Trash size="40" />
           </div>
@@ -242,7 +274,7 @@ const Post = ({
             <div className="upVote" onClick={upVoteHandler}>
               <div
                 className={
-                  vote == true
+                  vote === true
                     ? "voteContainer voted voted1"
                     : " voteContainer null"
                 }
@@ -254,7 +286,7 @@ const Post = ({
             <div className="downVote" onClick={downVoteHandler}>
               <div
                 className={
-                  vote == false
+                  vote === false
                     ? "voteContainer voted voted0"
                     : " voteContainer null"
                 }

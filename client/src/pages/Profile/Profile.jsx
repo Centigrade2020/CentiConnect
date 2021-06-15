@@ -14,14 +14,19 @@ function Profile() {
   const [postCount, setPostCount] = useState(0);
 
   useEffect(() => {
+    let unmounted = false;
     if (!!localStorage.getItem("userId")) {
       fb.firestore
         .collection("users")
         .doc(localStorage.getItem("userId"))
         .get()
         .then((doc) => {
-          setUsername(doc.data().username);
-          setAbout(doc.data().about);
+          if (!unmounted) {
+            setUsername(doc.data().username);
+            setAbout(doc.data().about);
+          } else {
+            console.log("");
+          }
         });
 
       try {
@@ -29,14 +34,21 @@ function Profile() {
           .ref()
           .child(`profileImages/${localStorage.getItem("userId")}.jpeg`)
           .getDownloadURL()
-          .then((data) => setProfilePic(data))
-          .catch(() => {
-            "";
+          .then((data) => {
+            if (!unmounted) {
+              setProfilePic(data);
+            } else {
+              console.log("");
+            }
           });
       } catch {
-        setProfilePic("");
+        console.log("");
       }
     }
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const logout = () => {
@@ -48,6 +60,7 @@ function Profile() {
   };
 
   useEffect(() => {
+    let unmounted = false;
     fetch(`getuserposts/${localStorage.getItem("userId")}`, {
       method: "GET",
     })
@@ -55,11 +68,23 @@ function Profile() {
         return res.json();
       })
       .then((res) => {
-        setPosts(res.posts);
+        if (!unmounted) {
+          setPosts(res.posts);
+        } else {
+          console.log("");
+        }
         if (res.noOfPost !== undefined) {
-          setPostCount(res.noOfPost);
+          if (!unmounted) {
+            setPostCount(res.noOfPost);
+          } else {
+            console.log("");
+          }
         }
       });
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   return (
