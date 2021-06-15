@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import fb from "../../services/firebase";
 import { Symbols } from "../../components";
@@ -28,32 +28,63 @@ const Post = ({
 
   const postRef = fb.firestore.collection("posts").doc(postId);
 
-  try {
-    fb.firestore
-      .collection("users")
-      .doc(userId)
-      .get()
-      .then((doc) => {
-        setUsername(doc.data().username);
-      });
-  } catch {
-    console.log("");
-  }
-
-  fb.storage
-    .ref()
-    .child(`profileImages/${userId}.jpeg`)
-    .getDownloadURL()
-    .then((data) => setProfilePic(data))
-    .catch(() => {
+  useEffect(() => {
+    let unmounted = false;
+    try {
+      fb.firestore
+        .collection("users")
+        .doc(userId)
+        .get()
+        .then((doc) => {
+          if (!unmounted) {
+            setUsername(doc.data().username);
+          } else {
+            console.log("");
+          }
+        });
+    } catch {
       console.log("");
-    });
+    }
 
-  fb.storage
-    .ref()
-    .child(`postImages/${postId}.jpeg`)
-    .getDownloadURL()
-    .then((data) => setLink(data));
+    try {
+      fb.storage
+        .ref()
+        .child(`profileImages/${userId}.jpeg`)
+        .getDownloadURL()
+        .then((data) => {
+          if (!unmounted) {
+            setProfilePic(data);
+          } else {
+            console.log("");
+          }
+        })
+        .catch(() => {
+          console.log("");
+        });
+    } catch {
+      console.log("");
+    }
+
+    try {
+      fb.storage
+        .ref()
+        .child(`postImages/${postId}.jpeg`)
+        .getDownloadURL()
+        .then((data) => {
+          if (!unmounted) {
+            setLink(data);
+          } else {
+            console.log("");
+          }
+        });
+    } catch {
+      console.log("");
+    }
+
+    return () => {
+      unmounted = true;
+    };
+  }, []);
 
   const postComment = () => {
     if (comment.split(" ").join() !== "") {
@@ -74,9 +105,9 @@ const Post = ({
           ...args,
         ]);
       });
+      setCommented(true);
     }
     setComment("");
-    setCommented(true);
   };
 
   const upVoteHandler = () => {

@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { SearchElement } from "../../components";
 import fb from "../../services/firebase";
 import "./SearchBar.css";
 
 function SearchBar() {
-  const history = useHistory();
-  function getUsernames() {
-    if (!!sessionStorage.getItem("usernames")) {
-      var str = sessionStorage.getItem("usernames");
-      var usernames = str.split(",");
-      return usernames;
-    }
-    return [];
-  }
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fb.firestore
+      .collection("root")
+      .doc("uid")
+      .get()
+      .then((doc) => {
+        setUsers(doc.data().users);
+      });
+  }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -26,39 +29,20 @@ function SearchBar() {
       return (
         <div className="searchListContainer">
           <ul className="searchList" id="searchList">
-            {getUsernames()
-              .filter((name) =>
-                name.toLowerCase().includes(searchTerm.toLowerCase())
-              )
-              .map((name) => (
-                <button
-                  className="searchResult"
-                  key={name}
-                  onClick={() => {
-                    fb.firestore
-                      .collection("root")
-                      .doc("uid")
-                      .get()
-                      .then((doc) => {
-                        const users = doc.data().users;
-                        for (var i in users) {
-                          if (users[i].username === name) {
-                            console.log(users[i].username, users[i].userId);
-                            history.push(`/user/${users[i].username}`, {
-                              uid: users[i].userId,
-                            });
-                          }
-                        }
-                      });
-                    setSearchTerm("");
-                  }}
-                >
-                  <div className="imageContainer">
-                    <img src="" alt="" />
-                  </div>
-                  <p>{name}</p>
-                </button>
-              ))}
+            {users.length > 0 &&
+              users
+                .filter((userObject) =>
+                  userObject.username.includes(searchTerm.toLowerCase())
+                )
+                .map((userObject, key) => {
+                  return (
+                    <SearchElement
+                      key={key}
+                      username={userObject.username}
+                      userId={userObject.userId}
+                    />
+                  );
+                })}
           </ul>
         </div>
       );
@@ -74,7 +58,7 @@ function SearchBar() {
         placeholder="Search"
         className="searchInput"
       />
-      {dynamicSearch()}
+      {searchTerm.length > 0 && dynamicSearch()}
     </div>
   );
 }

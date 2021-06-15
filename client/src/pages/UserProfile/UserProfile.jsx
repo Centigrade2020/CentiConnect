@@ -1,16 +1,16 @@
 import { Symbols, Post } from "../../components";
 import "./UserProfile.css";
 import { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 import fb from "../../services/firebase";
 
 function UserProfile() {
   const history = useHistory();
-  const location = useLocation();
+  const [uid, setUid] = useState("");
 
-  var uid = location.state.uid;
-  localStorage.setItem("searchUser", uid);
-  uid = localStorage.getItem("searchUser");
+  useEffect(() => {
+    setUid(localStorage.getItem("searchUser"));
+  }, [localStorage.getItem("searchUser")]);
 
   const [profilePic, setProfilePic] = useState("");
   const [username, setUsername] = useState("");
@@ -19,7 +19,7 @@ function UserProfile() {
   const [postCount, setPostCount] = useState(0);
 
   useEffect(() => {
-    if (!!uid) {
+    if (uid !== "") {
       fb.firestore
         .collection("users")
         .doc(uid)
@@ -42,7 +42,7 @@ function UserProfile() {
         setProfilePic("");
       }
     }
-  }, []);
+  }, [uid]);
 
   const logout = () => {
     fb.auth.signOut().then(() => {
@@ -53,19 +53,30 @@ function UserProfile() {
   };
 
   useEffect(() => {
-    fetch(`/getuserposts/${uid}`, {
-      method: "GET",
-    })
-      .then((res) => {
-        return res.json();
+    let unmounted = false;
+    if (uid !== "") {
+      fetch(`/getuserposts/${uid}`, {
+        method: "GET",
       })
-      .then((res) => {
-        setPosts(res.posts);
-        if (res.noOfPost !== undefined) {
-          setPostCount(res.noOfPost);
-        }
-      });
-  }, []);
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          if (!unmounted) {
+            setPosts(res.posts);
+          }
+          if (res.noOfPost !== undefined) {
+            if (!unmounted) {
+              setPostCount(res.noOfPost);
+            }
+          }
+        });
+    }
+
+    return () => {
+      unmounted = true;
+    };
+  }, [uid]);
 
   return (
     <div className="Profile">
@@ -104,26 +115,6 @@ function UserProfile() {
             <p className="userInfoText">About</p>
 
             <p className="bioText">{about}</p>
-          </div>
-        </div>
-
-        <div className="profileBannerLinks">
-          <div
-            className="profileBannerLinkButton"
-            onClick={() => {
-              history.push("settings");
-            }}
-          >
-            <Symbols.Settings size="30" />
-            <p className="floatingInfo">Settings</p>
-          </div>
-          <div
-            className="profileBannerLinkButton"
-            alt="logout"
-            onClick={() => logout()}
-          >
-            <Symbols.Logout size="30" />
-            <p className="floatingInfo">Logout</p>
           </div>
         </div>
       </div>
