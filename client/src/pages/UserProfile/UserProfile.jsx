@@ -33,10 +33,10 @@ function UserProfile() {
           .getDownloadURL()
           .then((data) => setProfilePic(data))
           .catch(() => {
-            "";
+            console.log("");
           });
       } catch {
-        setProfilePic("");
+        console.log("");
       }
     }
   }, [uid]);
