@@ -12,6 +12,7 @@ function Profile() {
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
   const [postCount, setPostCount] = useState(0);
+  const [logoutMode, setLogoutMode] = useState(false);
 
   useEffect(() => {
     let unmounted = false;
@@ -130,7 +131,7 @@ function Profile() {
         <div className="profileBannerLinks">
           <div
             className="profileBannerLinkButton"
-            // onClick={}
+          // onClick={}
           >
             <Symbols.Person size="30" />
             <p className="floatingInfo">Requests</p>
@@ -147,14 +148,35 @@ function Profile() {
             <Symbols.Settings size="30" />
             <p className="floatingInfo">Settings</p>
           </div>
-          <div
-            className="profileBannerLinkButton"
-            alt="logout"
-            onClick={() => logout()}
-          >
-            <Symbols.Logout size="30" />
-            <p className="floatingInfo">Logout</p>
-          </div>
+          {!logoutMode ? (
+            <div
+              className="profileBannerLinkButton"
+              alt="logout"
+              onClick={() => {
+                setLogoutMode(true);
+              }}
+            >
+              <Symbols.Logout size="30" />
+              <p className="floatingInfo">Logout</p>
+
+            </div>
+          ) : (
+            <div className="confirmLogout">
+              <p>Logout?</p>
+
+              <button
+                className="deleteNo"
+                onClick={() => {
+                  setLogoutMode(false);
+                }}
+              >
+                No
+              </button>
+              <button className="deleteYes" onClick={() => logout()}>
+                Yes
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

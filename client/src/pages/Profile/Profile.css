@@ -353,7 +353,22 @@
 
 .requestNo p {
   position: absolute;
+
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.confirmLogout p {
+  margin-left: -40px;
+}
+.confirmLogout button {
+  padding: 5px 10px;
+  outline: none;
+  margin-top: 5px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+  background-color: white;
+  margin-right: -100px;
 }
