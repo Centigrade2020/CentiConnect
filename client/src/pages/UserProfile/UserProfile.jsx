@@ -1,12 +1,9 @@
+import { useState, useEffect } from "react";
+import fb from "../../services/firebase";
 import { Symbols, Post } from "../../components";
 import "./UserProfile.css";
-import { useState, useEffect } from "react";
-import { useHistory } from "react-router";
-import fb from "../../services/firebase";
 
 function UserProfile() {
-  const history = useHistory();
-
   const [uid, setUid] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [username, setUsername] = useState("");
@@ -43,14 +40,6 @@ function UserProfile() {
       }
     }
   }, [uid]);
-
-  const logout = () => {
-    fb.auth.signOut().then(() => {
-      localStorage.clear();
-      sessionStorage.clear();
-      history.push("login");
-    });
-  };
 
   useEffect(() => {
     let unmounted = false;

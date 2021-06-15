@@ -30,6 +30,7 @@ const Post = ({
 
   useEffect(() => {
     let unmounted = false;
+
     try {
       fb.firestore
         .collection("users")
