@@ -32,8 +32,9 @@ def signup():
                 "username": content["username"],
                 "private": False,
                 "about": "",
-                "post": [],
-                "connections": []
+                "posts": [],
+                "connections": [],
+                "requests": []
             })
             fbfirestore.collection("root").document("AdditionalData").update({
                 "usernames": functions.ArrayUnion([content["username"]])

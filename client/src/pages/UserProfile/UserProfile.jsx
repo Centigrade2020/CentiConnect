@@ -107,7 +107,19 @@ function UserProfile() {
           </div>
         </div>
         <div className="profileBannerLinks">
-          <div className="profileBannerLinkButton">
+          <div
+            className="profileBannerLinkButton"
+            onClick={() => {
+              fb.firestore
+                .collection("users")
+                .doc(uid)
+                .update({
+                  requests: fb.firebase.firestore.FieldValue.arrayUnion(
+                    localStorage.getItem("userId")
+                  ),
+                });
+            }}
+          >
             <Symbols.Request size="30" />
             <p className="floatingInfo">Request</p>
           </div>

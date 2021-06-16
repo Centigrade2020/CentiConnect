@@ -1,0 +1,181 @@
+.People {
+  width: 100%;
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.peopleContainer {
+  width: 1000px;
+  height: 80vh;
+  border-radius: 20px;
+  margin: 30px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.peopleContainerTab {
+  height: 80vh;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.peopleContainerTab h1 {
+  margin: 10px 20px;
+  font-size: 1.4rem;
+  color: var(--violet);
+}
+
+.People .connections {
+  width: 39%;
+  height: 100%;
+}
+
+.People .requests {
+  width: 59%;
+  height: 100%;
+}
+
+.connectionsList {
+  width: 90%;
+  margin: auto;
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  list-style: none;
+}
+
+.connectionsList li {
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background-color: var(--lightviolet);
+}
+
+.connectionsList li .profileImageContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: gray;
+  margin-right: 15px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.connectionsList li .profileImageContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.requestsList {
+  width: 90%;
+  margin: auto;
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  list-style: none;
+}
+
+.requestsList li {
+  margin: 10px;
+  padding: 20px;
+  display: flex;
+  background-color: var(--lightviolet);
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.requestsList li .profileImageContainer {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: var(--lightgray);
+  border: 3px solid var(--violet);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.requestsList li .profileImageContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.requestsList .buttonsLists {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.requestsList .buttonsLists button {
+  padding: 10px 18px;
+  outline: none;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.acceptButton {
+  border: 1px solid var(--violet);
+  color: white;
+  background-color: var(--violet);
+}
+
+.denyButton {
+  border: 1px solid red;
+  color: white;
+  background-color: red;
+}
+
+.acceptButton:hover {
+  background-color: var(--violet3);
+}
+
+.denyButton:hover {
+  background-color: rgb(151, 0, 0);
+}
+
+.checkProfileButton {
+  padding: 8px 15px;
+  outline: none;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid var(--violet);
+  color: var(--violet);
+  background-color: white;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease-in-out;
+}
+
+.checkProfileButton p {
+  transform: translateY(1px);
+}
+
+.checkProfileButton .Person {
+  fill: var(--violet);
+  margin-left: 5px;
+  transition: all 200ms ease-in-out;
+}
+
+.checkProfileButton:hover {
+  color: white;
+  background-color: var(--violet);
+}
+.checkProfileButton:hover .Person {
+  fill: white;
+}
+
+.requestElementInfo {
+  margin-right: 30px;
+}

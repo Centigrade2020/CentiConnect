@@ -131,7 +131,9 @@ function Profile() {
         <div className="profileBannerLinks">
           <div
             className="profileBannerLinkButton"
-            // onClick={}
+            onClick={() => {
+              history.push("/people");
+            }}
           >
             <Symbols.Person size="30" />
             <p className="floatingInfo">People</p>

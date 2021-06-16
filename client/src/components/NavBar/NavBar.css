@@ -80,6 +80,10 @@
   margin-right: 20px;
 }
 
+.chatContainer p {
+  margin-right: 10px;
+}
+
 .searchContainer {
   position: absolute;
   top: 50%;
