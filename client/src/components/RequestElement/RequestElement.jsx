@@ -9,6 +9,8 @@ function RequestElement({ userId }) {
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
 
+  const [triggered, setTriggered] = useState(false);
+
   useEffect(() => {
     let unmounted = false;
     if (userId !== "") {
@@ -67,29 +69,47 @@ function RequestElement({ userId }) {
       .update({
         requests: fb.firebase.firestore.FieldValue.arrayRemove(userId),
       });
-    window.location.reload();
+    setTriggered(true);
   };
 
-  return (
-    <li>
-      <div className="profileImageContainer">
-        <img src={profilePic} alt="profileimage" />
-      </div>
-      <div className="requestElementInfo">
-        <p>{username}</p>
-        <button className="checkProfileButton">
-          <p>Check</p>
-          <Symbols.Person size="25" />
-        </button>
-      </div>
-      <div className="buttonsLists">
-        <button className="acceptButton" onClick={acceptHandler}>
-          Accept
-        </button>
-        <button className="denyButton">Deny</button>
-      </div>
-    </li>
-  );
+  if (!triggered) {
+    return (
+      <li>
+        <div className="profileImageContainer">
+          <img src={profilePic} alt="profileimage" />
+        </div>
+        <div className="requestElementInfo">
+          <p>{username}</p>
+          <button className="checkProfileButton">
+            <p>Check</p>
+            <Symbols.Person size="25" />
+          </button>
+        </div>
+        <div className="buttonsLists">
+          <button className="acceptButton" onClick={acceptHandler}>
+            Accept
+          </button>
+          <button
+            className="denyButton"
+            onClick={() => {
+              fb.firestore
+                .collection("users")
+                .doc(localStorage.getItem("userId"))
+                .update({
+                  requests:
+                    fb.firebase.firestore.FieldValue.arrayRemove(userId),
+                });
+              setTriggered(true);
+            }}
+          >
+            Deny
+          </button>
+        </div>
+      </li>
+    );
+  }
+
+  return <> </>;
 }
 
 export default RequestElement;

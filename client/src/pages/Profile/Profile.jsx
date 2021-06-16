@@ -12,6 +12,7 @@ function Profile() {
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
   const [postCount, setPostCount] = useState(0);
+  const [requestCount, setRequestCount] = useState(0);
   const [logoutMode, setLogoutMode] = useState(false);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function Profile() {
           if (!unmounted) {
             setUsername(doc.data().username);
             setAbout(doc.data().about);
+            setRequestCount(doc.data().requests.length);
           } else {
             console.log("");
           }
@@ -137,9 +139,11 @@ function Profile() {
           >
             <Symbols.Person size="30" />
             <p className="floatingInfo">People</p>
-            <div className="requestNo">
-              <p>99</p>
-            </div>
+            {requestCount > 0 && (
+              <div className="requestNo">
+                <p>{requestCount}</p>
+              </div>
+            )}
           </div>
           <div
             className="profileBannerLinkButton"
