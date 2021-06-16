@@ -297,29 +297,26 @@ const Post = ({
 
         <div className="description">
           <div className="postLinks">
-            <div className="upVote" onClick={upVoteHandler}>
-              <div
-                className={
-                  vote === true
-                    ? "voteContainer voted voted1"
-                    : " voteContainer null"
-                }
-              >
+            <div
+              className="upVote"
+              className={vote === true ? "upVote voted voted1" : " upVote null"}
+              onClick={upVoteHandler}
+            >
+              <div className="voteContainer">
                 <Symbols.UpVote size="22" />
               </div>
-              {disUpvotes}
+              <p>{disUpvotes}</p>
             </div>
-            <div className="downVote" onClick={downVoteHandler}>
-              <div
-                className={
-                  vote === false
-                    ? "voteContainer voted voted0"
-                    : " voteContainer null"
-                }
-              >
+            <div
+              className={
+                vote === false ? "downVote voted voted0" : " downVote null"
+              }
+              onClick={downVoteHandler}
+            >
+              <div className="voteContainer ">
                 <Symbols.DownVote size="22" />
               </div>
-              {disDownvotes}
+              <p>{disDownvotes}</p>
             </div>
           </div>
           <div className="descriptionContent">

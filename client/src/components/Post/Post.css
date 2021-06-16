@@ -117,7 +117,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: calc(var(--padding10) * 3);
+  margin: 0 calc(var(--padding10) / 2);
   padding: calc(var(--padding10) / 2);
   cursor: pointer;
 }
@@ -139,16 +139,33 @@
   transition: all 200ms ease-in-out;
 }
 
+.upVote,
+.downVote {
+  border-radius: 8px;
+}
+
+.upVote > p,
+.downVote > p {
+  margin-right: 5px;
+}
+
 .voted1 {
-  background-color: rgb(0, 110, 255);
+  background-color: var(--violet);
   transition: all 200ms ease-in-out;
 }
 .voted0 {
   background-color: rgb(255, 77, 77);
   transition: all 200ms ease-in-out;
 }
-.voted > .UpVote,
-.voted > .DownVote {
+
+.voted {
+  border-radius: 8px;
+  margin: 5px;
+  color: white;
+}
+
+.voted > .voteContainer > .UpVote,
+.voted > .voteContainer > .DownVote {
   fill: white;
 }
 
