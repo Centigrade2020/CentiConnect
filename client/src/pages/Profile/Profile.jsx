@@ -116,7 +116,7 @@ function Profile() {
               <span className="userInfoText">Posts</span>
             </p>
             <p className="connections">
-              <span className="userInfoNum">3</span>
+              <span className="userInfoNum">2</span>
               <span className="userInfoText">Connections</span>
             </p>
           </div>
@@ -131,12 +131,12 @@ function Profile() {
         <div className="profileBannerLinks">
           <div
             className="profileBannerLinkButton"
-          // onClick={}
+            // onClick={}
           >
             <Symbols.Person size="30" />
-            <p className="floatingInfo">Requests</p>
+            <p className="floatingInfo">People</p>
             <div className="requestNo">
-              <p>0</p>
+              <p>99</p>
             </div>
           </div>
           <div
@@ -158,7 +158,6 @@ function Profile() {
             >
               <Symbols.Logout size="30" />
               <p className="floatingInfo">Logout</p>
-
             </div>
           ) : (
             <div className="confirmLogout">

@@ -10,6 +10,7 @@ import CreatePost from "./pages/CreatePost";
 import Settings from "./pages/Settings";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
+import People from "./pages/People";
 
 function App() {
   const history = useHistory();
@@ -43,6 +44,7 @@ function App() {
         <Route path="/createpost" component={CreatePost} />
         <Route path="/profile" component={Profile} />
         <Route path="/settings" component={Settings} />
+        <Route path="/people" component={People} />
         <Route path="/user/:uname" component={UserProfile} />
       </>
     </Switch>

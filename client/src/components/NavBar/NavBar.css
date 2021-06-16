@@ -13,6 +13,7 @@
   align-items: center;
   justify-content: space-between;
   color: white;
+  position: relative;
 }
 
 .NavBar .navBarContainer .logo {
@@ -22,14 +23,14 @@
 .NavBar .navBarContainer .logo:hover > h1 {
   text-shadow: 1px 1px 5px var(--violet3);
 }
-.NavBar .navBarContainer > .profileContainer {
+.NavBar .navBarContainer .profileContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
 }
 
-.NavBar .navBarContainer > .profileContainer > .profilePicContainer {
+.NavBar .navBarContainer .profileContainer .profilePicContainer {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -41,13 +42,17 @@
   transition: all 200ms ease-in-out;
 }
 
-.NavBar .navBarContainer > .profileContainer:hover > .profilePicContainer {
+.NavBar .navBarContainer .profileContainer .profilePicContainer:hover {
   box-shadow: 0 0 0 3px var(--lightgray);
 }
 
 .NavBar .profileName {
   margin-right: 10px;
   cursor: pointer;
+}
+
+.NavBar .profileName:hover + .profilePicContainer {
+  box-shadow: 0 0 0 3px var(--lightgray);
 }
 
 .NavBar .profileTabToggler {
@@ -61,4 +66,43 @@
 
 .NavBar .profileTabToggler:focus ~ .ProfileTab {
   visibility: visible;
+}
+
+.NavBar .Chat {
+  fill: white;
+}
+
+.chatContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.searchContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.chatNo {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  position: absolute;
+  top: -9px;
+  right: -10px;
+  box-shadow: 0 0 0 3px var(--violet);
+}
+
+.chatNo p {
+  position: absolute;
+  top: 41%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.8rem;
 }

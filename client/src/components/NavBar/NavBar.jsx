@@ -1,8 +1,10 @@
-import SearchBar from "../SearchBar/SearchBar";
-import "./NavBar.css";
-import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import fb from "../../services/firebase";
+import SearchBar from "../SearchBar/SearchBar";
+import { Symbols } from "../../components";
+import "./NavBar.css";
+
 function NavBar() {
   const history = useHistory();
   const [username, setUsername] = useState("");
@@ -49,17 +51,32 @@ function NavBar() {
             Connect
           </h1>
         </div>
+
         <div className="searchContainer">
           <SearchBar />
         </div>
-        <div
-          className="profileContainer"
-          onClick={() => {
-            history.push("/profile");
-          }}
-        >
-          <p className="profileName">{username}</p>
-          <div className="profilePicContainer">
+
+        <div className="profileContainer">
+          <div className="chatContainer">
+            <Symbols.Chat size="28" />
+            <div className="chatNo">
+              <p>99</p>
+            </div>
+          </div>
+          <p
+            className="profileName"
+            onClick={() => {
+              history.push("/profile");
+            }}
+          >
+            {username}
+          </p>
+          <div
+            className="profilePicContainer"
+            onClick={() => {
+              history.push("/profile");
+            }}
+          >
             <img
               src={profilePic}
               alt=""

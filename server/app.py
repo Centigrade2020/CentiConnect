@@ -32,7 +32,8 @@ def signup():
                 "username": content["username"],
                 "private": False,
                 "about": "",
-                "post": []
+                "post": [],
+                "connections": []
             })
             fbfirestore.collection("root").document("AdditionalData").update({
                 "usernames": functions.ArrayUnion([content["username"]])
@@ -156,6 +157,22 @@ def update_user():
             "username": content["username"],
             "about": content["about"]
         })
+
+        users = fbfirestore.collection("root").document("uid").get().to_dict()["users"]
+        old_username = ""
+        for i in users:
+            if i["userId"] == content["userId"]:
+                old_username = i["username"]
+        print(old_username)
+
+        users = fbfirestore.collection("root").document("uid").update({
+            "users" : functions.ArrayRemove([{'username': old_username, 'userId': content["userId"]}])
+        })
+
+        users = fbfirestore.collection("root").document("uid").update({
+            "users" : functions.ArrayUnion([{'username': content["username"], 'userId': content["userId"]}])
+        })
+
         end = time.time()
         print(f" {end - begin} s")
         return {}
