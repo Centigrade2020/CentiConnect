@@ -10,6 +10,7 @@ function UserProfile() {
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
   const [postCount, setPostCount] = useState(0);
+  const [connectionsCount, setConnectionsCount] = useState(0);
   const [requestSent, setRequestSent] = useState(false);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function UserProfile() {
         .then((doc) => {
           setUsername(doc.data().username);
           setAbout(doc.data().about);
+          setConnectionsCount(doc.data().connections.length);
         });
 
       try {

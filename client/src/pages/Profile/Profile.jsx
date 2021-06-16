@@ -13,6 +13,7 @@ function Profile() {
   const [posts, setPosts] = useState([]);
   const [postCount, setPostCount] = useState(0);
   const [requestCount, setRequestCount] = useState(0);
+  const [connectionsCount, setConnectionsCount] = useState(0);
   const [logoutMode, setLogoutMode] = useState(false);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ function Profile() {
             setUsername(doc.data().username);
             setAbout(doc.data().about);
             setRequestCount(doc.data().requests.length);
+            setConnectionsCount(doc.data().connections.length);
           } else {
             console.log("");
           }
@@ -118,7 +120,7 @@ function Profile() {
               <span className="userInfoText">Posts</span>
             </p>
             <p className="connections">
-              <span className="userInfoNum">2</span>
+              <span className="userInfoNum">{connectionsCount}</span>
               <span className="userInfoText">Connections</span>
             </p>
           </div>
