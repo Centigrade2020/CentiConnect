@@ -168,20 +168,23 @@ function Profile() {
               <p className="floatingInfo">Logout</p>
             </div>
           ) : (
-            <div className="confirmLogout">
-              <p>Logout?</p>
-
-              <button
-                className="deleteNo"
-                onClick={() => {
-                  setLogoutMode(false);
-                }}
-              >
-                No
-              </button>
-              <button className="deleteYes" onClick={() => logout()}>
-                Yes
-              </button>
+            <div className="profileBannerLinkButton1">
+              <div className="confirmLogout">
+                <p>Logout?</p>
+                <div className="logoutButtons">
+                  <button
+                    className="deleteNo"
+                    onClick={() => {
+                      setLogoutMode(false);
+                    }}
+                  >
+                    No
+                  </button>
+                  <button className="deleteYes" onClick={() => logout()}>
+                    Yes
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>

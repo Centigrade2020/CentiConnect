@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { useAuth, useResolved } from "./hooks";
 import NavBar from "./components/NavBar";
+import SearchBar from "./components/SearchBar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -46,6 +47,7 @@ function App() {
         <Route path="/settings" component={Settings} />
         <Route path="/people" component={People} />
         <Route path="/user/:uname" component={UserProfile} />
+        <SearchBar />
       </>
     </Switch>
   );

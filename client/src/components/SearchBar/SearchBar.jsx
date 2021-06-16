@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SearchElement } from "../../components";
+import { SearchElement, Symbols } from "../../components";
 import fb from "../../services/firebase";
 import "./SearchBar.css";
 
@@ -56,6 +56,12 @@ function SearchBar() {
         placeholder="Search"
         className="searchInput"
       />
+      {searchTerm.length > 0 && (
+        <div className="crossContainer" onClick={() => setSearchTerm("")}>
+          <Symbols.Cross size="22" />
+        </div>
+      )}
+
       {searchTerm.length > 0 && dynamicSearch()}
     </div>
   );

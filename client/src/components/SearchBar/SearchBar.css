@@ -1,7 +1,13 @@
 .Search {
   width: 200px;
-  position: relative;
-  z-index: 20;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 2vh;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .searchInput {
@@ -14,7 +20,7 @@
   width: inherit;
   border-bottom: 1px solid white;
   text-align: center;
-  cursor: text;
+  cursor: pointer;
 }
 
 .searchInput::placeholder {
@@ -94,4 +100,17 @@
   transform: translate(calc(-50% + 10px), -50%);
   user-select: none;
   font-size: large;
+}
+
+.crossContainer {
+  min-width: 25px;
+  min-height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.crossContainer .Cross {
+  fill: white;
 }

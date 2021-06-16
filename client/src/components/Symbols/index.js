@@ -14,6 +14,7 @@ import Trash from "./Trash";
 import Request from "./Request";
 import Person from "./Person";
 import Chat from "./Chat";
+import Cross from "./Cross";
 
 const Symbols = {
   Plus,
@@ -32,6 +33,7 @@ const Symbols = {
   Request,
   Person,
   Chat,
+  Cross,
 };
 
 export default Symbols;

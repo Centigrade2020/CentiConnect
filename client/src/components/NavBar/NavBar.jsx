@@ -52,9 +52,9 @@ function NavBar() {
           </h1>
         </div>
 
-        <div className="searchContainer">
+        {/* <div className="searchContainer">
           <SearchBar />
-        </div>
+        </div> */}
 
         <div className="profileContainer">
           <div className="chatContainer">
