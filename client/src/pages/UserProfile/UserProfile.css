@@ -1,3 +1,20 @@
 .profileBannerLinkButton .Request {
   margin-left: 5px;
 }
+
+.requestSent {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.requestSent .Tick {
+  fill: gray;
+}
+
+.requestSent p {
+  color: gray;
+}

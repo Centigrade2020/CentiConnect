@@ -10,6 +10,7 @@ function UserProfile() {
   const [about, setAbout] = useState("");
   const [posts, setPosts] = useState([]);
   const [postCount, setPostCount] = useState(0);
+  const [requestSent, setRequestSent] = useState(false);
 
   useEffect(() => {
     setUid(localStorage.getItem("searchUser"));
@@ -107,22 +108,32 @@ function UserProfile() {
           </div>
         </div>
         <div className="profileBannerLinks">
-          <div
-            className="profileBannerLinkButton"
-            onClick={() => {
-              fb.firestore
-                .collection("users")
-                .doc(uid)
-                .update({
-                  requests: fb.firebase.firestore.FieldValue.arrayUnion(
-                    localStorage.getItem("userId")
-                  ),
-                });
-            }}
-          >
-            <Symbols.Request size="30" />
-            <p className="floatingInfo">Request</p>
-          </div>
+          {!requestSent ? (
+            <div
+              className="profileBannerLinkButton"
+              onClick={() => {
+                fb.firestore
+                  .collection("users")
+                  .doc(uid)
+                  .update({
+                    requests: fb.firebase.firestore.FieldValue.arrayUnion(
+                      localStorage.getItem("userId")
+                    ),
+                  })
+                  .then(() => {
+                    setRequestSent(true);
+                  });
+              }}
+            >
+              <Symbols.Request size="30" />
+              <p className="floatingInfo">Request</p>
+            </div>
+          ) : (
+            <div className="requestSent">
+              <Symbols.Tick size="30" />
+              <p>Request sent</p>
+            </div>
+          )}
         </div>
       </div>
 
