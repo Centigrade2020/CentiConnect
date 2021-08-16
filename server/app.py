@@ -4,14 +4,14 @@ import uuid
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore, auth, storage
-import pymongo
+# import pymongo
 
-conn_str = "mongodb+srv://Centigrade:centigrade_123@centiconnect.uhvbj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-client = pymongo.MongoClient(conn_str, serverSelectionTimeoutMS=5000)
+# conn_str = "mongodb+srv://Centigrade:centigrade_123@centiconnect.uhvbj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+# client = pymongo.MongoClient(conn_str, serverSelectionTimeoutMS=5000)
 
-users = client["users"]
-posts = client["posts"]
-root = client["root"]
+# users = client["users"]
+# posts = client["posts"]
+# root = client["root"]
 
 cred = credentials.Certificate("services/serviceAccountKey.json")
 app = firebase_admin.initialize_app(cred, {
@@ -118,14 +118,14 @@ def create_post():
 
         
         
-        posts[content["postId"]].insert_one({
-            "postId": content["postId"],
-            "userId": content["userId"],
-            "caption": content["caption"],
-            "comments": [],
-            "upvotes": [],
-            "downvotes": []
-        })
+        # posts[content["postId"]].insert_one({
+        #     "postId": content["postId"],
+        #     "userId": content["userId"],
+        #     "caption": content["caption"],
+        #     "comments": [],
+        #     "upvotes": [],
+        #     "downvotes": []
+        # })
         
 
 
