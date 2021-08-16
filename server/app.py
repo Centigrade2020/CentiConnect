@@ -4,6 +4,14 @@ import uuid
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore, auth, storage
+import pymongo
+
+conn_str = "mongodb+srv://Centigrade:centigrade_123@centiconnect.uhvbj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+client = pymongo.MongoClient(conn_str, serverSelectionTimeoutMS=5000)
+
+users = client["users"]
+posts = client["posts"]
+root = client["root"]
 
 cred = credentials.Certificate("services/serviceAccountKey.json")
 app = firebase_admin.initialize_app(cred, {
@@ -41,6 +49,29 @@ def signup():
             fbfirestore.collection("root").document("uid").update({
                 content['username']: user.uid
             })
+
+            fbfirestore.collection("root").document("uid").update({
+            "users" : functions.ArrayUnion([{'username': content["username"], 'userId': user.uid}])
+        })
+
+            # dbuser = users[user.uid]
+            # dbuser.insert_one({
+            #     "username": content["username"],
+            #     "private": False,
+            #     "about": "",
+            #     "posts": [],
+            #     "connections": [],
+            #     "requests": []
+            # })
+
+            # additional_data = root["AdditionalData"]
+            # additional_data["usernames"].insert_one(content["username"])
+
+            # uid = root["uid"]
+            # uid = 
+
+            
+
             #-------------------------------------------------------
 
 
@@ -81,6 +112,22 @@ def create_post():
         fbfirestore.collection("users").document(content["userId"]).update({
             "posts": functions.ArrayUnion([content["postId"]])
         })
+
+        
+
+
+        
+        
+        posts[content["postId"]].insert_one({
+            "postId": content["postId"],
+            "userId": content["userId"],
+            "caption": content["caption"],
+            "comments": [],
+            "upvotes": [],
+            "downvotes": []
+        })
+        
+
 
         #-------------------------------------------------------
 
