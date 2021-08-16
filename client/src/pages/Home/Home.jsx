@@ -38,7 +38,8 @@ function Home() {
                       return true;
                     }
                   }
-                } else if (i.downvotes.length > 0) {
+                }
+                if (i.downvotes.length > 0) {
                   for (var k in i.downvotes) {
                     if (i.downvotes[k] === localStorage.getItem("userId")) {
                       return false;
