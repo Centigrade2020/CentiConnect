@@ -1,0 +1,27 @@
+.message {
+  display: flex;
+  align-items: center;
+}
+
+.sent {
+  flex-direction: row-reverse;
+}
+
+.sent p {
+  color: white;
+  align-self: flex-end;
+}
+.received p {
+  color: black;
+}
+
+#profilepic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 2px 5px;
+}
+
+#sendmsg:disabled {
+  cursor: not-allowed;
+}

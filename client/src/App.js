@@ -12,6 +12,8 @@ import Settings from "./pages/Settings";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 import People from "./pages/People";
+import Chat from "./pages/Chat";
+
 
 function App() {
   const history = useHistory();
@@ -47,6 +49,7 @@ function App() {
         <Route path="/settings" component={Settings} />
         <Route path="/people" component={People} />
         <Route path="/user/:uname" component={UserProfile} />
+        <Route path="/chat/" component={Chat} />
         <SearchBar />
       </>
     </Switch>
