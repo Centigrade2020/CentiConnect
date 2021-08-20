@@ -15,6 +15,7 @@ import Request from "./Request";
 import Person from "./Person";
 import Chat from "./Chat";
 import Cross from "./Cross";
+import Compose from "./Compose";
 
 const Symbols = {
   Plus,
@@ -34,6 +35,7 @@ const Symbols = {
   Person,
   Chat,
   Cross,
+  Compose,
 };
 
 export default Symbols;

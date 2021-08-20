@@ -56,7 +56,19 @@ function PeopleElement({ userId }) {
       }}
     >
       <div className="profileImageContainer">
-        <img src={profilePic} alt="profileimage" />
+        <img
+          src={profilePic}
+          alt="PI"
+          onDragStart={(e) => {
+            e.preventDefault();
+          }}
+          onContextMenu={(e) => {
+            e.preventDefault();
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        />
       </div>
       <p>{username}</p>
     </li>

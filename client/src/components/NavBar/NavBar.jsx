@@ -57,7 +57,12 @@ function NavBar() {
         </div> */}
 
         <div className="profileContainer">
-          <div className="chatContainer">
+          <div
+            className="chatContainer"
+            onClick={() => {
+              history.push("DM");
+            }}
+          >
             <Symbols.Chat size="28" />
             <div className="chatNo">
               <p>99</p>

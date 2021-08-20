@@ -13,7 +13,7 @@ import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 import People from "./pages/People";
 import Chat from "./pages/Chat";
-
+import DM from "./pages/DM";
 
 function App() {
   const history = useHistory();
@@ -50,6 +50,7 @@ function App() {
         <Route path="/people" component={People} />
         <Route path="/user/:uname" component={UserProfile} />
         <Route path="/chat/" component={Chat} />
+        <Route path="/DM" component={DM} />
         <SearchBar />
       </>
     </Switch>
