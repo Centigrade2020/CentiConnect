@@ -1,7 +1,6 @@
 const Compose = ({ size }) => (
   <svg
     aria-label="New Message"
-    class="_8-yf5 "
     fill="#262626"
     height={size}
     role="img"

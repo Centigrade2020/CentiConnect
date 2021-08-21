@@ -173,3 +173,30 @@
 .AddChat .addChatContainer .addChatHeader .addChatClose:hover .Cross {
   fill: var(--violet3);
 }
+
+.DMAddChatPeopleElement {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: background-color 200ms ease-in-out;
+}
+
+.DMAddChatPeopleElement .DMAddChatPeopleElementImageContainer {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.DMAddChatPeopleElement .DMAddChatPeopleElementImageContainer img {
+  width: inherit;
+  height: inherit;
+}
+.DMAddChatPeopleElement:hover {
+  background-color: var(--lightgray);
+}

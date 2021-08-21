@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import fb from "../../services/firebase";
-import { Symbols, AddChat } from "../../components";
+import { Symbols, DMAddChatPeopleElement } from "../../components";
 import "./DM.css";
 
 function DM() {
@@ -8,15 +8,95 @@ function DM() {
 
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  const [connections, setConnections] = useState([]);
 
-  const [userId, setUserId] = useState("XSHgxXWYMhRmHprfJpLYOHW18923");
+  const [DMUserId, setDMUserId] = useState("XSHgxXWYMhRmHprfJpLYOHW18923");
+
+  // const [users, setUsers] = useState([]);
+  // const [searchTerm, setSearchTerm] = useState("");
+
+  // useEffect(() => {
+  //   fb.firestore
+  //     .collection("root")
+  //     .doc("uid")
+  //     .get()
+  //     .then((doc) => {
+  //       setUsers(doc.data().users);
+  //     });
+  // }, []);
+
+  // function editSearchTerm(e) {
+  //   var value = e.target.value;
+  //   setSearchTerm(value.split(/\s/).join(""));
+  // }
+
+  // function dynamicSearch() {
+  //   if (searchTerm !== "" && searchTerm.length >= 1) {
+  //     return (
+  //       <div className="addChatPeopleContainer">
+  //         {connections.length > 0 &&
+  //           connections
+  //             .filter((userObject) =>
+  //               userObject.includes(searchTerm.toLowerCase())
+  //             )
+  //             .map((userObject, key) => {
+  //               return (
+  //                 <DMAddChatPeopleElement
+  //                   key={key}
+  //                   userId={userObject.userId}
+  //                 />
+  //               );
+  //             })}
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div className="addChatPeopleContainer">
+  //         {users.length > 0 &&
+  //           users
+  //             .filter((userObject) =>
+  //               userObject.username.includes(searchTerm.toLowerCase())
+  //             )
+  //             .map((userObject, key) => {
+  //               return (
+  //                 <DMAddChatPeopleElement
+  //                   key={key}
+  //                   userId={userObject.userId}
+  //                 />
+  //               );
+  //             })}
+  //       </div>
+  //     );
+  //   }
+  // }
 
   useEffect(() => {
     let unmounted = false;
-    if (userId !== "") {
+    if (localStorage.getItem("userId") !== "") {
       fb.firestore
         .collection("users")
-        .doc(userId)
+        .doc(localStorage.getItem("userId"))
+        .get()
+        .then((doc) => {
+          if (!unmounted) {
+            setConnections(doc.data().connections);
+          } else {
+            console.log("");
+          }
+        });
+    }
+
+    return () => {
+      unmounted = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let unmounted = false;
+    if (DMUserId !== "") {
+      fb.firestore
+        .collection("users")
+        .doc(DMUserId)
         .get()
         .then((doc) => {
           if (!unmounted) {
@@ -29,7 +109,7 @@ function DM() {
       try {
         fb.storage
           .ref()
-          .child(`profileImages/${userId}.jpeg`)
+          .child(`profileImages/${DMUserId}.jpeg`)
           .getDownloadURL()
           .then((data) => {
             if (!unmounted) {
@@ -102,6 +182,30 @@ function DM() {
                 <Symbols.Cross size="30" />
               </div>
             </div>
+
+            {/* <div className="DMAddChatSearch">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={editSearchTerm}
+                placeholder="Search"
+                className="DMAddChatSearchInput"
+              />
+              {searchTerm.length > 0 && (
+                <div
+                  className="crossContainer"
+                  onClick={() => setSearchTerm("")}
+                >
+                  <Symbols.Cross size="22" />
+                </div>
+              )}
+
+              {searchTerm.length > 0 && dynamicSearch()}
+            </div> */}
+
+            {connections.map((value, key) => (
+              <DMAddChatPeopleElement key={key} userId={value} />
+            ))}
           </div>
         </div>
       )}

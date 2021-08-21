@@ -5,6 +5,7 @@ import Post from "./Post";
 import SearchElement from "./SearchElement";
 import PeopleElement from "./PeopleElement";
 import RequestElement from "./RequestElement";
+import DMAddChatPeopleElement from "./DMAddChatPeopleElement";
 
 export {
   Navbar,
@@ -14,4 +15,5 @@ export {
   SearchElement,
   PeopleElement,
   RequestElement,
+  DMAddChatPeopleElement,
 };
