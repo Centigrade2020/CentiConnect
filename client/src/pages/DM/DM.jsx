@@ -206,7 +206,19 @@ function DM() {
                 </div>
               </>
             ) : (
-              <div className="DMDummyChatWrapper">Hello</div>
+              <div className="DMDummyChatWrapper">
+                <div>
+                  <Symbols.Message size="120" />
+                </div>
+                <p>Start a conversation with your friend</p>
+                <button
+                  onClick={() => {
+                    setAddChat(true);
+                  }}
+                >
+                  Send Message
+                </button>
+              </div>
             )}
           </div>
         </div>
