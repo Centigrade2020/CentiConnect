@@ -386,10 +386,20 @@ def delete_user_documents(uid):
 #     })
 
 
+
+@app.route("/addChat", methods=["POST", "GET"])
+def addChat():
+    if request.method == "POST":
+        content = request.get_data()
+        print(content)
+        return {}
+    else:
+        return {}
+
 @app.route("/")
 def index():
     return jsonify({
-        "Centigrade": "CentiConnect",
+        "Centigrade": "Connect",
         "Developed by": ["Dharundds", "DharunVS", "HrithikMJ"]
     })
 

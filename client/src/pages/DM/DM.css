@@ -14,13 +14,15 @@
   justify-content: space-between;
 }
 
-.peopleContainerTab {
+.DMTab {
   height: 80vh;
   background-color: white;
   border-radius: 20px;
+  overflow: hidden;
+  border: 4px solid white;
 }
 
-.peopleContainerTab h1 {
+.DMTab h1 {
   margin: 10px 20px;
   font-size: 1.4rem;
   color: var(--violet);
@@ -29,12 +31,12 @@
   justify-content: space-between;
 }
 
-.peopleContainerTab h1 .addChat .Compose {
+.DMTab h1 .addChat .Compose {
   fill: var(--violet3);
   transition: all 200ms ease-in-out;
 }
 
-.peopleContainerTab h1 .addChat {
+.DMTab h1 .addChat {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,21 +46,21 @@
   transition: all 200ms ease-in-out;
 }
 
-.peopleContainerTab h1 .addChat:hover .Compose {
+.DMTab h1 .addChat:hover .Compose {
   fill: var(--violet);
 }
 
-.People .connections {
+.People .yourchats {
   width: 39%;
   height: 100%;
 }
 
-.People .requests {
+.People .DMmessages {
   width: 59%;
   height: 100%;
 }
 
-.connectionsList {
+.DMList {
   width: 90%;
   margin: auto;
   height: 70vh;
@@ -67,7 +69,7 @@
   list-style: none;
 }
 
-.connectionsList li {
+.DMList li {
   margin: 10px;
   padding: 12px;
   display: flex;
@@ -76,7 +78,7 @@
   background-color: var(--lightviolet);
 }
 
-.connectionsList li .profileImageContainer {
+.DMList li .profileImageContainer {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -89,15 +91,57 @@
   border: 3px solid var(--violet);
 }
 
-.connectionsList li .profileImageContainer img {
+.DMList li .profileImageContainer img {
   width: 40px;
   height: 40px;
 }
 
 .chatHeader {
-  padding: 20px;
+  padding: 0 20px;
+  height: 10%;
   display: flex;
   align-items: center;
+  /* background-color: yellow; */
+  border-bottom: 1px solid var(--lightgray);
+}
+
+.DMMessages {
+  height: 82%;
+  border-bottom: 1px solid var(--lightgray);
+}
+
+.DMEnterMessageTab {
+  height: 8%;
+}
+
+.DMEnterMessageTab input {
+  width: 88%;
+  height: 100%;
+  padding: 10px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.DMEnterMessageTab button {
+  width: 12%;
+  height: 100%;
+  outline: none;
+  border: none;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 500;
+  background-color: var(--violet);
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-size: 1rem;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}
+
+.DMEnterMessageTab button:hover {
+  background-color: var(--violet2);
 }
 
 .chatHeader p {
@@ -120,6 +164,13 @@
 .chatHeader .profileImageContainer img {
   width: inherit;
   height: inherit;
+}
+
+.DMDummyChatWrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*----------------------*/
