@@ -141,14 +141,12 @@ function DM() {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(content),
-            }).then(() => {
-              setDMUserId(content.DMuserId);
-              setAddChat(false);
-            });
-          } else {
-            setDMUserId(content.DMuserId);
-            setAddChat(false);
+            }).then(() => {});
           }
+
+          setDMUserId(content.DMuserId);
+          setAddChat(false);
+          console.log(content);
         }}
       >
         <div className="DMAddChatPeopleElementImageContainer">
