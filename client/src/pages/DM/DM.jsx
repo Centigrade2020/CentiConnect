@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import fb from "../../services/firebase";
-import { Symbols } from "../../components";
+import { Symbols, DMMessageElement } from "../../components";
 import "./DM.css";
 
 function DM() {
@@ -12,6 +12,11 @@ function DM() {
   const [DMAdded, setDMAdded] = useState([]);
 
   const [DMUserId, setDMUserId] = useState("");
+  const [DMChatId, setDMChatId] = useState("");
+
+  const [messages, setMessages] = useState([]);
+
+  const [currentMessage, setCurrentMesage] = useState("");
 
   useEffect(() => {
     let unmounted = false;
@@ -123,30 +128,51 @@ function DM() {
             currentUserId: localStorage.getItem("userId"),
           };
 
-          var proceed = true;
-
-          while (proceed) {
-            for (var i in DMAdded) {
-              if (DMAdded[i] == userId) {
-                proceed = false;
-              }
-            }
-          }
-
-          if (proceed) {
-            console.log(content);
+          if (!DMAdded.includes(userId)) {
             fetch("/addChat", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(content),
-            }).then(() => {});
+            }).then(() => {
+              if (localStorage.getItem("userId") !== "") {
+                fb.firestore
+                  .collection("users")
+                  .doc(localStorage.getItem("userId"))
+                  .get()
+                  .then((doc) => {
+                    setConnections(doc.data().connections);
+                    setDMAdded(doc.data().DMAdded);
+                  });
+              }
+            });
           }
 
           setDMUserId(content.DMuserId);
+          if (localStorage.getItem("userId") !== "") {
+            fb.firestore
+              .collection("users")
+              .doc(localStorage.getItem("userId"))
+              .get()
+              .then((doc) => {
+                for (var i in doc.data().DMUidList) {
+                  if (content.DMuserId === doc.data().DMUidList[i].userId) {
+                    setDMChatId(doc.data().DMUidList[i].chatId);
+                    fb.firestore
+                      .collection("DM")
+                      .doc(doc.data().DMUidList[i].chatId)
+                      .get()
+                      .then((doc) => {
+                        setMessages(doc.data().Messages);
+                      });
+                  }
+                }
+              })
+              .then(() => {});
+          }
+
           setAddChat(false);
-          console.log(content);
         }}
       >
         <div className="DMAddChatPeopleElementImageContainer">
@@ -197,10 +223,48 @@ function DM() {
                   </div>
                   <p>{username}</p>
                 </div>
-                <div className="DMMessages">{}</div>
+                <div className="DMMessages">
+                  {messages.map((value, key) => (
+                    <DMMessageElement key={key} object={value} />
+                  ))}
+                </div>
                 <div className="DMEnterMessageTab">
-                  <input type="text" placeholder="Message..." />
-                  <button>Send</button>
+                  <input
+                    type="text"
+                    placeholder="Message..."
+                    onChange={(e) => {
+                      setCurrentMesage(e.target.value);
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      var myTimestamp =
+                        fb.firebase.firestore.Timestamp.fromDate(new Date());
+                      fb.firestore
+                        .collection("DM")
+                        .doc(DMChatId)
+                        .update({
+                          Messages: fb.firebase.firestore.FieldValue.arrayUnion(
+                            {
+                              userId: localStorage.getItem("userId"),
+                              text: currentMessage,
+                              datetime: myTimestamp,
+                            }
+                          ),
+                        })
+                        .then(() => {
+                          fb.firestore
+                            .collection("DM")
+                            .doc(DMChatId)
+                            .get()
+                            .then((doc) => {
+                              setMessages(doc.data().Messages);
+                            });
+                        });
+                    }}
+                  >
+                    Send
+                  </button>
                 </div>
               </>
             ) : (

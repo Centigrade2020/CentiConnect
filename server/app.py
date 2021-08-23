@@ -402,11 +402,13 @@ def addChat():
             })
 
         fbfirestore.collection("users").document(content["DMuserId"]).update({
-            "DMAdded": functions.ArrayUnion({[{"userId":content["currentUserId"], "chatId": id}]})
+            "DMAdded": functions.ArrayUnion([content["currentUserId"]]),
+            "DMUidList": functions.ArrayUnion([{"userId":content["currentUserId"], "chatId": id}])
         })
 
         fbfirestore.collection("users").document(content["currentUserId"]).update({
-            "DMAdded": functions.ArrayUnion({[{"userId":content["DMuserId"], "chatId": id}]})
+            "DMAdded": functions.ArrayUnion([content["DMuserId"]]),
+            "DMUidList": functions.ArrayUnion([{"userId":content["DMuserId"], "chatId": id}])
         })
         
         return {}

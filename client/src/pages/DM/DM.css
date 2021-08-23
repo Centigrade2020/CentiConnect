@@ -108,6 +108,9 @@
 .DMMessages {
   height: 82%;
   border-bottom: 1px solid var(--lightgray);
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 .DMEnterMessageTab {
@@ -277,4 +280,22 @@
 }
 .DMAddChatPeopleElement:hover {
   background-color: var(--lightgray);
+}
+
+/* DMMessageElement */
+/* DMMessageElement */
+/* DMMessageElement */
+/* DMMessageElement */
+
+.DMMessageElementSent,
+.DMMessageElementReceived {
+  background-color: var(--lightgray);
+  width: max-content;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.DMMessageElementSent {
+  flex-direction: row-reverse;
 }
