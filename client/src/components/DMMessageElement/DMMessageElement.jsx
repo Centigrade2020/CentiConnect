@@ -1,6 +1,10 @@
 function DMMessageElement({ object }) {
-  var datetime = object.createdAt.toDate().toLocaleTimeString().split(" ");
-  var timestamp = datetime[0].slice(0, 5) + " " + datetime[1];
+  if (object.createdAt !== null) {
+    var datetime = object.createdAt.toDate().toLocaleTimeString().split(" ");
+    var timestamp = datetime[0].slice(0, 5) + " " + datetime[1];
+  } else {
+    var timestamp = "";
+  }
 
   return (
     <div
