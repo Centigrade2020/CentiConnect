@@ -2,7 +2,7 @@ function DMMessageElement({ object }) {
   return (
     <div
       className={
-        object.userId === localStorage.getItem("userId")
+        object.uid === localStorage.getItem("userId")
           ? "DMMessageElementSent"
           : "DMMessageElementReceived"
       }
