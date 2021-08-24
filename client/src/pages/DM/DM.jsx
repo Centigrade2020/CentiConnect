@@ -105,7 +105,7 @@ function DM() {
               .doc(localStorage.getItem("DMChatId"))
               .collection("Messages")
               .orderBy("createdAt")
-              .limit(25)
+              .limit(1000)
           );
         }
       }
@@ -256,10 +256,100 @@ function DM() {
     );
   }
 
+  function DMAddedPeopleElement({ userId }) {
+    const [addedPeopleText, setAddedPeopleText] = useState("");
+    // const [username, setUsername] = useState("");
+    // const [profilePic, setProfilePic] = useState("");
+
+    // useEffect(() => {
+    //   let unmounted = false;
+    //   if (userId !== "") {
+    //     fb.firestore
+    //       .collection("users")
+    //       .doc(userId)
+    //       .get()
+    //       .then((doc) => {
+    //         if (!unmounted) {
+    //           setUsername(doc.data().username);
+    //         } else {
+    //           console.log("");
+    //         }
+    //       });
+
+    //     try {
+    //       fb.storage
+    //         .ref()
+    //         .child(`profileImages/${userId}.jpeg`)
+    //         .getDownloadURL()
+    //         .then((data) => {
+    //           if (!unmounted) {
+    //             setProfilePic(data);
+    //           } else {
+    //             console.log("");
+    //           }
+    //         });
+    //     } catch {
+    //       console.log("");
+    //     }
+    //   }
+
+    //   return () => {
+    //     unmounted = true;
+    //   };
+    // }, []);
+
+    const DMAddedPeopleElementClick = () => {
+      const content = {
+        DMuserId: userId,
+        currentUserId: localStorage.getItem("userId"),
+      };
+
+      localStorage.setItem("DMUserId", content.DMuserId);
+      if (localStorage.getItem("userId") !== "") {
+        fb.firestore
+          .collection("users")
+          .doc(localStorage.getItem("userId"))
+          .get()
+          .then((doc) => {
+            for (var i in doc.data().DMUidList) {
+              if (content.DMuserId === doc.data().DMUidList[i].userId) {
+                localStorage.setItem(
+                  "DMChatId",
+                  doc.data().DMUidList[i].chatId
+                );
+              }
+            }
+          })
+          .then(() => {
+            window.location.reload();
+          });
+      }
+
+      setAddChat(false);
+    };
+
+    return (
+      <div
+        className="DMAddedPeopleElement"
+        key={userId}
+        onClick={DMAddedPeopleElementClick}
+      >
+        <div className="DMAddedPeopleElementImageContainer">
+          {/* {profilePic !== "" && <img src={profilePic} alt={username} />} */}
+        </div>
+        <div>
+          {/* <p>{username}</p> */}
+          {/* <p>{addedPeopleText}</p> */}
+          <p>{userId}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="People">
-        <div className="peopleContainer">
+        <div className="DMContainer">
           <div className="DMTab yourchats">
             <h1>
               Your chats
@@ -274,7 +364,9 @@ function DM() {
             </h1>
             <ul className="DMList">
               {DMAdded.length > 0 &&
-                DMAdded.map((value, key) => <li key={key}>{value}</li>)}
+                DMAdded.map((value, key) => {
+                  return <DMAddedPeopleElement userId={value} key={key} />;
+                })}
             </ul>
           </div>
 
