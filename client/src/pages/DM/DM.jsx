@@ -272,7 +272,10 @@ function DM() {
                 <Symbols.Compose size="30" />
               </div>
             </h1>
-            <ul className="DMList"></ul>
+            <ul className="DMList">
+              {DMAdded.length > 0 &&
+                DMAdded.map((value, key) => <li key={key}>{value}</li>)}
+            </ul>
           </div>
 
           <div className="DMTab DMmessages">
