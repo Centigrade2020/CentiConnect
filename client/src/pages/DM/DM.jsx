@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, createRef } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import fb from "../../services/firebase";
 import { Symbols, DMMessageElement } from "../../components";
@@ -18,6 +18,14 @@ function DM() {
 
   const [Messages] = useCollectionData(query, { idField: "id" });
   const [currentMessage, setCurrentMesage] = useState("");
+
+  function scrollToBottom() {
+    dummy.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [Messages]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -289,9 +297,6 @@ function DM() {
                   <p>{username}</p>
                 </div>
                 <div className="DMMessages">
-                  {/* {messages.map((value, key) => (
-                    <DMMessageElement key={key} object={value} />
-                  ))} */}
                   {Messages &&
                     Messages.map((msg, key) => (
                       <DMMessageElement key={key} object={msg} />

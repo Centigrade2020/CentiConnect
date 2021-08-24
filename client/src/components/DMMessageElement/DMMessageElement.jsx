@@ -1,4 +1,7 @@
+import React, { useRef, useState } from "react";
+
 function DMMessageElement({ object }) {
+  const dummy = useRef();
   return (
     <div
       className={
@@ -8,6 +11,7 @@ function DMMessageElement({ object }) {
       }
     >
       {object.text}
+      <span ref={dummy}></span>
     </div>
   );
 }
