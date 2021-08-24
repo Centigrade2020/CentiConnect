@@ -1,7 +1,13 @@
-import React, { useRef, useState } from "react";
+import fb from "../../services/firebase";
 
 function DMMessageElement({ object }) {
-  const dummy = useRef();
+  // var datetime = object.createdAt.toDate().toLocaleTimeString().split(" ");
+
+  // // var myTimestamp = fb.firebase.firestore.Timestamp.fromDate(
+  // //   new Date()
+  // // ).toDate().toLocaleString;
+  // var timestamp = datetime[0].slice(0, 5) + " " + datetime[1];
+
   return (
     <div
       className={
@@ -10,8 +16,8 @@ function DMMessageElement({ object }) {
           : "DMMessageElementReceived"
       }
     >
-      {object.text}
-      <span ref={dummy}></span>
+      <p>{object.text}</p>
+      {/* <span className="dateTime">{timestamp}</span> */}
     </div>
   );
 }

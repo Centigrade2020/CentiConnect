@@ -105,14 +105,6 @@
   border-bottom: 1px solid var(--lightgray);
 }
 
-.DMMessages {
-  height: 82%;
-  border-bottom: 1px solid var(--lightgray);
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
 .DMEnterMessageTab {
   height: 8%;
 }
@@ -287,6 +279,15 @@
 /* DMMessageElement */
 /* DMMessageElement */
 
+.DMMessages {
+  height: 82%;
+  border-bottom: 1px solid var(--lightgray);
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-end; */
+}
+
 .DMMessageElementSent,
 .DMMessageElementReceived {
   background-color: var(--lightgray);
@@ -295,8 +296,21 @@
   border-radius: 20px;
   margin: 10px;
   display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.DMMessageElementSent {
+  align-self: flex-end;
 }
 
-.DMMessageElementSent {
-  float: left;
+.DMMessageElementSent p,
+.DMMessageElementReceived p {
+  align-self: flex-start;
+}
+
+.DMMessageElementSent .dateTime,
+.DMMessageElementReceived .dateTime {
+  font-size: 0.8rem;
+  color: gray;
+  align-self: flex-end;
 }

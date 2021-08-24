@@ -298,8 +298,8 @@ function DM() {
                 </div>
                 <div className="DMMessages">
                   {Messages &&
-                    Messages.map((msg, key) => (
-                      <DMMessageElement key={key} object={msg} />
+                    Messages.map((obj, key) => (
+                      <DMMessageElement key={key} object={obj} />
                     ))}
                   <span ref={dummy}></span>
                 </div>
