@@ -256,96 +256,6 @@ function DM() {
     );
   }
 
-  function DMAddedPeopleElement({ userId }) {
-    const [addedPeopleText, setAddedPeopleText] = useState("");
-    // const [username, setUsername] = useState("");
-    // const [profilePic, setProfilePic] = useState("");
-
-    // useEffect(() => {
-    //   let unmounted = false;
-    //   if (userId !== "") {
-    //     fb.firestore
-    //       .collection("users")
-    //       .doc(userId)
-    //       .get()
-    //       .then((doc) => {
-    //         if (!unmounted) {
-    //           setUsername(doc.data().username);
-    //         } else {
-    //           console.log("");
-    //         }
-    //       });
-
-    //     try {
-    //       fb.storage
-    //         .ref()
-    //         .child(`profileImages/${userId}.jpeg`)
-    //         .getDownloadURL()
-    //         .then((data) => {
-    //           if (!unmounted) {
-    //             setProfilePic(data);
-    //           } else {
-    //             console.log("");
-    //           }
-    //         });
-    //     } catch {
-    //       console.log("");
-    //     }
-    //   }
-
-    //   return () => {
-    //     unmounted = true;
-    //   };
-    // }, []);
-
-    const DMAddedPeopleElementClick = () => {
-      const content = {
-        DMuserId: userId,
-        currentUserId: localStorage.getItem("userId"),
-      };
-
-      localStorage.setItem("DMUserId", content.DMuserId);
-      if (localStorage.getItem("userId") !== "") {
-        fb.firestore
-          .collection("users")
-          .doc(localStorage.getItem("userId"))
-          .get()
-          .then((doc) => {
-            for (var i in doc.data().DMUidList) {
-              if (content.DMuserId === doc.data().DMUidList[i].userId) {
-                localStorage.setItem(
-                  "DMChatId",
-                  doc.data().DMUidList[i].chatId
-                );
-              }
-            }
-          })
-          .then(() => {
-            window.location.reload();
-          });
-      }
-
-      setAddChat(false);
-    };
-
-    return (
-      <div
-        className="DMAddedPeopleElement"
-        key={userId}
-        onClick={DMAddedPeopleElementClick}
-      >
-        <div className="DMAddedPeopleElementImageContainer">
-          {/* {profilePic !== "" && <img src={profilePic} alt={username} />} */}
-        </div>
-        <div>
-          {/* <p>{username}</p> */}
-          {/* <p>{addedPeopleText}</p> */}
-          <p>{userId}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="People">
@@ -363,10 +273,9 @@ function DM() {
               </div>
             </h1>
             <ul className="DMList">
-              {DMAdded.length > 0 &&
-                DMAdded.map((value, key) => {
-                  return <DMAddedPeopleElement userId={value} key={key} />;
-                })}
+              {DMAdded.map((value, key) => {
+                return <DMAddedPeopleElement userId={value} key={key} />;
+              })}
             </ul>
           </div>
 
@@ -454,6 +363,116 @@ function DM() {
         </div>
       )}
     </>
+  );
+}
+
+function DMAddedPeopleElement({ userId }) {
+  const [addedPeopleText, setAddedPeopleText] = useState("");
+  const [username, setUsername] = useState("");
+  const [profilePic, setProfilePic] = useState("");
+  const [chatId, setChatId] = useState("");
+
+  if (localStorage.getItem("userId") !== "") {
+    fb.firestore
+      .collection("users")
+      .doc(localStorage.getItem("userId"))
+      .get()
+      .then((doc) => {
+        for (var i in doc.data().DMUidList) {
+          if (userId === doc.data().DMUidList[i].userId) {
+            setChatId(doc.data().DMUidList[i].chatId);
+            // fb.firestore
+            //   .collection("DM")
+            //   .doc(doc.data().DMUidList[i].chatId)
+            //   .collection("Messages")
+            //   .get()
+            //   .then((docs) => {
+            //     docs.forEach((doc) => {
+            //       setAddedPeopleText(doc.data().text);
+            //     });
+            //   });
+          }
+        }
+      });
+  }
+
+  useEffect(() => {
+    let unmounted = false;
+    if (userId !== "") {
+      fb.firestore
+        .collection("users")
+        .doc(userId)
+        .get()
+        .then((doc) => {
+          if (!unmounted) {
+            setUsername(doc.data().username);
+          } else {
+            console.log("");
+          }
+        });
+
+      try {
+        fb.storage
+          .ref()
+          .child(`profileImages/${userId}.jpeg`)
+          .getDownloadURL()
+          .then((data) => {
+            if (!unmounted) {
+              setProfilePic(data);
+            } else {
+              console.log("");
+            }
+          });
+      } catch {
+        console.log("");
+      }
+    }
+
+    return () => {
+      unmounted = true;
+    };
+  }, []);
+
+  const DMAddedPeopleElementClick = () => {
+    const content = {
+      DMuserId: userId,
+      currentUserId: localStorage.getItem("userId"),
+    };
+
+    localStorage.setItem("DMUserId", content.DMuserId);
+    if (localStorage.getItem("userId") !== "") {
+      fb.firestore
+        .collection("users")
+        .doc(localStorage.getItem("userId"))
+        .get()
+        .then((doc) => {
+          for (var i in doc.data().DMUidList) {
+            if (content.DMuserId === doc.data().DMUidList[i].userId) {
+              localStorage.setItem("DMChatId", doc.data().DMUidList[i].chatId);
+            }
+          }
+        })
+        .then(() => {
+          window.location.reload();
+        });
+    }
+  };
+
+  return (
+    <div
+      className="DMAddedPeopleElement"
+      key={userId}
+      onClick={DMAddedPeopleElementClick}
+    >
+      <div className="DMAddedPeopleElementImageContainer">
+        {profilePic !== "" && <img src={profilePic} alt={username} />}
+      </div>
+      <div>
+        <p>{username}</p>
+        <p>{addedPeopleText}</p>
+        {/* <p>{chatId}</p> */}
+      </div>
+    </div>
   );
 }
 
