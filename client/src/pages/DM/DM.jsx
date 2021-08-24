@@ -129,24 +129,48 @@ function DM() {
           };
 
           if (!DMAdded.includes(userId)) {
-            fetch("/addChat", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(content),
-            }).then(() => {
-              if (localStorage.getItem("userId") !== "") {
-                fb.firestore
-                  .collection("users")
-                  .doc(localStorage.getItem("userId"))
-                  .get()
-                  .then((doc) => {
-                    setConnections(doc.data().connections);
-                    setDMAdded(doc.data().DMAdded);
-                  });
-              }
+            var fbDoc = fb.firestore.collection("DM").doc();
+            fbDoc.set({
+              MembersUID: [userId, localStorage.getItem("userId")],
+              Messages: [],
             });
+
+            console.log(fbDoc.id);
+
+            fb.firestore
+              .collection("users")
+              .doc(userId)
+              .update({
+                DMAdded: fb.firebase.firestore.FieldValue.arrayUnion(
+                  localStorage.getItem("userId")
+                ),
+                DMUidList: fb.firebase.firestore.FieldValue.arrayUnion({
+                  userId: localStorage.getItem("userId"),
+                  chatId: fbDoc.id,
+                }),
+              });
+
+            fb.firestore
+              .collection("users")
+              .doc(localStorage.getItem("userId"))
+              .update({
+                DMAdded: fb.firebase.firestore.FieldValue.arrayUnion(userId),
+                DMUidList: fb.firebase.firestore.FieldValue.arrayUnion({
+                  userId: userId,
+                  chatId: fbDoc.id,
+                }),
+              });
+
+            if (localStorage.getItem("userId") !== "") {
+              fb.firestore
+                .collection("users")
+                .doc(localStorage.getItem("userId"))
+                .get()
+                .then((doc) => {
+                  setConnections(doc.data().connections);
+                  setDMAdded(doc.data().DMAdded);
+                });
+            }
           }
 
           setDMUserId(content.DMuserId);
@@ -228,44 +252,45 @@ function DM() {
                     <DMMessageElement key={key} object={value} />
                   ))}
                 </div>
-                <div className="DMEnterMessageTab">
+                <form
+                  className="DMEnterMessageTab"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    var myTimestamp = fb.firebase.firestore.Timestamp.fromDate(
+                      new Date()
+                    );
+                    fb.firestore
+                      .collection("DM")
+                      .doc(DMChatId)
+                      .update({
+                        Messages: fb.firebase.firestore.FieldValue.arrayUnion({
+                          userId: localStorage.getItem("userId"),
+                          text: currentMessage,
+                          datetime: myTimestamp,
+                        }),
+                      })
+                      .then(() => {
+                        fb.firestore
+                          .collection("DM")
+                          .doc(DMChatId)
+                          .get()
+                          .then((doc) => {
+                            setMessages(doc.data().Messages);
+                          });
+                      });
+                    setCurrentMesage("");
+                  }}
+                >
                   <input
                     type="text"
                     placeholder="Message..."
                     onChange={(e) => {
                       setCurrentMesage(e.target.value);
                     }}
+                    value={currentMessage}
                   />
-                  <button
-                    onClick={() => {
-                      var myTimestamp =
-                        fb.firebase.firestore.Timestamp.fromDate(new Date());
-                      fb.firestore
-                        .collection("DM")
-                        .doc(DMChatId)
-                        .update({
-                          Messages: fb.firebase.firestore.FieldValue.arrayUnion(
-                            {
-                              userId: localStorage.getItem("userId"),
-                              text: currentMessage,
-                              datetime: myTimestamp,
-                            }
-                          ),
-                        })
-                        .then(() => {
-                          fb.firestore
-                            .collection("DM")
-                            .doc(DMChatId)
-                            .get()
-                            .then((doc) => {
-                              setMessages(doc.data().Messages);
-                            });
-                        });
-                    }}
-                  >
-                    Send
-                  </button>
-                </div>
+                  <button type="submit">Send</button>
+                </form>
               </>
             ) : (
               <div className="DMDummyChatWrapper">

@@ -414,6 +414,7 @@ def addChat():
         return {}
     else:
         return {}
+        
 
 @app.route("/")
 def index():
