@@ -314,3 +314,7 @@
   color: gray;
   align-self: flex-end;
 }
+
+.DMMessageElementReceived .dateTime {
+  align-self: flex-start;
+}
