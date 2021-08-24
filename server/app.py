@@ -388,33 +388,33 @@ def delete_user_documents(uid):
 
 
 
-@app.route("/addChat", methods=["POST", "GET"])
-def addChat():
-    if request.method == "POST":
-        content = request.get_json()
+# @app.route("/addChat", methods=["POST", "GET"])
+# def addChat():
+#     if request.method == "POST":
+#         content = request.get_json()
         
-        id = str(uuid.uuid4())
+#         id = str(uuid.uuid4())
 
         
-        fbfirestore.collection("DM").document(id).set({
-                "MembersUID": functions.ArrayUnion([content["DMuserId"], content["currentUserId"]]),
-                "Messages" : []
-            })
+#         fbfirestore.collection("DM").document(id).set({
+#                 "MembersUID": functions.ArrayUnion([content["DMuserId"], content["currentUserId"]]),
+#                 "Messages" : []
+#             })
 
-        fbfirestore.collection("users").document(content["DMuserId"]).update({
-            "DMAdded": functions.ArrayUnion([content["currentUserId"]]),
-            "DMUidList": functions.ArrayUnion([{"userId":content["currentUserId"], "chatId": id}])
-        })
+#         fbfirestore.collection("users").document(content["DMuserId"]).update({
+#             "DMAdded": functions.ArrayUnion([content["currentUserId"]]),
+#             "DMUidList": functions.ArrayUnion([{"userId":content["currentUserId"], "chatId": id}])
+#         })
 
-        fbfirestore.collection("users").document(content["currentUserId"]).update({
-            "DMAdded": functions.ArrayUnion([content["DMuserId"]]),
-            "DMUidList": functions.ArrayUnion([{"userId":content["DMuserId"], "chatId": id}])
-        })
+#         fbfirestore.collection("users").document(content["currentUserId"]).update({
+#             "DMAdded": functions.ArrayUnion([content["DMuserId"]]),
+#             "DMUidList": functions.ArrayUnion([{"userId":content["DMuserId"], "chatId": id}])
+#         })
         
-        return {}
-    else:
-        return {}
-        
+#         return {}
+#     else:
+#         return {}
+
 
 @app.route("/")
 def index():
