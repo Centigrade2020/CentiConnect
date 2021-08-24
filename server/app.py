@@ -1,9 +1,14 @@
 from flask import Flask, jsonify, request
+from flask_mail import Mail, Message
 import os
 import uuid
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore, auth, storage
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # import pymongo
 
 # conn_str = "mongodb+srv://Centigrade:centigrade_123@centiconnect.uhvbj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
@@ -24,6 +29,17 @@ fbauth = auth
 bucket = storage.bucket()
 
 app = Flask(__name__)
+mail = Mail(app)
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = os.getenv('email')
+app.config['MAIL_PASSWORD'] = os.getenv('password')
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
+
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -33,7 +49,15 @@ def signup():
             user = fbauth.create_user(
                 email=content["email"], password=content["password"])
 
-            #-------------------------------------------------------
+            msg = Message(
+                'We are happy to have you with us',
+                sender='centigrade.ad@gmail.com',
+                recipients=[content['email']]
+            )
+            msg.body = 'You have successfully Signed up with Centiconnect :) \n Complete your profile settings :) \n You can chat with your friends and Post Images   '
+            mail.send(msg)
+
+            # -------------------------------------------------------
             fbfirestore.collection("users").document(user.uid).set({
                 "username": content["username"],
                 "private": False,
@@ -52,8 +76,8 @@ def signup():
             })
 
             fbfirestore.collection("root").document("uid").update({
-            "users" : functions.ArrayUnion([{'username': content["username"], 'userId': user.uid}])
-        })
+                "users": functions.ArrayUnion([{'username': content["username"], 'userId': user.uid}])
+            })
 
             # dbuser = users[user.uid]
             # dbuser.insert_one({
@@ -69,12 +93,9 @@ def signup():
             # additional_data["usernames"].insert_one(content["username"])
 
             # uid = root["uid"]
-            # uid = 
+            # uid =
 
-            
-
-            #-------------------------------------------------------
-
+            # -------------------------------------------------------
 
             with open("defaults/defaultProfile.jpeg", "rb") as r:
                 data = r.read()
@@ -99,8 +120,8 @@ def signup():
 def create_post():
     if request.method == "POST":
         content = request.get_json()
-        
-        #-------------------------------------------------------
+
+        # -------------------------------------------------------
 
         fbfirestore.collection('posts').document(content["postId"]).set({
             "postId": content["postId"],
@@ -114,11 +135,6 @@ def create_post():
             "posts": functions.ArrayUnion([content["postId"]])
         })
 
-        
-
-
-        
-        
         # posts[content["postId"]].insert_one({
         #     "postId": content["postId"],
         #     "userId": content["userId"],
@@ -127,11 +143,8 @@ def create_post():
         #     "upvotes": [],
         #     "downvotes": []
         # })
-        
 
-
-        #-------------------------------------------------------
-
+        # -------------------------------------------------------
 
         return {}
     else:
@@ -144,15 +157,15 @@ def delete_post():
         content = request.get_json()
         print(content)
 
-        #-------------------------------------------------------
+        # -------------------------------------------------------
 
         fbfirestore.collection("users").document(content["userId"]).update({
             "posts": functions.ArrayRemove([content["postId"]])
         })
         fbfirestore.collection("posts").document(content["postId"]).delete()
 
-        #-------------------------------------------------------
-       
+        # -------------------------------------------------------
+
         try:
             blob = bucket.blob(f'postImages/{content["postId"]}.jpeg')
             blob.delete()
@@ -193,7 +206,7 @@ def update_user():
     if request.method == "POST":
         content = request.get_json()
 
-        #-------------------------------------------------------
+        # -------------------------------------------------------
         user_doc = fbfirestore.collection(
             "users").document(content["userId"]).get().to_dict()
 
@@ -210,26 +223,25 @@ def update_user():
             "about": content["about"]
         })
 
-        users = fbfirestore.collection("root").document("uid").get().to_dict()["users"]
-        #-------------------------------------------------------
-        
+        users = fbfirestore.collection("root").document(
+            "uid").get().to_dict()["users"]
+        # -------------------------------------------------------
+
         old_username = ""
         for i in users:
             if i["userId"] == content["userId"]:
                 old_username = i["username"]
         print(old_username)
 
-        
-
-        #-------------------------------------------------------
+        # -------------------------------------------------------
         users = fbfirestore.collection("root").document("uid").update({
-            "users" : functions.ArrayRemove([{'username': old_username, 'userId': content["userId"]}])
+            "users": functions.ArrayRemove([{'username': old_username, 'userId': content["userId"]}])
         })
 
         users = fbfirestore.collection("root").document("uid").update({
-            "users" : functions.ArrayUnion([{'username': content["username"], 'userId': content["userId"]}])
+            "users": functions.ArrayUnion([{'username': content["username"], 'userId': content["userId"]}])
         })
-        #-------------------------------------------------------
+        # -------------------------------------------------------
 
         return {}
     else:
@@ -241,14 +253,14 @@ def post_comment():
     if request.method == "POST":
         content = request.get_json()
 
-        #-------------------------------------------------------
+        # -------------------------------------------------------
         fbfirestore.collection("posts").document(content["postId"]).update({
             "comments": functions.ArrayUnion([{
                 "userId": content["userId"],
                 "comment": content["comment"]
             }])
         })
-        #-------------------------------------------------------
+        # -------------------------------------------------------
 
         return {}
     else:
@@ -259,21 +271,21 @@ def post_comment():
 def get_user_posts(uid):
     if request.method == "GET":
 
-        #-------------------------------------------------------
+        # -------------------------------------------------------
         user_doc = fbfirestore.collection(
             "users").document(uid).get().to_dict()
-        #-------------------------------------------------------
+        # -------------------------------------------------------
 
         try:
             user_posts = []
             for i in user_doc["posts"]:
 
-            #-------------------------------------------------------
+                # -------------------------------------------------------
                 post = fbfirestore.collection(
                     "posts").document(i).get().to_dict()
                 user_posts.append(post)
-            #-------------------------------------------------------
-            
+            # -------------------------------------------------------
+
             return jsonify({
                 "posts": user_posts,
                 "noOfPost": len(user_posts)
@@ -290,9 +302,9 @@ def get_user_posts(uid):
 def get_all_posts():
     if request.method == "GET":
         posts_list = []
-        #-------------------------------------------------------
+        # -------------------------------------------------------
         posts = fbfirestore.collection("posts").get()
-        #-------------------------------------------------------
+        # -------------------------------------------------------
         for i in posts:
             posts_list.append(i.to_dict())
         return jsonify({
@@ -325,10 +337,10 @@ def update_profile_pic(uid):
 @app.route("/deleteuserdocuments/<uid>", methods=["GET"])
 def delete_user_documents(uid):
 
-    #-------------------------------------------------------
+    # -------------------------------------------------------
     user_doc = fbfirestore.collection(
         "users").document(uid).get().to_dict()
-    #-------------------------------------------------------
+    # -------------------------------------------------------
 
     try:
         username = user_doc["username"]
@@ -338,32 +350,32 @@ def delete_user_documents(uid):
         posts = []
 
     try:
-        #-------------------------------------------------------
+        # -------------------------------------------------------
         fbfirestore.collection("root").document("AdditionalData").update({
             "usernames": functions.ArrayRemove([user_doc["username"]])
         })
-        #-------------------------------------------------------
+        # -------------------------------------------------------
     except:
         print("")
 
     if len(posts) > 0:
         for post in posts:
-            #-------------------------------------------------------
+            # -------------------------------------------------------
             fbfirestore.collection("posts").document(post).delete()
-            #-------------------------------------------------------
+            # -------------------------------------------------------
             try:
                 blob = bucket.blob(f'postImages/{post}.jpeg')
                 blob.delete()
             except:
                 print("")
 
-    #-------------------------------------------------------
+    # -------------------------------------------------------
     fbfirestore.collection("root").document("AdditionalData").update({
         "usernames": functions.ArrayRemove([username])
     })
 
     fbfirestore.collection("users").document(uid).delete()
-    #-------------------------------------------------------
+    # -------------------------------------------------------
 
     try:
         blob = bucket.blob(f'profileImages/{uid}.jpeg')
@@ -387,15 +399,14 @@ def delete_user_documents(uid):
 #     })
 
 
-
 # @app.route("/addChat", methods=["POST", "GET"])
 # def addChat():
 #     if request.method == "POST":
 #         content = request.get_json()
-        
+
 #         id = str(uuid.uuid4())
 
-        
+
 #         fbfirestore.collection("DM").document(id).set({
 #                 "MembersUID": functions.ArrayUnion([content["DMuserId"], content["currentUserId"]]),
 #                 "Messages" : []
@@ -410,7 +421,7 @@ def delete_user_documents(uid):
 #             "DMAdded": functions.ArrayUnion([content["DMuserId"]]),
 #             "DMUidList": functions.ArrayUnion([{"userId":content["DMuserId"], "chatId": id}])
 #         })
-        
+
 #         return {}
 #     else:
 #         return {}
