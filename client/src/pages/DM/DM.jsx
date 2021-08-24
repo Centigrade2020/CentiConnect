@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import fb from "../../services/firebase";
 import { Symbols, DMMessageElement } from "../../components";
 import "./DM.css";
@@ -81,6 +82,15 @@ function DM() {
     const [username, setUsername] = useState("");
     const [profilePic, setProfilePic] = useState("");
 
+    const messageRef = fb.firestore
+      .collection("DM")
+      .doc(DMChatId)
+      .collection("Messages");
+    const query = messageRef.orderBy("createdAt").limit(25);
+
+    const [messages] = useCollectionData(query, { idField: "id" });
+    const [formValue, setFormValue] = useState("");
+
     useEffect(() => {
       let unmounted = false;
       if (userId !== "") {
@@ -128,12 +138,24 @@ function DM() {
             currentUserId: localStorage.getItem("userId"),
           };
 
+          var myTimestamp = fb.firebase.firestore.Timestamp.fromDate(
+            new Date()
+          );
+
           if (!DMAdded.includes(userId)) {
             var fbDoc = fb.firestore.collection("DM").doc();
             fbDoc.set({
               MembersUID: [userId, localStorage.getItem("userId")],
               Messages: [],
             });
+            fbDoc
+              .collection("Messages")
+              .doc()
+              .set({
+                createdAt: myTimestamp,
+                text: "Conversation started",
+                uid: localStorage.getItem("userId"),
+              });
 
             console.log(fbDoc.id);
 
