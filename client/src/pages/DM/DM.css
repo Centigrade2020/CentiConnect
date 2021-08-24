@@ -299,6 +299,7 @@
   flex-direction: column;
   text-align: center;
 }
+
 .DMMessageElementSent {
   align-self: flex-end;
 }
@@ -306,6 +307,10 @@
 .DMMessageElementSent p,
 .DMMessageElementReceived p {
   align-self: flex-start;
+}
+
+.DMMessageElementSent p {
+  align-self: flex-end;
 }
 
 .DMMessageElementSent .dateTime,
