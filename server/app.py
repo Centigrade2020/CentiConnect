@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_mail import Mail, Message
 import os
 import uuid
@@ -54,7 +54,8 @@ def signup():
                 sender='centigrade.ad@gmail.com',
                 recipients=[content['email']]
             )
-            msg.body = 'You have successfully Signed up with Centiconnect :) \n Complete your profile settings :) \n You can chat with your friends and Post Images   '
+            msg.html = render_template('email.html')
+            # msg.body = 'You have successfully Signed up with Centiconnect :) \n Complete your profile settings :) \n You can chat with your friends and Post Images   '
             mail.send(msg)
 
             # -------------------------------------------------------
