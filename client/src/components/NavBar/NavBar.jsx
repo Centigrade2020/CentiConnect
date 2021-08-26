@@ -60,7 +60,7 @@ function NavBar() {
           <div
             className="chatContainer"
             onClick={() => {
-              history.push("DM");
+              history.push("/DM");
             }}
           >
             <Symbols.Chat size="28" />
