@@ -7,7 +7,7 @@ A Secure Social Media application built for Build2Learn using Firebase, node and
 
 - [node 16.0.0+](https://nodejs.org/en/download/current/)
 
-## Instalation:
+## Installation:
     
 - clone this repository
 
