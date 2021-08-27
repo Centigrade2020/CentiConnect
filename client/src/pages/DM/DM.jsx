@@ -39,6 +39,15 @@ function DM() {
           text: currentMessage,
           createdAt: fb.firebase.firestore.FieldValue.serverTimestamp(),
           uid: localStorage.getItem("userId"),
+        })
+        .then(() => {
+          const string = `DMCount.${localStorage.getItem("userId")}`;
+          fb.firestore
+            .collection("users")
+            .doc(localStorage.getItem("DMUserId"))
+            .update({
+              [string]: fb.firebase.firestore.FieldValue.increment(1),
+            });
         });
       setCurrentMesage("");
       dummy.current.scrollIntoView({ behavior: "smooth" });
@@ -56,8 +65,6 @@ function DM() {
           if (!unmounted) {
             setConnections(doc.data().connections);
             setDMAdded(doc.data().DMAdded);
-          } else {
-            console.log("");
           }
         });
     }
@@ -77,8 +84,6 @@ function DM() {
         .then((doc) => {
           if (!unmounted) {
             setUsername(doc.data().username);
-          } else {
-            console.log("");
           }
         });
 
@@ -90,8 +95,6 @@ function DM() {
           .then((data) => {
             if (!unmounted) {
               setProfilePic(data);
-            } else {
-              console.log("");
             }
           });
       } catch {
@@ -130,8 +133,6 @@ function DM() {
           .then((doc) => {
             if (!unmounted) {
               setUsername(doc.data().username);
-            } else {
-              console.log("");
             }
           });
 
@@ -143,8 +144,6 @@ function DM() {
             .then((data) => {
               if (!unmounted) {
                 setProfilePic(data);
-              } else {
-                console.log("");
               }
             });
         } catch {
@@ -175,7 +174,8 @@ function DM() {
             var fbDoc = fb.firestore.collection("DM").doc();
             fbDoc.set({
               MembersUID: [userId, localStorage.getItem("userId")],
-              Messages: [],
+              [content.DMuserId]: 0,
+              [content.currentUserId]: 0,
             });
             fbDoc
               .collection("Messages")
@@ -185,8 +185,6 @@ function DM() {
                 text: "Conversation started",
                 uid: localStorage.getItem("userId"),
               });
-
-            console.log(fbDoc.id);
 
             fb.firestore
               .collection("users")
@@ -371,30 +369,7 @@ function DMAddedPeopleElement({ userId }) {
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [chatId, setChatId] = useState("");
-
-  if (localStorage.getItem("userId") !== "") {
-    fb.firestore
-      .collection("users")
-      .doc(localStorage.getItem("userId"))
-      .get()
-      .then((doc) => {
-        for (var i in doc.data().DMUidList) {
-          if (userId === doc.data().DMUidList[i].userId) {
-            setChatId(doc.data().DMUidList[i].chatId);
-            // fb.firestore
-            //   .collection("DM")
-            //   .doc(doc.data().DMUidList[i].chatId)
-            //   .collection("Messages")
-            //   .get()
-            //   .then((docs) => {
-            //     docs.forEach((doc) => {
-            //       setAddedPeopleText(doc.data().text);
-            //     });
-            //   });
-          }
-        }
-      });
-  }
+  const [newMessage, setNewMessage] = useState(false);
 
   useEffect(() => {
     let unmounted = false;
@@ -406,8 +381,6 @@ function DMAddedPeopleElement({ userId }) {
         .then((doc) => {
           if (!unmounted) {
             setUsername(doc.data().username);
-          } else {
-            console.log("");
           }
         });
 
@@ -419,8 +392,6 @@ function DMAddedPeopleElement({ userId }) {
           .then((data) => {
             if (!unmounted) {
               setProfilePic(data);
-            } else {
-              console.log("");
             }
           });
       } catch {
@@ -472,6 +443,7 @@ function DMAddedPeopleElement({ userId }) {
         <p>{addedPeopleText}</p>
         {/* <p>{chatId}</p> */}
       </div>
+      {newMessage && <div className="newMessageDot"></div>}
     </div>
   );
 }
