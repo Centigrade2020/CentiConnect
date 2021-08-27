@@ -9,6 +9,8 @@ function NavBar() {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  const [messagesCount, setMessagesCount] = useState(0);
+  const [DMAdded, setDMAdded] = useState([]);
 
   useEffect(() => {
     if (!!localStorage.getItem("userId")) {
@@ -36,6 +38,18 @@ function NavBar() {
       } catch {
         setProfilePic("");
       }
+
+      fb.firestore
+        .collection("users")
+        .doc(localStorage.getItem("userId"))
+        .get()
+        .then((doc) => {
+          console.log(doc.data().DMCount);
+          for (var i in doc.data().DMCount) {
+            console.log(doc.data().DMCount[i]);
+            setMessagesCount(messagesCount + doc.data().DMCount[i]);
+          }
+        });
     }
   }, []);
 
@@ -60,13 +74,15 @@ function NavBar() {
           <div
             className="chatContainer"
             onClick={() => {
-              history.push("DM");
+              history.push("/DM");
             }}
           >
             <Symbols.Chat size="28" />
-            <div className="chatNo">
-              <p>99</p>
-            </div>
+            {messagesCount > 0 && (
+              <div className="chatNo">
+                <p>{messagesCount}</p>
+              </div>
+            )}
           </div>
           <p
             className="profileName"
