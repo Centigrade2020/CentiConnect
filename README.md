@@ -19,6 +19,16 @@ A Secure Social Media application built for Build2Learn using Firebase, React an
 
 ## Features:
 
+- Create and customise your own profile
+
+- Create and share posts
+
+- Interact with posts 
+
+- Connect and chat with fellow users
+
+- P2P chat!
+
 ## Known Issues:
 
 - To report any bugs click [here](https://github.com/Centigrade2020/CentiConnect/issues).
