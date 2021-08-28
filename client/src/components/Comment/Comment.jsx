@@ -11,16 +11,27 @@ function Comment({ userId, comment, keyName }) {
       .doc(userId)
       .get()
       .then((doc) => {
-        setUsername(doc.data().username);
+        if (doc.data() !== undefined) {
+          setUsername(doc.data().username);
+        } else {
+          setUsername("user_deleted");
+        }
+      })
+      .catch(() => {
+        console.log("");
       });
 
     fb.storage
       .ref()
       .child(`profileImages/${userId}.jpeg`)
       .getDownloadURL()
-      .then((data) => setProfilePic(data))
+      .then((data) => {
+        setProfilePic(data);
+      })
       .catch(() => {
-        console.log("");
+        setProfilePic(
+          "https://firebasestorage.googleapis.com/v0/b/centiconnect.appspot.com/o/profileImages%2FS3s5pz38yLMv4pInOZe5xzjROwx2.jpeg?alt=media&token=4999b47f-def8-456c-999b-87331c9221fc"
+        );
       });
 
     return (

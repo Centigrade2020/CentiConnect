@@ -44,9 +44,7 @@ function NavBar() {
         .doc(localStorage.getItem("userId"))
         .get()
         .then((doc) => {
-          console.log(doc.data().DMCount);
           for (var i in doc.data().DMCount) {
-            console.log(doc.data().DMCount[i]);
             setMessagesCount(messagesCount + doc.data().DMCount[i]);
           }
         });
